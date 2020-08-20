@@ -21,7 +21,6 @@ import com.rudolphh.studentscheduler.mentor.MentorEntity;
 import com.rudolphh.studentscheduler.term.TermDao;
 import com.rudolphh.studentscheduler.term.TermEntity;
 
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.ExecutorService;
@@ -50,16 +49,27 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
         return instance;
     }
 
+    // callback for executing code (in this case add sample data) after creation of database
+    // can also override onOpen or onDestructiveMigration
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             TermDao termDao = instance.termDao();
             databaseWriteExecutor.execute(()-> termDao.insert(
-                    new TermEntity("First Term",
-                            new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
-                            new GregorianCalendar(2020, Calendar.AUGUST, 18).getTime())));
+                    new TermEntity("Term 1",
+                    new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
+                    new GregorianCalendar(2020, Calendar.AUGUST, 18).getTime())));
+
+            databaseWriteExecutor.execute(()-> termDao.insert(
+                    new TermEntity("Term 2",
+                            new GregorianCalendar(2020, Calendar.DECEMBER, 1).getTime(),
+                            new GregorianCalendar(2021, Calendar.MAY, 31).getTime())));
+
+
         }
+
+
     };
 
 }
