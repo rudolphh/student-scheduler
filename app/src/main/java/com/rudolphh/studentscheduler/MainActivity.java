@@ -1,47 +1,171 @@
 package com.rudolphh.studentscheduler;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
-import com.rudolphh.studentscheduler.term.TermAdapter;
-import com.rudolphh.studentscheduler.term.TermEntity;
-import com.rudolphh.studentscheduler.term.TermViewModel;
 
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.rudolphh.studentscheduler.assessment.AssessmentCreateActivity;
+import com.rudolphh.studentscheduler.assessment.AssessmentMainActivity;
+import com.rudolphh.studentscheduler.course.CourseCreateActivity;
+import com.rudolphh.studentscheduler.course.CourseMainActivity;
+import com.rudolphh.studentscheduler.mentor.MentorCreateActivity;
+import com.rudolphh.studentscheduler.mentor.MentorMainActivity;
+import com.rudolphh.studentscheduler.term.TermCreateActivity;
+import com.rudolphh.studentscheduler.term.TermMainActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private TermViewModel termViewModel;
 
+    FloatingActionButton fabMain, fabTerm, fabCourse, fabAssessment, fabMentor;
+    Float translationY = 100f;
+
+    Boolean menuOpen = false;
+
+    OvershootInterpolator interpolator = new OvershootInterpolator();
+    private static final String TAG = "MainActivity";
+
+    /** onCreate */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // set up recyclerView
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
+        initFabMenu();
 
-        // set up adapter
-        TermAdapter termAdapter = new TermAdapter();
-        recyclerView.setAdapter(termAdapter);
+/*        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setLogo(R.drawable.ic_mentor_24);
+        actionBar.setDisplayUseLogoEnabled(true);*/
+    }// end onCreate
 
-        // get viewModel instance
-        termViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(TermViewModel.class);
-        termViewModel.getAllTerms().observe(this, new Observer<List<TermEntity>>() {
-            @Override
-            public void onChanged(List<TermEntity> termEntities) {
-                termAdapter.setTerms(termEntities);
-                // update RecyclerView
-                //Toast.makeText(MainActivity.this, "OnChanged yo!", Toast.LENGTH_LONG).show();
-            }
-        });
+    /** initFabMenu */
+    private void initFabMenu(){
+        fabMain = findViewById(R.id.fabMain);
+        fabTerm = findViewById(R.id.fabTerm);
+        fabCourse = findViewById(R.id.fabCourse);
+        fabAssessment = findViewById(R.id.fabAssessment);
+        fabMentor = findViewById(R.id.fabMentor);
+
+        fabTerm.setAlpha(0f);
+        fabCourse.setAlpha(0f);
+        fabAssessment.setAlpha(0f);
+        fabMentor.setAlpha(0f);
+
+        fabTerm.setTranslationY(translationY);
+        fabCourse.setTranslationY(translationY);
+        fabAssessment.setTranslationY(translationY);
+        fabMentor.setTranslationY(translationY);
+
+        fabMain.setOnClickListener(this);
+        fabTerm.setOnClickListener(this);
+        fabCourse.setOnClickListener(this);
+        fabAssessment.setOnClickListener(this);
+        fabMentor.setOnClickListener(this);
+    }
+
+    /** Called when the user taps the Terms button */
+    public void openTermsView(View view) {
+        Intent intent = new Intent(this, TermMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openCoursesView(View view) {
+        Intent intent = new Intent(this, CourseMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openAssessmentsView(View view) {
+        Intent intent = new Intent(this, AssessmentMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openMentorsView(View view) {
+        Intent intent = new Intent(this, MentorMainActivity.class);
+        startActivity(intent);
+    }
+
+
+    ////////////////////////////////////////// Fab Menu Methods
+
+    /** Called when the user taps on fab menu main button */
+    private void toggleMenuOpenClose(){
+        menuOpen = !menuOpen;
+
+        if(menuOpen){
+            fabMain.animate().setInterpolator(interpolator).rotation(45f).setDuration(300).start();
+
+            fabTerm.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+            fabCourse.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+            fabAssessment.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+            fabMentor.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+        }
+        else {
+            fabMain.animate().setInterpolator(interpolator).rotation(0f).setDuration(300).start();
+
+            fabTerm.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+            fabCourse.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+            fabAssessment.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+            fabMentor.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+        }
+    }
+
+    /** Once the user taps the appropriate fab, start their respective create activity */
+    private void openCreateTerm(){
+        Intent intent = new Intent(this, TermCreateActivity.class);
+        startActivity(intent);
+    }
+
+    private void openCreateCourse(){
+        Intent intent = new Intent(this, CourseCreateActivity.class);
+        startActivity(intent);
+    }
+
+    private void openCreateAssessment(){
+        Intent intent = new Intent(this, AssessmentCreateActivity.class);
+        startActivity(intent);
+    }
+
+    private void openCreateMentor(){
+        Intent intent = new Intent(this, MentorCreateActivity.class);
+        startActivity(intent);
+    }
+
+
+    /** Fab menu items onClick handler */
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.fabMain:
+                Log.i(TAG, "onClick: fab main");
+                break;
+            case R.id.fabTerm:
+                Log.i(TAG, "onClick: fab term");
+                openCreateTerm();
+                break;
+            case R.id.fabCourse:
+                Log.i(TAG, "onClick: fab course");
+                openCreateCourse();
+                break;
+            case R.id.fabAssessment:
+                Log.i(TAG, "onClick: fab assessment");
+                openCreateAssessment();
+                break;
+            case R.id.fabMentor:
+                Log.i(TAG, "onClick: fab mentor");
+                openCreateMentor();
+                break;
+        }
+        toggleMenuOpenClose();
     }
 }

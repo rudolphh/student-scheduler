@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Student Scheduler</string>
+    <string name="main_terms">Terms</string>
+    <string name="main_courses">Courses</string>
+    <string name="main_assessments">Assessments</string>
+    <string name="main_mentors">Mentors</string>
+
+    <string name="edit_button">Edit</string>
+
+    <string name="add_term">Add Term</string>
 </resources>

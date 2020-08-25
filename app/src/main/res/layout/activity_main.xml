@@ -1,16 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    android:background="@android:color/white">
 
-    <!-- Term recyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/term_item" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!-- TERMS -->
+        <LinearLayout
+            android:id="@+id/termsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="#003057"
+            android:onClick="openTermsView"
+            android:padding="9dp">
+
+            <ImageView
+                android:id="@+id/termsIcon"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="33dp"
+                android:layout_marginEnd="45dp"
+                android:contentDescription="@string/main_terms"
+                android:src="@drawable/ic_terms_24"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/termsTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:text="@string/main_terms"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <!-- COURSES -->
+        <LinearLayout
+            android:id="@+id/coursesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/termsButton"
+            android:layout_margin="1dp"
+            android:background="#4986AD"
+            android:onClick="openCoursesView"
+            android:padding="9dp">
+
+            <ImageView
+                android:id="@+id/coursesIcon"
+                android:src="@drawable/ic_courses_24"
+                app:tint="@android:color/white"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="33dp"
+                android:layout_marginEnd="45dp"
+                android:contentDescription="@string/main_courses" />
+
+            <TextView
+                android:id="@+id/coursesTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:text="@string/main_courses"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <!-- ASSESSMENTS -->
+        <LinearLayout
+            android:id="@+id/assessmentsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/coursesButton"
+            android:layout_margin="1dp"
+            android:background="#003057"
+            android:onClick="openAssessmentsView"
+            android:padding="9dp">
+
+            <ImageView
+                android:id="@+id/assessmentsIcon"
+                android:src="@drawable/ic_assessment_24"
+                app:tint="@android:color/white"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="33dp"
+                android:layout_marginEnd="45dp"
+                android:contentDescription="@string/main_assessments" />
+
+            <TextView
+                android:id="@+id/assessmentsTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:text="@string/main_assessments"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <!-- MENTORS -->
+        <LinearLayout
+            android:id="@+id/mentorsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/assessmentsButton"
+            android:layout_margin="1dp"
+            android:background="#4986AD"
+            android:onClick="openMentorsView"
+            android:padding="9dp">
+
+            <ImageView
+                android:id="@+id/mentorsIcon"
+                android:src="@drawable/ic_mentor_24"
+                app:tint="@android:color/white"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="33dp"
+                android:layout_marginEnd="45dp"
+                android:contentDescription="@string/main_mentors" />
+
+            <TextView
+                android:id="@+id/mentorsTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:text="@string/main_mentors"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMentor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:tint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_mentor_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAssessment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:tint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_assessment_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:tint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_courses_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabTerm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:tint="@android:color/white"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_terms_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:tint="@android:color/white"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

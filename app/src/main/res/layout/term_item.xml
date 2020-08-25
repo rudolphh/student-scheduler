@@ -2,14 +2,21 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="111dp"
         android:padding="8dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:contentDescription="@string/edit_button"/>
 
         <TextView
             android:id="@+id/text_view_start"
@@ -24,20 +31,20 @@
         <TextView
             android:id="@+id/text_view_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_start"
-            android:layout_alignParentStart="true"
+            android:layout_height="match_parent"
             android:ellipsize="end"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:text="Title"
+
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
             android:id="@+id/text_view_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_title"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Date"

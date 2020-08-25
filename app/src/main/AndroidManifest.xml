@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.rudolphh.studentscheduler">
 
     <application
@@ -9,14 +10,39 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name="com.rudolphh.studentscheduler.MainActivity">
+        android:theme="@style/AppTheme"
+        app:contentInsetStartWithNavigation="20dp">
+
+        <activity android:name=".mentor.MentorCreateActivity" />
+        <activity android:name=".assessment.AssessmentCreateActivity" />
+        <activity android:name=".course.CourseCreateActivity" />
+        <activity android:name=".term.TermCreateActivity" />
+
+        <activity
+            android:name=".mentor.MentorMainActivity"
+            android:label="Mentor Activity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".assessment.AssessmentMainActivity"
+            android:label="Assessment Activity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".course.CourseMainActivity"
+            android:label="Course Activity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".term.TermMainActivity"
+            android:label="Term Activity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

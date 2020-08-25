@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class, MentorEntity.class}, version = 1)
+@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class, MentorEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({AssessmentTypeConverter.class, DateConverter.class, StatusConverter.class })
 public abstract class StudentSchedulerDatabase extends RoomDatabase {
 
