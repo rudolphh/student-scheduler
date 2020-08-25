@@ -11,7 +11,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#D9D9D6"
+        android:background="@color/colorNeutralLightGray"
         tools:listitem="@layout/term_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -47,5 +49,10 @@ public class TermMainActivity extends AppCompatActivity {
         });
     }// end onCreate
 
+
+    public void openCreateTerm(View view){
+        Intent intent = new Intent(this, TermCreateActivity.class);
+        startActivity(intent);
+    }
 
 }
