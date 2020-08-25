@@ -17,4 +17,10 @@ public class AssessmentMainActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Assessments");
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

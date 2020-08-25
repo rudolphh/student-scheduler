@@ -10,29 +10,30 @@ import java.util.List;
 
 public class TermViewModel extends AndroidViewModel {
 
-    private TermRepository repository;
+    private TermRepository termRepository;
     private LiveData<List<TermEntity>> allTerms;
 
     public TermViewModel(@NonNull Application application) {
         super(application);
-        repository = new TermRepository(application);
-        allTerms = repository.getAllTerms();
+        termRepository = new TermRepository(application);
+
+        allTerms = termRepository.getAllTerms();
     }
 
     public void insert(TermEntity term){
-        repository.insert(term);
+        termRepository.insert(term);
     }
 
     public void update(TermEntity term){
-        repository.update(term);
+        termRepository.update(term);
     }
 
     public void delete(TermEntity term){
-        repository.delete(term);
+        termRepository.delete(term);
     }
 
     public void deleteAllTerms(){
-        repository.deleteAllTerms();
+        termRepository.deleteAllTerms();
     }
 
     public LiveData<List<TermEntity>> getAllTerms(){

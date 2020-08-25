@@ -17,4 +17,10 @@ public class MentorMainActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Mentors");
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

@@ -1,23 +1,26 @@
 package com.rudolphh.studentscheduler.assessment;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
+import com.rudolphh.studentscheduler.course.CourseEntity;
 
 import java.util.Date;
 
-@Entity(tableName = "assessment_table")
+@Entity(tableName = "assessment_table", foreignKeys = @ForeignKey(entity = CourseEntity.class, parentColumns = "id", childColumns = "courseId"))
 public class AssessmentEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private int courseId;
 
     private String title;
     private Date goalDate;
     private AssessmentType assessmentType;
 
-    private int courseId;
-
-    public AssessmentEntity(String title, Date goalDate, AssessmentType assessmentType, int courseId) {
+    public AssessmentEntity(int courseId, String title, Date goalDate, AssessmentType assessmentType) {
+        this.courseId = courseId;
         this.title = title;
         this.goalDate = goalDate;
         this.assessmentType = assessmentType;
@@ -47,7 +50,4 @@ public class AssessmentEntity {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
 }

@@ -73,13 +73,14 @@
                 android:textColor="@color/colorPrimary"/>
 
             <TextView
+                android:id="@+id/text_view_number_courses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="viewEnd"
+                android:onClick="openCoursesView"
                 android:text="0 Courses"
-                android:textColor="@color/colorPrimary"
+                android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                />
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
 
