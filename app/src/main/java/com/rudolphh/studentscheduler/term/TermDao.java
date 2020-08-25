@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -24,7 +25,8 @@ public interface TermDao {
     @Query("DELETE FROM term_table")
     void deleteAllTerms();
 
+    @Transaction
     @Query("SELECT * FROM term_table ORDER BY start ASC")
-    LiveData< List<TermEntity> > getAllTerms();
+    LiveData< List<TermWithCourses> > getAllTerms();
 
 }
