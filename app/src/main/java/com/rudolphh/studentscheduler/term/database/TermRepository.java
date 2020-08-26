@@ -1,7 +1,6 @@
-package com.rudolphh.studentscheduler.term;
+package com.rudolphh.studentscheduler.term.database;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public class TermRepository {
 
     private TermDao termDao;
-    private LiveData<List<TermEntity>> allTerms;
+    private LiveData<List<TermWithCourses>> allTerms;
 
     public TermRepository(Application application){
 
@@ -50,7 +49,7 @@ public class TermRepository {
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.deleteAllTerms());
     }
 
-    public LiveData<List<TermEntity>> getAllTerms(){
+    public LiveData<List<TermWithCourses>> getAllTerms(){
         return allTerms;
     }
 

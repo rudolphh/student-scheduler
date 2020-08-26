@@ -1,7 +1,6 @@
-package com.rudolphh.studentscheduler.term;
+package com.rudolphh.studentscheduler.term.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,20 +8,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.rudolphh.studentscheduler.MainActivity;
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.course.CourseMainActivity;
+import com.rudolphh.studentscheduler.term.TermCreateActivity;
 
-import java.util.List;
 import java.util.Objects;
 
 public class TermMainActivity extends AppCompatActivity {
 
-    private TermViewModel termViewModel;
+    private TermMainViewModel termMainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +33,15 @@ public class TermMainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         // set up adapter
-        TermAdapter termAdapter = new TermAdapter();
-        recyclerView.setAdapter(termAdapter);
+        TermMainAdapter termMainAdapter = new TermMainAdapter();
+        recyclerView.setAdapter(termMainAdapter);
 
         // get viewModel instance
-        termViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(TermViewModel.class);
+        termMainViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication()).create(TermMainViewModel.class);
 
         // set up viewModel with liveData
-        termViewModel.getAllTerms().observe(this, termEntities -> {
-            termAdapter.setTerms(termEntities);
+        termMainViewModel.getAllTerms().observe(this, termWithCourses -> {
+            termMainAdapter.setTerms(termWithCourses);
             // update RecyclerView
             Toast.makeText(TermMainActivity.this, "welCome to Terms!", Toast.LENGTH_LONG).show();
         });

@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.term;
+package com.rudolphh.studentscheduler.term.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

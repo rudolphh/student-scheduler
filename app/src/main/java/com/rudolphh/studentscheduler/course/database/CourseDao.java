@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.course;
+package com.rudolphh.studentscheduler.course.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,8 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
-import com.rudolphh.studentscheduler.course.CourseEntity;
 
 import java.util.List;
 
@@ -27,9 +25,8 @@ public interface CourseDao {
     void deleteAllCourses();
 
     @Query("SELECT * FROM course_table ORDER BY start ASC")
-    LiveData<List<CourseEntity>> getAllCourses();
+    LiveData<List<CourseWithMentorAndAssessments>> getAllCourses();
 
     @Query("SELECT * FROM course_table WHERE termId = :termId")
-    LiveData<List<CourseEntity>> getCoursesByTermId(int termId);
-
+    LiveData<CourseWithMentorAndAssessments> getCourseByTermId(int termId);
 }

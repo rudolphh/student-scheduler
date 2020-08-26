@@ -1,13 +1,10 @@
-package com.rudolphh.studentscheduler.course;
+package com.rudolphh.studentscheduler.course.database;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
-import com.rudolphh.studentscheduler.converters.DateConverter;
-import com.rudolphh.studentscheduler.converters.StatusConverter;
-import com.rudolphh.studentscheduler.term.TermEntity;
+import com.rudolphh.studentscheduler.term.database.TermEntity;
 
 import java.util.Date;
 

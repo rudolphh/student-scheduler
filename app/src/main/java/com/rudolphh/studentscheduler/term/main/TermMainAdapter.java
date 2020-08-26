@@ -1,6 +1,5 @@
-package com.rudolphh.studentscheduler.term;
+package com.rudolphh.studentscheduler.term.main;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,44 +11,47 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rudolphh.studentscheduler.MainActivity;
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.course.CourseMainActivity;
-import com.rudolphh.studentscheduler.course.CourseRepository;
+import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
+import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
+public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHolder> {
 
-    private List<TermEntity> terms = new ArrayList<>();
+    private List<TermWithCourses> terms = new ArrayList<>();
     private Context context;
 
     @NonNull
     @Override
     public TermHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
+
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.term_item, parent, false);
+
         return new TermHolder(itemView);
     }
 
+    /*******************  onBindViewHolder */
     @Override
     public void onBindViewHolder(@NonNull TermHolder holder, int position) {
 
-        TermEntity currentTerm = terms.get(position);
+        TermWithCourses currentTerm = terms.get(position);
 
-        holder.textViewTitle.setText(currentTerm.getTitle());
+        holder.textViewTitle.setText(currentTerm.term.getTitle());// set title
 
         // format text and set start and end Date textView
         SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy", Locale.US);
 
-        holder.textViewStart.setText(formatter.format(currentTerm.getStart()));
-        holder.textViewEnd.setText(formatter.format(currentTerm.getEnd()));
+        holder.textViewStart.setText(formatter.format(currentTerm.term.getStart()));
+        holder.textViewEnd.setText(formatter.format(currentTerm.term.getEnd()));
 
-        //holder.textViewNumberCourses.setText(numCourses);
+        String numberOfCourses = currentTerm.courses.size() + " courses";
+        holder.textViewNumberCourses.setText(numberOfCourses);
 
         holder.textViewNumberCourses.setOnClickListener((view -> {
             Bundle bundle = new Bundle();
@@ -67,12 +69,11 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
         return terms.size();
     }
 
-    public void setTerms(List<TermEntity> terms){
+    public void setTerms(List<TermWithCourses> terms){
         this.terms = terms;
         notifyDataSetChanged();
         // notifyItemInserted(); && notifyItemRemoved();
     }
-
 
 
     ///////////////////////// TermHolder

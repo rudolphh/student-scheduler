@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.course;
+package com.rudolphh.studentscheduler.course.database;
 
 import android.app.Application;
 
@@ -11,11 +11,10 @@ import java.util.List;
 public class CourseRepository {
 
     private CourseDao courseDao;
-    private LiveData<List<CourseEntity>> allCourses;
+    private LiveData<List<CourseWithMentorAndAssessments>> allCourses;
 
     public CourseRepository(Application application){
 
-        // get the database
         StudentSchedulerDatabase database = StudentSchedulerDatabase.getInstance(application);
 
         // initialize LiveData
@@ -40,8 +39,11 @@ public class CourseRepository {
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.deleteAllCourses());
     }
 
-    public LiveData<List<CourseEntity>> getAllCourses(){
+    public LiveData<List<CourseWithMentorAndAssessments>> getAllCourses(){
         return allCourses;
     }
 
+    public LiveData<CourseWithMentorAndAssessments> getCourseByTermId(int termId) {
+        return courseDao.getCourseByTermId(termId);
+    }
 }

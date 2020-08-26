@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import com.rudolphh.studentscheduler.course.CourseEntity;
+import com.rudolphh.studentscheduler.course.database.CourseEntity;
 
 @Entity(tableName = "mentor_table", foreignKeys = @ForeignKey(entity = CourseEntity.class, parentColumns = "id", childColumns = "courseId"))
 public class MentorEntity {

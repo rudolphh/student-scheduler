@@ -8,4 +8,13 @@
     <string name="edit_button">Edit</string>
 
     <string name="add_term">Add Term</string>
+
+    <!-- Fillers for hardcorded strings -->
+    <string name="filler_begins">Begins :\u0020</string>
+    <string name="filler_ending">"Ending :\u0020</string>
+    <string name="filler_date">Date</string>
+    <string name="filler_title">Title</string>
+    <string name="filler_num_courses">0 Courses</string>
+    <string name="filler_num_assessments">0 Assessments</string>
+
 </resources>

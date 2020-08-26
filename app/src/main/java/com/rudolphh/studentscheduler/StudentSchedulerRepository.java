@@ -6,12 +6,12 @@ import androidx.lifecycle.LiveData;
 
 import com.rudolphh.studentscheduler.assessment.AssessmentDao;
 import com.rudolphh.studentscheduler.assessment.AssessmentEntity;
-import com.rudolphh.studentscheduler.course.CourseDao;
-import com.rudolphh.studentscheduler.course.CourseEntity;
+import com.rudolphh.studentscheduler.course.database.CourseDao;
+import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 import com.rudolphh.studentscheduler.mentor.MentorDao;
 import com.rudolphh.studentscheduler.mentor.MentorEntity;
 
-import com.rudolphh.studentscheduler.term.TermRepository;
+import com.rudolphh.studentscheduler.term.database.TermRepository;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class StudentSchedulerRepository {
     private TermRepository termRepository;
 
     private CourseDao courseDao;
-    private LiveData<List<CourseEntity>> allCourses;
+    private LiveData<List<CourseWithMentorAndAssessments>> allCourses;
 
     private AssessmentDao assessmentDao;
     private LiveData<List<AssessmentEntity>> allAssessments;

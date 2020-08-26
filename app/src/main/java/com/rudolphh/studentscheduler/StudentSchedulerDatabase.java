@@ -14,12 +14,13 @@ import com.rudolphh.studentscheduler.assessment.AssessmentEntity;
 import com.rudolphh.studentscheduler.converters.AssessmentTypeConverter;
 import com.rudolphh.studentscheduler.converters.DateConverter;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
-import com.rudolphh.studentscheduler.course.CourseDao;
-import com.rudolphh.studentscheduler.course.CourseEntity;
+import com.rudolphh.studentscheduler.course.database.CourseDao;
+import com.rudolphh.studentscheduler.course.database.CourseEntity;
+import com.rudolphh.studentscheduler.course.database.CourseStatus;
 import com.rudolphh.studentscheduler.mentor.MentorDao;
 import com.rudolphh.studentscheduler.mentor.MentorEntity;
-import com.rudolphh.studentscheduler.term.TermDao;
-import com.rudolphh.studentscheduler.term.TermEntity;
+import com.rudolphh.studentscheduler.term.database.TermDao;
+import com.rudolphh.studentscheduler.term.database.TermEntity;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -55,11 +56,13 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+
+            // Sample term data
             TermDao termDao = instance.termDao();
             databaseWriteExecutor.execute(()-> termDao.insert(
                     new TermEntity("Term 1",
                     new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
-                    new GregorianCalendar(2020, Calendar.AUGUST, 18).getTime())));
+                    new GregorianCalendar(2020, Calendar.NOVEMBER, 30).getTime())));
 
             databaseWriteExecutor.execute(()-> termDao.insert(
                     new TermEntity("Term 2",
@@ -67,6 +70,14 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
                             new GregorianCalendar(2021, Calendar.MAY, 31).getTime())));
 
 
+            // Sample Course Data
+            CourseDao courseDao = instance.courseDao();
+            databaseWriteExecutor.execute(()-> courseDao.insert(
+                    new CourseEntity(1, "C196",
+                            new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
+                            new GregorianCalendar(2020, Calendar.AUGUST, 28).getTime(),
+                            CourseStatus.IN_PROGRESS)
+            ));
         }
 
 

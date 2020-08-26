@@ -12,12 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         app:contentInsetStartWithNavigation="20dp">
-
+        <activity android:name=".course.CourseDetailsActivity" />
         <activity android:name=".mentor.MentorCreateActivity" />
         <activity android:name=".assessment.AssessmentCreateActivity" />
         <activity android:name=".course.CourseCreateActivity" />
         <activity android:name=".term.TermCreateActivity" />
-
         <activity
             android:name=".mentor.MentorMainActivity"
             android:label="Mentor Activity"
@@ -27,14 +26,13 @@
             android:label="Assessment Activity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".course.CourseMainActivity"
+            android:name=".course.main.CourseMainActivity"
             android:label="Course Activity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".term.TermMainActivity"
+            android:name=".term.main.TermMainActivity"
             android:label="Term Activity"
             android:parentActivityName=".MainActivity" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

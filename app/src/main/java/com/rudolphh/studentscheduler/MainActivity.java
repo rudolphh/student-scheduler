@@ -1,6 +1,5 @@
 package com.rudolphh.studentscheduler;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,18 +7,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Toast;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.assessment.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.course.CourseCreateActivity;
-import com.rudolphh.studentscheduler.course.CourseMainActivity;
+import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
 import com.rudolphh.studentscheduler.mentor.MentorCreateActivity;
 import com.rudolphh.studentscheduler.mentor.MentorMainActivity;
 import com.rudolphh.studentscheduler.term.TermCreateActivity;
-import com.rudolphh.studentscheduler.term.TermMainActivity;
+import com.rudolphh.studentscheduler.term.main.TermMainActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -81,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void openCoursesView(View view) {
         Intent intent = new Intent(this, CourseMainActivity.class);
+
         startActivity(intent);
     }
 

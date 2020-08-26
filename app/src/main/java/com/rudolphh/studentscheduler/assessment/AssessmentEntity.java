@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import com.rudolphh.studentscheduler.course.CourseEntity;
+import com.rudolphh.studentscheduler.course.database.CourseEntity;
 
 import java.util.Date;
 

@@ -2,7 +2,7 @@ package com.rudolphh.studentscheduler.converters;
 
 import androidx.room.TypeConverter;
 
-import com.rudolphh.studentscheduler.course.CourseStatus;
+import com.rudolphh.studentscheduler.course.database.CourseStatus;
 
 public class StatusConverter {
 

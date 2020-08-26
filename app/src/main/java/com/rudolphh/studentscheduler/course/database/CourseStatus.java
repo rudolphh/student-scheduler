@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.course;
+package com.rudolphh.studentscheduler.course.database;
 
 public enum CourseStatus {
     IN_PROGRESS(0), COMPLETED(1), DROPPED(2), PLAN_TO_TAKE(3);
