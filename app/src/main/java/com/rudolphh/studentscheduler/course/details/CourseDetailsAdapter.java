@@ -1,8 +1,6 @@
-package com.rudolphh.studentscheduler.course.main;
+package com.rudolphh.studentscheduler.course.details;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
-import com.rudolphh.studentscheduler.course.details.CourseDetailsActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.CourseHolder> {
+public class CourseDetailsAdapter extends RecyclerView.Adapter<CourseDetailsAdapter.CourseHolder> {
 
-    private List<CourseWithMentorAndAssessments> coursesDetails = new ArrayList<>();
+    private List<CourseWithMentorAndAssessments> courses = new ArrayList<>();
     private Context context;
 
     @NonNull
@@ -40,49 +37,42 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
     @Override
     public void onBindViewHolder(@NonNull CourseHolder holder, int position) {
 
-        CourseWithMentorAndAssessments currentCourseDetails = coursesDetails.get(position);
+        CourseWithMentorAndAssessments courseDetails = courses.get(position);
 
-        holder.textViewTitle.setText(currentCourseDetails.course.getTitle());// set title
+        holder.textViewTitle.setText(courseDetails.course.getTitle());// set title
 
         // format text and set start and end Date textView
         SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy", Locale.US);
 
-        holder.textViewStart.setText(formatter.format(currentCourseDetails.course.getStart()));
-        holder.textViewEnd.setText(formatter.format(currentCourseDetails.course.getAnticipatedEnd()));
+        holder.textViewStart.setText(formatter.format(courseDetails.course.getStart()));
+        holder.textViewEnd.setText(formatter.format(courseDetails.course.getAnticipatedEnd()));
 
-        String numberOfAssessments = currentCourseDetails.assessments.size() + " assessments";
-        holder.textViewNumberAssessments.setText(numberOfAssessments);
+        String numberOfAssessments = courseDetails.assessments.size() + " courses";
+        holder.textViewNumberCourses.setText(numberOfAssessments);
 
-        // when user clicks on an individual course cardview
         holder.courseView.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("goto", "CourseMainActivity");
-            bundle.putInt("courseId", currentCourseDetails.course.getId());
-            bundle.putString("courseTitle", currentCourseDetails.course.getTitle());
 
-            Intent intent = new Intent(context, CourseDetailsActivity.class);
-            intent.putExtras(bundle);
-            context.startActivity(intent);
         });
 
 /*        holder.textViewNumberCourses.setOnClickListener((view -> {
             Bundle bundle = new Bundle();
             bundle.putString("goto", "CourseMainActivity");
-            bundle.putInt("courseId", currentCourseDetails.course.getId());
+            bundle.putInt("courseId", courseDetails.course.getId());
 
             Intent intent = new Intent(context, CourseMainActivity.class);
             intent.putExtras(bundle);
+
             context.startActivity(intent);
         }));*/
     }
 
     @Override
     public int getItemCount() {
-        return coursesDetails.size();
+        return courses.size();
     }
 
-    public void setCourses(List<CourseWithMentorAndAssessments> coursesDetails){
-        this.coursesDetails = coursesDetails;
+    public void setCourses(List<CourseWithMentorAndAssessments> courses){
+        this.courses = courses;
         notifyDataSetChanged();
         // notifyItemInserted(); && notifyItemRemoved();
     }
@@ -93,7 +83,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         private TextView textViewTitle;
         private TextView textViewStart;
         private TextView textViewEnd;
-        private TextView textViewNumberAssessments;
+        private TextView textViewNumberCourses;
 
         private View courseView;
 
@@ -105,7 +95,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewStart = itemView.findViewById(R.id.text_view_start);
             textViewEnd = itemView.findViewById(R.id.text_view_end);
-            textViewNumberAssessments = itemView.findViewById(R.id.text_view_number_assessments);
+            textViewNumberCourses = itemView.findViewById(R.id.text_view_number_courses);
         }
     }
 }

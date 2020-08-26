@@ -17,4 +17,6 @@
     <string name="filler_num_courses">0 Courses</string>
     <string name="filler_num_assessments">0 Assessments</string>
 
+    <string name="filler_course_title">Course Title</string>
+
 </resources>

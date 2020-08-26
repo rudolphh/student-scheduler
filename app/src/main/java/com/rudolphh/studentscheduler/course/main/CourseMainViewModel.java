@@ -44,8 +44,8 @@ public class CourseMainViewModel extends AndroidViewModel {
         return allCourses;
     }
 
-    public LiveData<CourseWithMentorAndAssessments> getCourseByTermId(int termId){
-        return CourseRepository.getCourseByTermId(termId);
+    public LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(int termId){
+        return CourseRepository.getCoursesByTermId(termId);
     }
 
 }

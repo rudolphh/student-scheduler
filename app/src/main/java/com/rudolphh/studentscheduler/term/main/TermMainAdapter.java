@@ -3,6 +3,8 @@ package com.rudolphh.studentscheduler.term.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,23 +43,25 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
     @Override
     public void onBindViewHolder(@NonNull TermHolder holder, int position) {
 
-        TermWithCourses currentTerm = terms.get(position);
+        TermWithCourses currentTermDetails = terms.get(position);
 
-        holder.textViewTitle.setText(currentTerm.term.getTitle());// set title
+        holder.textViewTitle.setText(currentTermDetails.term.getTitle());// set title
 
         // format text and set start and end Date textView
         SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy", Locale.US);
 
-        holder.textViewStart.setText(formatter.format(currentTerm.term.getStart()));
-        holder.textViewEnd.setText(formatter.format(currentTerm.term.getEnd()));
+        holder.textViewStart.setText(formatter.format(currentTermDetails.term.getStart()));
+        holder.textViewEnd.setText(formatter.format(currentTermDetails.term.getEnd()));
 
-        String numberOfCourses = currentTerm.courses.size() + " courses";
+        String numberOfCourses = currentTermDetails.courses.size() + " courses";
         holder.textViewNumberCourses.setText(numberOfCourses);
 
-        holder.textViewNumberCourses.setOnClickListener((view -> {
+        holder.termView.setOnClickListener((view -> {
             Bundle bundle = new Bundle();
-            bundle.putString("goto", "TermMainActivity");
+            bundle.putInt("termId", currentTermDetails.term.getId());
+            bundle.putString("termTitle", currentTermDetails.term.getTitle());
 
+            // take us to CourseMain
             Intent intent = new Intent(context, CourseMainActivity.class);
             intent.putExtras(bundle);
 
@@ -78,6 +83,9 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
 
     ///////////////////////// TermHolder
     static class TermHolder extends RecyclerView.ViewHolder {
+
+        private View termView;
+
         private TextView textViewTitle;
         private TextView textViewStart;
         private TextView textViewEnd;
@@ -85,6 +93,8 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
 
         public TermHolder(@NonNull View itemView) {
             super(itemView);
+            termView = itemView;
+
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewStart = itemView.findViewById(R.id.text_view_start);
             textViewEnd = itemView.findViewById(R.id.text_view_end);

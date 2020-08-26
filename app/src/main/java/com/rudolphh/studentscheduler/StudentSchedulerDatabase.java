@@ -70,7 +70,7 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
                             new GregorianCalendar(2021, Calendar.MAY, 31).getTime())));
 
 
-            // Sample Course Data
+            // Sample course Data
             CourseDao courseDao = instance.courseDao();
             databaseWriteExecutor.execute(()-> courseDao.insert(
                     new CourseEntity(1, "C196",
@@ -78,6 +78,14 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
                             new GregorianCalendar(2020, Calendar.AUGUST, 28).getTime(),
                             CourseStatus.IN_PROGRESS)
             ));
+
+            databaseWriteExecutor.execute(()-> courseDao.insert(
+                    new CourseEntity(1, "C191",
+                            new GregorianCalendar(2020, Calendar.JULY, 3).getTime(),
+                            new GregorianCalendar(2020, Calendar.AUGUST, 7).getTime(),
+                            CourseStatus.COMPLETED)
+            ));
+
         }
 
 

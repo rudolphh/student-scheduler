@@ -43,7 +43,11 @@ public class CourseRepository {
         return allCourses;
     }
 
-    public LiveData<CourseWithMentorAndAssessments> getCourseByTermId(int termId) {
-        return courseDao.getCourseByTermId(termId);
+    public LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(int termId) {
+        return courseDao.getCoursesByTermId(termId);
+    }
+
+    public LiveData<CourseWithMentorAndAssessments> getCourseById(int courseId) {
+        return courseDao.getCourseById(courseId);
     }
 }

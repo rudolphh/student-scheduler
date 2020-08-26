@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorNeutralLightGray"
-        tools:listitem="@layout/term_item" />
+        tools:listitem="@layout/course_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
