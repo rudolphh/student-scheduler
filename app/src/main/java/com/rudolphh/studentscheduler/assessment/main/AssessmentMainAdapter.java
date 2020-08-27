@@ -47,8 +47,9 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
 
         holder.textViewDue.setText(formatter.format(currentAssessment.getDueDate()));
 
-        String numberOfAssessments = assessments.size() + " assessments";
-        holder.textViewNumberAssessments.setText(numberOfAssessments);
+        String assessmentType = currentAssessment.getAssessmentType().toString();
+        assessmentType = assessmentType.substring(0,1) + assessmentType.substring(1).toLowerCase();
+        holder.textViewAssessmentType.setText(assessmentType);
 
         // when user clicks on an individual course cardview
         holder.assessmentView.setOnClickListener(view -> {
@@ -80,7 +81,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         private TextView textViewTitle;
         private TextView textViewDue;
 
-        private TextView textViewNumberAssessments;
+        private TextView textViewAssessmentType;
 
         private View assessmentView;
 
@@ -92,7 +93,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDue = itemView.findViewById(R.id.text_view_due);
 
-            textViewNumberAssessments = itemView.findViewById(R.id.text_view_number_assessments);
+            textViewAssessmentType = itemView.findViewById(R.id.text_view_assessment_type);
         }
     }
 }
