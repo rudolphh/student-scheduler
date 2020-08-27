@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CourseMainViewModel extends AndroidViewModel {
 
-    private com.rudolphh.studentscheduler.course.database.CourseRepository CourseRepository;
+    private CourseRepository CourseRepository;
     private LiveData<List<CourseWithMentorAndAssessments>> allCourses;
 
     public CourseMainViewModel(@NonNull Application application) {

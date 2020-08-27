@@ -6,7 +6,9 @@ import androidx.room.PrimaryKey;
 
 import com.rudolphh.studentscheduler.course.database.CourseEntity;
 
-@Entity(tableName = "mentor_table", foreignKeys = @ForeignKey(entity = CourseEntity.class, parentColumns = "id", childColumns = "courseId"))
+@Entity(tableName = "mentor_table",
+        foreignKeys = @ForeignKey(entity = CourseEntity.class,
+                parentColumns = "id", childColumns = "courseId"))
 public class MentorEntity {
 
     @PrimaryKey(autoGenerate = true)

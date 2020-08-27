@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.assessment;
+package com.rudolphh.studentscheduler.assessment.database;
 
 public enum AssessmentType {
     OBJECTIVE(0), PERFORMANCE(1);

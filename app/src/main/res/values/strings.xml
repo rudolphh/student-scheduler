@@ -8,6 +8,8 @@
     <string name="edit_button">Edit</string>
 
     <string name="add_term">Add Term</string>
+    <string name="add_assessment">Add Assessment</string>
+    <string name="add_course">Add Course</string>
 
     <!-- Fillers for hardcorded strings -->
     <string name="filler_begins">Begins :\u0020</string>
@@ -18,5 +20,8 @@
     <string name="filler_num_assessments">0 Assessments</string>
 
     <string name="filler_course_title">Course Title</string>
+    <string name="filler_assessment_title">Assessment Title</string>
+
+    <string name="filler_assessment_due">Due :\u0020</string>
 
 </resources>

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rudolphh.studentscheduler.R;
+import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 import com.rudolphh.studentscheduler.course.details.CourseDetailsActivity;
 
@@ -56,7 +57,6 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         // when user clicks on an individual course cardview
         holder.courseView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putString("goto", "CourseMainActivity");
             bundle.putInt("courseId", currentCourseDetails.course.getId());
             bundle.putString("courseTitle", currentCourseDetails.course.getTitle());
 
@@ -65,15 +65,17 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
             context.startActivity(intent);
         });
 
-/*        holder.textViewNumberCourses.setOnClickListener((view -> {
+        // when user taps on the number of assessments in the course
+        holder.textViewNumberAssessments.setOnClickListener((view -> {
             Bundle bundle = new Bundle();
-            bundle.putString("goto", "CourseMainActivity");
             bundle.putInt("courseId", currentCourseDetails.course.getId());
+            bundle.putString("courseTitle", currentCourseDetails.course.getTitle());
+            bundle.putString("courseNotes", currentCourseDetails.course.getNotes());
 
-            Intent intent = new Intent(context, CourseMainActivity.class);
+            Intent intent = new Intent(context, AssessmentMainActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
-        }));*/
+        }));
     }
 
     @Override

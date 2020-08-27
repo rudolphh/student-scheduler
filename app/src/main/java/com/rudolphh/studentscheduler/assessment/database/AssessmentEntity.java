@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.assessment;
+package com.rudolphh.studentscheduler.assessment.database;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -16,13 +16,13 @@ public class AssessmentEntity {
     private int courseId;
 
     private String title;
-    private Date goalDate;
+    private Date dueDate;
     private AssessmentType assessmentType;
 
-    public AssessmentEntity(int courseId, String title, Date goalDate, AssessmentType assessmentType) {
+    public AssessmentEntity(int courseId, String title, Date dueDate, AssessmentType assessmentType) {
         this.courseId = courseId;
         this.title = title;
-        this.goalDate = goalDate;
+        this.dueDate = dueDate;
         this.assessmentType = assessmentType;
     }
 
@@ -38,8 +38,8 @@ public class AssessmentEntity {
         return title;
     }
 
-    public Date getGoalDate() {
-        return goalDate;
+    public Date getDueDate() {
+        return dueDate;
     }
 
     public AssessmentType getAssessmentType() {

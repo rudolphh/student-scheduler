@@ -2,7 +2,7 @@ package com.rudolphh.studentscheduler.converters;
 
 import androidx.room.TypeConverter;
 
-import com.rudolphh.studentscheduler.assessment.AssessmentType;
+import com.rudolphh.studentscheduler.assessment.database.AssessmentType;
 
 public class AssessmentTypeConverter {
 

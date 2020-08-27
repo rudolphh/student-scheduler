@@ -4,8 +4,8 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.rudolphh.studentscheduler.assessment.AssessmentDao;
-import com.rudolphh.studentscheduler.assessment.AssessmentEntity;
+import com.rudolphh.studentscheduler.assessment.database.AssessmentDao;
+import com.rudolphh.studentscheduler.assessment.database.AssessmentEntity;
 import com.rudolphh.studentscheduler.course.database.CourseDao;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 import com.rudolphh.studentscheduler.mentor.MentorDao;

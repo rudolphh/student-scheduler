@@ -18,14 +18,17 @@ public class CourseEntity {
     private String title;
     private Date start;
     private Date anticipatedEnd;
+    private String notes;
     private CourseStatus courseStatus;
 
     // constructors
-    public CourseEntity(int termId, String title, Date start, Date anticipatedEnd, CourseStatus courseStatus) {
+    public CourseEntity(int termId, String title, Date start, Date anticipatedEnd, String notes,
+                        CourseStatus courseStatus) {
         this.termId = termId;
         this.title = title;
         this.start = start;
         this.anticipatedEnd = anticipatedEnd;
+        this.notes = notes;
         this.courseStatus = courseStatus;
     }
 
@@ -34,9 +37,6 @@ public class CourseEntity {
         this.id = id;
     }
 
-    public void setTermId(int termId) {
-        this.termId = termId;
-    }
 
     // getters
 
@@ -58,6 +58,10 @@ public class CourseEntity {
 
     public Date getAnticipatedEnd() {
         return anticipatedEnd;
+    }
+
+    public String getNotes() {
+        return notes;
     }
 
     public CourseStatus getCourseStatus() {

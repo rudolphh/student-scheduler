@@ -9,8 +9,9 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.rudolphh.studentscheduler.assessment.AssessmentDao;
-import com.rudolphh.studentscheduler.assessment.AssessmentEntity;
+import com.rudolphh.studentscheduler.assessment.database.AssessmentDao;
+import com.rudolphh.studentscheduler.assessment.database.AssessmentEntity;
+import com.rudolphh.studentscheduler.assessment.database.AssessmentType;
 import com.rudolphh.studentscheduler.converters.AssessmentTypeConverter;
 import com.rudolphh.studentscheduler.converters.DateConverter;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
@@ -57,36 +58,47 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
-            // Sample term data
             TermDao termDao = instance.termDao();
-            databaseWriteExecutor.execute(()-> termDao.insert(
-                    new TermEntity("Term 1",
-                    new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
-                    new GregorianCalendar(2020, Calendar.NOVEMBER, 30).getTime())));
-
-            databaseWriteExecutor.execute(()-> termDao.insert(
-                    new TermEntity("Term 2",
-                            new GregorianCalendar(2020, Calendar.DECEMBER, 1).getTime(),
-                            new GregorianCalendar(2021, Calendar.MAY, 31).getTime())));
-
-
-            // Sample course Data
             CourseDao courseDao = instance.courseDao();
-            databaseWriteExecutor.execute(()-> courseDao.insert(
-                    new CourseEntity(1, "C196",
-                            new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
-                            new GregorianCalendar(2020, Calendar.AUGUST, 28).getTime(),
-                            CourseStatus.IN_PROGRESS)
-            ));
+            AssessmentDao assessmentDao = instance.assessmentDao();
 
-            databaseWriteExecutor.execute(()-> courseDao.insert(
-                    new CourseEntity(1, "C191",
-                            new GregorianCalendar(2020, Calendar.JULY, 3).getTime(),
-                            new GregorianCalendar(2020, Calendar.AUGUST, 7).getTime(),
-                            CourseStatus.COMPLETED)
-            ));
+            databaseWriteExecutor.execute(()-> {
 
-        }
+                // Sample term data
+                termDao.insert(
+                        new TermEntity("Term 1",
+                                new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
+                                new GregorianCalendar(2020, Calendar.NOVEMBER, 30).getTime()));
+
+                termDao.insert(
+                        new TermEntity("Term 2",
+                                new GregorianCalendar(2020, Calendar.DECEMBER, 1).getTime(),
+                                new GregorianCalendar(2021, Calendar.MAY, 31).getTime()));
+
+                // Sample course Data
+                courseDao.insert(
+                        new CourseEntity(1, "C196",
+                                new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
+                                new GregorianCalendar(2020, Calendar.AUGUST, 31).getTime(),
+                                "",
+                                CourseStatus.IN_PROGRESS));
+
+                courseDao.insert(
+                        new CourseEntity(1, "C191",
+                                new GregorianCalendar(2020, Calendar.JULY, 3).getTime(),
+                                new GregorianCalendar(2020, Calendar.AUGUST, 7).getTime(),
+                                "",
+                                CourseStatus.COMPLETED));
+
+                // Sample assessment Data
+                assessmentDao.insert(
+                        new AssessmentEntity(1, "Mobile Application",
+                                new GregorianCalendar(2020, Calendar.AUGUST, 31).getTime(),
+                                AssessmentType.PERFORMANCE));
+
+            });
+
+        }// end onCreate
 
 
     };

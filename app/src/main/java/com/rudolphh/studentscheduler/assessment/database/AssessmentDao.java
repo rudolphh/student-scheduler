@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.assessment;
+package com.rudolphh.studentscheduler.assessment.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -22,8 +22,14 @@ public interface AssessmentDao {
     void delete(AssessmentEntity assessment);
 
     @Query("DELETE FROM assessment_table")
-    void deleteAllCourses();
+    void deleteAllAssessments();
 
-    @Query("SELECT * FROM assessment_table ORDER BY goalDate ASC")
+    @Query("SELECT * FROM assessment_table ORDER BY dueDate ASC")
     LiveData<List<AssessmentEntity>> getAllAssessments();
+
+    @Query("SELECT * FROM assessment_table WHERE id = :id")
+    LiveData<AssessmentEntity> getAssessmentById(int id);
+
+    @Query("SELECT * FROM assessment_table WHERE courseId = :courseId ORDER BY title")
+    LiveData<List<AssessmentEntity>> getAllAssessmentsByCourseId(int courseId);
 }

@@ -23,7 +23,7 @@
             android:layout_alignParentRight="true" />
 
         <LinearLayout
-            android:id="@+id/start_date"
+            android:id="@+id/due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -35,11 +35,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/filler_begins"
+                android:text="@string/filler_assessment_due"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_view_start"
+                android:id="@+id/text_view_due"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/end_date"
-            android:layout_below="@id/start_date"
+            android:layout_below="@id/due_date"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -61,8 +61,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:contentDescription="@string/main_courses"
-                app:srcCompat="@drawable/ic_courses_24"
+                android:contentDescription="@string/main_assessments"
+                app:srcCompat="@drawable/ic_assessment_24"
                 app:tint="@color/colorPrimary" />
 
             <TextView
@@ -74,7 +74,7 @@
                 android:maxLines="1"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="@string/filler_course_title"
+                android:text="@string/filler_assessment_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary" />
 

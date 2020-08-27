@@ -11,18 +11,17 @@ import android.view.animation.OvershootInterpolator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.assessment.AssessmentCreateActivity;
-import com.rudolphh.studentscheduler.assessment.AssessmentMainActivity;
+import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.course.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
-import com.rudolphh.studentscheduler.mentor.MentorCreateActivity;
-import com.rudolphh.studentscheduler.mentor.MentorMainActivity;
 import com.rudolphh.studentscheduler.term.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.main.TermMainActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    FloatingActionButton fabMain, fabTerm, fabCourse, fabAssessment, fabMentor;
+    FloatingActionButton fabMain, fabTerm, fabCourse, fabAssessment;
+    // fabMentor;
     Float translationY = 100f;
 
     Boolean menuOpen = false;
@@ -52,23 +51,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabTerm = findViewById(R.id.fabTerm);
         fabCourse = findViewById(R.id.fabCourse);
         fabAssessment = findViewById(R.id.fabAssessment);
-        fabMentor = findViewById(R.id.fabMentor);
+//        fabMentor = findViewById(R.id.fabMentor);
 
         fabTerm.setAlpha(0f);
         fabCourse.setAlpha(0f);
         fabAssessment.setAlpha(0f);
-        fabMentor.setAlpha(0f);
+//        fabMentor.setAlpha(0f);
 
         fabTerm.setTranslationY(translationY);
         fabCourse.setTranslationY(translationY);
         fabAssessment.setTranslationY(translationY);
-        fabMentor.setTranslationY(translationY);
+//        fabMentor.setTranslationY(translationY);
 
         fabMain.setOnClickListener(this);
         fabTerm.setOnClickListener(this);
         fabCourse.setOnClickListener(this);
         fabAssessment.setOnClickListener(this);
-        fabMentor.setOnClickListener(this);
+//        fabMentor.setOnClickListener(this);
     }
 
     /** Called when the user taps the Terms button */
@@ -88,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    public void openMentorsView(View view) {
-        Intent intent = new Intent(this, MentorMainActivity.class);
-        startActivity(intent);
-    }
+//    public void openMentorsView(View view) {
+//        Intent intent = new Intent(this, MentorMainActivity.class);
+//        startActivity(intent);
+//    }
 
 
     ////////////////////////////////////////// Fab Menu Methods
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fabTerm.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
             fabCourse.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
             fabAssessment.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
-            fabMentor.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+//            fabMentor.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
         }
         else {
             fabMain.animate().setInterpolator(interpolator).rotation(0f).setDuration(300).start();
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fabTerm.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
             fabCourse.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
             fabAssessment.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
-            fabMentor.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+//            fabMentor.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
         }
     }
 
@@ -134,10 +133,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    private void openCreateMentor(){
-        Intent intent = new Intent(this, MentorCreateActivity.class);
-        startActivity(intent);
-    }
+//    private void openCreateMentor(){
+//        Intent intent = new Intent(this, MentorCreateActivity.class);
+//        startActivity(intent);
+//    }
 
 
     /** Fab menu items onClick handler */
@@ -160,10 +159,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i(TAG, "onClick: fab assessment");
                 openCreateAssessment();
                 break;
-            case R.id.fabMentor:
-                Log.i(TAG, "onClick: fab mentor");
-                openCreateMentor();
-                break;
+//            case R.id.fabMentor:
+//                Log.i(TAG, "onClick: fab mentor");
+//                openCreateMentor();
+//                break;
         }
         toggleMenuOpenClose();
     }
