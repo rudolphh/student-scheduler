@@ -31,16 +31,18 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         // set up viewModel with liveData
         int courseId = 0;
-        String courseTitle = "";
+        String termTitle = "";
         Bundle extras = getIntent().getExtras();
 
         if(extras != null){
             courseId = extras.getInt("courseId");
+            termTitle = extras.getString("termTitle");
         }
 
+        String finalTermTitle = termTitle;
         courseDetailsViewModel.getCourseById(courseId).observe(this, courseDetails -> {
             Objects.requireNonNull(getSupportActionBar()).setTitle(
-                    courseDetails.course.getTitle());
+                    courseDetails.course.getTitle() + " (" + finalTermTitle + ")");
 
             // TODO : set up the field data within textviews etc.
         });

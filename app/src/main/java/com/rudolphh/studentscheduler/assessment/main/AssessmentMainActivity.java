@@ -62,7 +62,7 @@ public class AssessmentMainActivity extends AppCompatActivity {
             assessmentMainViewModel.getAllAssessmentsByCourseId(courseId).observe(
                     this, assessments -> {
                 assessmentMainAdapter.setAssessments(assessments);
-                Objects.requireNonNull(getSupportActionBar()).setTitle("Assessments for "+ finalCourseTitle);
+                Objects.requireNonNull(getSupportActionBar()).setTitle(finalCourseTitle + " Assessments");
                 Toast.makeText(AssessmentMainActivity.this,
                         "Assessments for "+ finalCourseTitle, Toast.LENGTH_LONG).show();
             });

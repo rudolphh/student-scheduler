@@ -61,7 +61,8 @@ public class CourseMainActivity extends AppCompatActivity {
             String finalTermTitle = termTitle;
             courseMainViewModel.getCoursesByTermId(termId).observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
-                Objects.requireNonNull(getSupportActionBar()).setTitle("Courses for "+ finalTermTitle);
+                courseMainAdapter.setTermTitle(finalTermTitle);
+                Objects.requireNonNull(getSupportActionBar()).setTitle(finalTermTitle + " Courses");
                 Toast.makeText(CourseMainActivity.this,
                         "Courses for "+ finalTermTitle, Toast.LENGTH_LONG).show();
             });

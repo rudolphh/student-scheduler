@@ -3,8 +3,10 @@ package com.rudolphh.studentscheduler.term.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
+
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
-import java.io.Serializable;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,8 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
         holder.textViewStart.setText(formatter.format(currentTermDetails.term.getStart()));
         holder.textViewEnd.setText(formatter.format(currentTermDetails.term.getEnd()));
 
-        String numberOfCourses = currentTermDetails.courses.size() + " courses";
+        int numCourses = currentTermDetails.courses.size();
+        String numberOfCourses =  (numCourses == 1) ? numCourses + " course" : numCourses + " courses";
         holder.textViewNumberCourses.setText(numberOfCourses);
 
         holder.termView.setOnClickListener((view -> {

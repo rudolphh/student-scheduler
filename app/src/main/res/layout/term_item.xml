@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp">
@@ -25,9 +25,9 @@
             android:id="@+id/start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/edit_button">
+            android:layout_toStartOf="@id/edit_button"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,38 +49,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/start_date"
             android:layout_above="@id/end_date"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_below="@id/start_date"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:src="@drawable/ic_terms_24"
-                android:contentDescription="@string/main_terms"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/main_terms"
+                android:src="@drawable/ic_terms_24"
                 app:tint="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/text_view_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:gravity="center_vertical"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:text="@string/filler_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/text_view_number_courses"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="@string/filler_num_courses"
-                android:textAlignment="viewEnd"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorPrimary" />
 
@@ -97,16 +97,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/filler_ending"
                 android:gravity="end"
-                android:textStyle="bold"/>
+                android:text="@string/filler_ending"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text_view_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:ellipsize="end"
+                android:gravity="end"
                 android:maxLines="1"
                 android:text="@string/filler_date"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />

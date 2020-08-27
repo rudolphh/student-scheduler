@@ -90,8 +90,8 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
 
             assessmentView = itemView;
 
-            textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewDue = itemView.findViewById(R.id.text_view_due);
+            textViewTitle = itemView.findViewById(R.id.text_view_assessment_title);
+            textViewDue = itemView.findViewById(R.id.text_view_assessment_due);
 
             textViewAssessmentType = itemView.findViewById(R.id.text_view_assessment_type);
         }

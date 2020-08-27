@@ -3,6 +3,8 @@ package com.rudolphh.studentscheduler.course.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import java.util.Locale;
 public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.CourseHolder> {
 
     private List<CourseWithMentorAndAssessments> coursesDetails = new ArrayList<>();
+    private String termTitle;
     private Context context;
 
     @NonNull
@@ -51,14 +54,19 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         holder.textViewStart.setText(formatter.format(currentCourseDetails.course.getStart()));
         holder.textViewEnd.setText(formatter.format(currentCourseDetails.course.getAnticipatedEnd()));
 
-        String numberOfAssessments = currentCourseDetails.assessments.size() + " assessments";
-        holder.textViewNumberAssessments.setText(numberOfAssessments);
+        int numAssessments = currentCourseDetails.assessments.size();
+        String numberOfAssessments =  (numAssessments == 1) ? numAssessments + " assessment" : numAssessments + " assessments";
+
+        SpannableString content = new SpannableString( numberOfAssessments) ;
+        content.setSpan( new UnderlineSpan() , 0 , content.length() , 0 ) ;
+
+        holder.textViewNumberAssessments.setText(content);
 
         // when user clicks on an individual course cardview
         holder.courseView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putInt("courseId", currentCourseDetails.course.getId());
-            bundle.putString("courseTitle", currentCourseDetails.course.getTitle());
+            bundle.putString("termTitle", termTitle);
 
             Intent intent = new Intent(context, CourseDetailsActivity.class);
             intent.putExtras(bundle);
@@ -89,6 +97,10 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         // notifyItemInserted(); && notifyItemRemoved();
     }
 
+    public void setTermTitle(String termTitle){
+        this.termTitle = termTitle;
+    }
+
 
     ///////////////////////// CourseHolder
     static class CourseHolder extends RecyclerView.ViewHolder {
@@ -104,9 +116,9 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
 
             courseView = itemView;
 
-            textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewStart = itemView.findViewById(R.id.text_view_start);
-            textViewEnd = itemView.findViewById(R.id.text_view_end);
+            textViewTitle = itemView.findViewById(R.id.text_view_course_title);
+            textViewStart = itemView.findViewById(R.id.text_view_course_start);
+            textViewEnd = itemView.findViewById(R.id.text_view_course_end);
             textViewNumberAssessments = itemView.findViewById(R.id.text_view_number_assessments);
         }
     }
