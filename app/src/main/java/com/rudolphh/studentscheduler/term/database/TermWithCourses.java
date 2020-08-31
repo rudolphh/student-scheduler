@@ -9,9 +9,7 @@ import java.util.List;
 
 public class TermWithCourses {
     @Embedded public TermEntity term;
-    @Relation(
-            parentColumn = "id",
-            entityColumn = "termId"
-    )
+
+    @Relation( parentColumn = "id", entityColumn = "termId")
     public List<CourseEntity> courses;
 }

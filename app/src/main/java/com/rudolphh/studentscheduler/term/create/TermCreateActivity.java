@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.term;
+package com.rudolphh.studentscheduler.term.create;
 
 import androidx.appcompat.app.AppCompatActivity;
 

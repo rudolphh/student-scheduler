@@ -14,7 +14,7 @@ import com.rudolphh.studentscheduler.assessment.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.course.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
-import com.rudolphh.studentscheduler.term.TermCreateActivity;
+import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.main.TermMainActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{

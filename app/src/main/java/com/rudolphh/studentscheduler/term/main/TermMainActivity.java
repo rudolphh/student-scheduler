@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.term.TermCreateActivity;
+import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 
 import java.util.Objects;
 

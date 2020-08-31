@@ -41,8 +41,14 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         String finalTermTitle = termTitle;
         courseDetailsViewModel.getCourseById(courseId).observe(this, courseDetails -> {
-            Objects.requireNonNull(getSupportActionBar()).setTitle(
-                    courseDetails.course.getTitle() + " (" + finalTermTitle + ")");
+
+            if(finalTermTitle == null || finalTermTitle.isEmpty()){
+                Objects.requireNonNull(getSupportActionBar()).setTitle(
+                        courseDetails.course.getTitle());
+            } else {
+                Objects.requireNonNull(getSupportActionBar()).setTitle(
+                        courseDetails.course.getTitle() + " (" + finalTermTitle + ")");
+            }
 
             // TODO : set up the field data within textviews etc.
         });

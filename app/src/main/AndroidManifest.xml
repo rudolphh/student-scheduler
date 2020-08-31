@@ -18,7 +18,7 @@
         <activity android:name=".mentor.MentorCreateActivity" />
         <activity android:name=".assessment.AssessmentCreateActivity" />
         <activity android:name=".course.CourseCreateActivity" />
-        <activity android:name=".term.TermCreateActivity" />
+        <activity android:name=".term.create.TermCreateActivity" />
         <activity
             android:name=".mentor.MentorMainActivity"
             android:label="Mentor Main Activity"
