@@ -7,11 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".assessment.main.AssessmentMainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <!-- Assessment recyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/assessment_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/colorNeutralLightGray"
         tools:listitem="@layout/assessment_item" />
 

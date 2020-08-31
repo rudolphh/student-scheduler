@@ -29,5 +29,7 @@
     <string name="filler_assessment_due">Due :\u0020</string>
     <string name="filler_assessment_type">Objective</string>
     <string name="filler_label_assessment_type">Type :\u0020</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_item">Save Item</string>
 
 </resources>

@@ -2,13 +2,16 @@ package com.rudolphh.studentscheduler.assessment.database;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.rudolphh.studentscheduler.course.database.CourseEntity;
 
 import java.util.Date;
 
-@Entity(tableName = "assessment_table", foreignKeys = @ForeignKey(entity = CourseEntity.class, parentColumns = "id", childColumns = "courseId"))
+@Entity(tableName = "assessment_table",
+        foreignKeys = @ForeignKey(entity = CourseEntity.class, parentColumns = "id", childColumns = "courseId"),
+        indices = @Index(value = "courseId", unique = true))
 public class AssessmentEntity {
 
     @PrimaryKey(autoGenerate = true)

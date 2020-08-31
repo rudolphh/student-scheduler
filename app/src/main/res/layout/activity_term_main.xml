@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".term.main.TermMainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <!-- Term recyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/colorNeutralLightGray"
         tools:listitem="@layout/term_item" />
 

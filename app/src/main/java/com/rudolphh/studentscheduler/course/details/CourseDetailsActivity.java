@@ -1,6 +1,7 @@
 package com.rudolphh.studentscheduler.course.details;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_details);
 
+        setToolbarAndNavigation();
+
         courseDetailsViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseDetailsViewModel.class);
 
@@ -43,11 +46,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
         courseDetailsViewModel.getCourseById(courseId).observe(this, courseDetails -> {
 
             if(finalTermTitle == null || finalTermTitle.isEmpty()){
-                Objects.requireNonNull(getSupportActionBar()).setTitle(
-                        courseDetails.course.getTitle());
+                setToolBarTitles(courseDetails.course.getTitle(), "Course Details");
             } else {
-                Objects.requireNonNull(getSupportActionBar()).setTitle(
-                        courseDetails.course.getTitle() + " (" + finalTermTitle + ")");
+                setToolBarTitles(courseDetails.course.getTitle(), finalTermTitle);
             }
 
             // TODO : set up the field data within textviews etc.
@@ -58,13 +59,25 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
 
 
-
-
-
-    /*** Up Navigation support */
+    /////////////////////// Navigation support
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    ////////////////// PRIVATE HELPERS
+
+    private void setToolBarTitles (String title, String subtitle){
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
+    }
+
+    private void setToolbarAndNavigation(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }

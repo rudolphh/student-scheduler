@@ -1,30 +1,31 @@
 package com.rudolphh.studentscheduler.course.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.rudolphh.studentscheduler.MainActivity;
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
-import com.rudolphh.studentscheduler.course.details.CourseDetailsActivity;
+
 
 import java.util.Objects;
 
 public class CourseMainActivity extends AppCompatActivity {
 
     CourseMainViewModel courseMainViewModel;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_main);
+
+        setToolbarAndNavigation();
 
         // set up recyclerView
         RecyclerView recyclerView = findViewById(R.id.course_recycler_view);
@@ -53,7 +54,7 @@ public class CourseMainActivity extends AppCompatActivity {
         if(termId == 0) {
             courseMainViewModel.getAllCourses().observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
-                Objects.requireNonNull(getSupportActionBar()).setTitle("All Courses");
+                setToolBarTitles("Courses", "All");
                 // update RecyclerView
                 Toast.makeText(CourseMainActivity.this, "All Courses", Toast.LENGTH_LONG).show();
             });
@@ -62,16 +63,34 @@ public class CourseMainActivity extends AppCompatActivity {
             courseMainViewModel.getCoursesByTermId(termId).observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
                 courseMainAdapter.setTermTitle(finalTermTitle);
-                Objects.requireNonNull(getSupportActionBar()).setTitle(finalTermTitle + " Courses");
+                setToolBarTitles(finalTermTitle, "Courses");
                 Toast.makeText(CourseMainActivity.this,
                         "Courses for "+ finalTermTitle, Toast.LENGTH_LONG).show();
             });
         }
     }// end onCreate
 
+
+
+    /////////////////// Navigation support
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    /////////////////////// Private Helpers
+
+    private void setToolBarTitles (String title, String subtitle){
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
+    }
+
+    private void setToolbarAndNavigation(){
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }

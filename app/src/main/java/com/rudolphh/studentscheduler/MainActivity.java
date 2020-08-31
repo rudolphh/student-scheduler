@@ -1,10 +1,12 @@
 package com.rudolphh.studentscheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
@@ -16,6 +18,8 @@ import com.rudolphh.studentscheduler.course.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.main.TermMainActivity;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,12 +33,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     OvershootInterpolator interpolator = new OvershootInterpolator();
     private static final String TAG = "MainActivity";
 
+
     /** onCreate */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         initFabMenu();
 
@@ -44,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         actionBar.setLogo(R.drawable.ic_mentor_24);
         actionBar.setDisplayUseLogoEnabled(true);*/
     }// end onCreate
+
+
 
     /** initFabMenu */
     private void initFabMenu(){

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.rudolphh.studentscheduler.R;
 
@@ -16,6 +17,8 @@ public class CourseCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_create);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Add Course");
 
         Toast.makeText(this, "Course Create!", Toast.LENGTH_LONG).show();

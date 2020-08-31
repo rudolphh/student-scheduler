@@ -2,13 +2,15 @@ package com.rudolphh.studentscheduler.mentor;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.rudolphh.studentscheduler.course.database.CourseEntity;
 
 @Entity(tableName = "mentor_table",
         foreignKeys = @ForeignKey(entity = CourseEntity.class,
-                parentColumns = "id", childColumns = "courseId"))
+                parentColumns = "id", childColumns = "courseId"),
+        indices = @Index(value = "courseId", unique = true) )
 public class MentorEntity {
 
     @PrimaryKey(autoGenerate = true)

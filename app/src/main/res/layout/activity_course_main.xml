@@ -7,11 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".course.main.CourseMainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <!-- Course recyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/course_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/colorNeutralLightGray"
         tools:listitem="@layout/course_item" />
 
