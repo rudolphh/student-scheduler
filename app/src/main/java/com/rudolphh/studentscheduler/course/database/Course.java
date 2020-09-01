@@ -2,21 +2,25 @@ package com.rudolphh.studentscheduler.course.database;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.rudolphh.studentscheduler.term.database.TermEntity;
+import com.rudolphh.studentscheduler.term.database.Term;
 
 import java.util.Date;
 
-@Entity(tableName = "course_table",
-        foreignKeys = @ForeignKey(entity = TermEntity.class, parentColumns = "id", childColumns = "termId"),
-        indices = {@Index(value = {"termId"})})
-public class CourseEntity {
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "course_table")
+public class Course {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
-    private int termId;
+    private long id_course;
+    
+    @ForeignKey
+            (entity = Term.class,
+            parentColumns = "id_term",
+            childColumns = "id_fkterm", onDelete = CASCADE)
+    private long id_fkterm;
 
     private String title;
     private Date start;
@@ -25,9 +29,9 @@ public class CourseEntity {
     private CourseStatus courseStatus;
 
     // constructors
-    public CourseEntity(int termId, String title, Date start, Date anticipatedEnd, String notes,
-                        CourseStatus courseStatus) {
-        this.termId = termId;
+    public Course(long id_fkterm, String title, Date start, Date anticipatedEnd, String notes,
+                  CourseStatus courseStatus) {
+        this.id_fkterm = id_fkterm;
         this.title = title;
         this.start = start;
         this.anticipatedEnd = anticipatedEnd;
@@ -35,20 +39,21 @@ public class CourseEntity {
         this.courseStatus = courseStatus;
     }
 
-    // setter
-    public void setId(int id) {
-        this.id = id;
+
+    public void setId_course(long id_course) {
+        this.id_course = id_course;
     }
 
-
-    // getters
-
-    public int getId() {
-        return id;
+    public void setId_fkterm(long id_fkterm){
+        this.id_fkterm = id_fkterm;
     }
 
-    public int getTermId() {
-        return termId;
+    public long getId_course() {
+        return id_course;
+    }
+
+    public long getId_fkterm() {
+        return id_fkterm;
     }
 
     public String getTitle() {

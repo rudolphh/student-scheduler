@@ -7,26 +7,24 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.rudolphh.studentscheduler.mentor.MentorEntity;
-
 import java.util.List;
 
 @Dao
 public interface MentorDao {
 
     @Insert
-    void insert(MentorEntity mentor);
+    void insert(Mentor mentor);
 
     @Update
-    void update(MentorEntity mentor);
+    void update(Mentor mentor);
 
     @Delete
-    void delete(MentorEntity mentor);
+    void delete(Mentor mentor);
 
     @Query("DELETE FROM mentor_table")
     void deleteAllMentors();
 
     @Query("SELECT * FROM mentor_table ORDER BY name ASC")
-    LiveData<List<MentorEntity>> getAllMentors();
+    LiveData<List<Mentor>> getAllMentors();
 
 }

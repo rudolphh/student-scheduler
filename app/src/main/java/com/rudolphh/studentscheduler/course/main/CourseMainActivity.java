@@ -41,17 +41,17 @@ public class CourseMainActivity extends AppCompatActivity {
                 this.getApplication()).create(CourseMainViewModel.class);
 
         // set up viewModel with liveData
-        int termId = 0;
+        long id_term = 0;
         String termTitle = "";
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
-            termId = extras.getInt("termId");
+            id_term = extras.getLong("id_term");
             termTitle = extras.getString("termTitle");
         }
 
         // Either we view ALL COURSES
-        if(termId == 0) {
+        if(id_term == 0) {
             courseMainViewModel.getAllCourses().observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
                 setToolBarTitles("Courses", "All");
@@ -60,7 +60,7 @@ public class CourseMainActivity extends AppCompatActivity {
             });
         } else { // OR we view courses for a SPECIFIC TERM
             String finalTermTitle = termTitle;
-            courseMainViewModel.getCoursesByTermId(termId).observe(this, courses -> {
+            courseMainViewModel.getCoursesByTermId(id_term).observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
                 courseMainAdapter.setTermTitle(finalTermTitle);
                 setToolBarTitles(finalTermTitle, "Courses");

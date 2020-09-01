@@ -5,8 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.rudolphh.studentscheduler.term.database.TermEntity;
+import com.rudolphh.studentscheduler.term.database.Term;
 import com.rudolphh.studentscheduler.term.database.TermRepository;
+import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
 public class TermCreateViewModel extends AndroidViewModel {
 
@@ -17,8 +18,8 @@ public class TermCreateViewModel extends AndroidViewModel {
         termRepository = new TermRepository(application);
     }
 
-    public void insert(TermEntity term) {
-        termRepository.insert(term);
+    public void insertTermWithCourses(TermWithCourses termWithCourses){
+        termRepository.insert(termWithCourses);
     }
 
 }

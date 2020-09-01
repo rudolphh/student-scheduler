@@ -2,20 +2,15 @@ package com.rudolphh.studentscheduler.course.details;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LiveData;
+
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
-import com.rudolphh.studentscheduler.MainActivity;
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
+import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class CourseDetailsActivity extends AppCompatActivity {
@@ -33,28 +28,26 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 this.getApplication()).create(CourseDetailsViewModel.class);
 
         // set up viewModel with liveData
-        int courseId = 0;
+        long id_course = 0;
         String termTitle = "";
         Bundle extras = getIntent().getExtras();
 
         if(extras != null){
-            courseId = extras.getInt("courseId");
+            id_course = extras.getLong("id_course");
             termTitle = extras.getString("termTitle");
         }
 
         String finalTermTitle = termTitle;
-        courseDetailsViewModel.getCourseById(courseId).observe(this, courseDetails -> {
-
+        courseDetailsViewModel.getCourseById(id_course).observe(this, courseDetails -> {
             if(finalTermTitle == null || finalTermTitle.isEmpty()){
                 setToolBarTitles(courseDetails.course.getTitle(), "Course Details");
             } else {
                 setToolBarTitles(courseDetails.course.getTitle(), finalTermTitle);
             }
-
             // TODO : set up the field data within textviews etc.
         });
 
-    }
+    }// end onCreate
 
 
 

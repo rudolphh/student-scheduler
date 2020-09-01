@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
     public void onBindViewHolder(@NonNull TermHolder holder, int position) {
 
         TermWithCourses currentTermDetails = terms.get(position);
+        Log.i("TermMainActivity", "position = " + position);
 
         holder.textViewTitle.setText(currentTermDetails.term.getTitle());// set title
 
@@ -56,12 +58,16 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
         holder.textViewEnd.setText(formatter.format(currentTermDetails.term.getEnd()));
 
         int numCourses = currentTermDetails.courses.size();
+//        String courseName = currentTermDetails.courses.get(0).getTitle();
+        Log.i("TermMainActivity", "numCourses = " + numCourses);
+//        Log.i("TermMainActivity", "courseName = " + courseName);
+
         String numberOfCourses =  (numCourses == 1) ? numCourses + " course" : numCourses + " courses";
         holder.textViewNumberCourses.setText(numberOfCourses);
 
         holder.termView.setOnClickListener((view -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("termId", currentTermDetails.term.getId());
+            bundle.putLong("id_term", currentTermDetails.term.getId_term());
             bundle.putString("termTitle", currentTermDetails.term.getTitle());
 
             // take us to CourseMain

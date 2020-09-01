@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.rudolphh.studentscheduler.assessment.database.AssessmentEntity;
+import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.assessment.database.AssessmentRepository;
 
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class AssessmentMainViewModel extends AndroidViewModel{
     
     private AssessmentRepository assessmentRepository;
-    private LiveData<List<AssessmentEntity>> allAssessments;
+    private LiveData<List<Assessment>> allAssessments;
 
     public AssessmentMainViewModel(@NonNull Application application) {
         super(application);
@@ -24,15 +24,15 @@ public class AssessmentMainViewModel extends AndroidViewModel{
         allAssessments = assessmentRepository.getAllAssessments();
     }
 
-    public void insert(AssessmentEntity assessment) {
+    public void insert(Assessment assessment) {
         assessmentRepository.insert(assessment);
     }
 
-    public void update(AssessmentEntity assessment) {
+    public void update(Assessment assessment) {
         assessmentRepository.update(assessment);
     }
 
-    public void delete(AssessmentEntity assessment) {
+    public void delete(Assessment assessment) {
         assessmentRepository.delete(assessment);
     }
 
@@ -40,11 +40,11 @@ public class AssessmentMainViewModel extends AndroidViewModel{
         assessmentRepository.deleteAllAssessments();
     }
 
-    public LiveData<List<AssessmentEntity>> getAllAssessments() {
+    public LiveData<List<Assessment>> getAllAssessments() {
         return allAssessments;
     }
 
-    public LiveData<List<AssessmentEntity>> getAllAssessmentsByCourseId(int courseId){
+    public LiveData<List<Assessment>> getAllAssessmentsByCourseId(int courseId){
         return assessmentRepository.getAllAssessmentsByCourseId(courseId);
     }
         

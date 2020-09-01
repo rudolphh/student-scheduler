@@ -3,19 +3,19 @@ package com.rudolphh.studentscheduler.course.database;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import com.rudolphh.studentscheduler.assessment.database.AssessmentEntity;
-import com.rudolphh.studentscheduler.mentor.MentorEntity;
+import com.rudolphh.studentscheduler.assessment.database.Assessment;
+import com.rudolphh.studentscheduler.mentor.Mentor;
 
 import java.util.List;
 
 public class CourseWithMentorAndAssessments {
 
     @Embedded
-    public CourseEntity course;
+    public Course course;
 
-    @Relation( parentColumn = "id", entityColumn = "courseId", entity = MentorEntity.class)
-    public MentorEntity mentor;
+    @Relation( parentColumn = "id_course", entityColumn = "id_fkcourse")
+    public Mentor mentor;
 
-    @Relation( parentColumn = "id", entityColumn = "courseId", entity = AssessmentEntity.class)
-    public List<AssessmentEntity> assessments;
+    @Relation( parentColumn = "id_course", entityColumn = "id_fkcourse")
+    public List<Assessment> assessments;
 }

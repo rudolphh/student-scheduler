@@ -8,19 +8,25 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.rudolphh.studentscheduler.course.database.Course;
+
 import java.util.List;
 
 @Dao
 public interface TermDao {
 
+    @Transaction
     @Insert
-    void insert(TermEntity term);
+    long insert(Term term);
+
+    @Insert
+    void insertCourses(List<Course> courses);
 
     @Update
-    void update(TermEntity term);
+    void update(Term term);
 
     @Delete
-    void delete(TermEntity term);
+    void delete(Term term);
 
     @Query("DELETE FROM term_table")
     void deleteAllTerms();

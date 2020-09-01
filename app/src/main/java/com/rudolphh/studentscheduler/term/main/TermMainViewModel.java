@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.rudolphh.studentscheduler.term.database.TermEntity;
+import com.rudolphh.studentscheduler.term.database.Term;
 import com.rudolphh.studentscheduler.term.database.TermRepository;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
@@ -14,25 +14,28 @@ import java.util.List;
 
 public class TermMainViewModel extends AndroidViewModel {
 
-    private TermRepository termRepository;
-    private LiveData<List<TermWithCourses>> allTerms;
-
     public TermMainViewModel(@NonNull Application application) {
         super(application);
         termRepository = new TermRepository(application);
-
         allTerms = termRepository.getAllTerms();
     }
 
-    public void insert(TermEntity term){
-        termRepository.insert(term);
+    private TermRepository termRepository;
+    private LiveData<List<TermWithCourses>> allTerms;
+
+    public void insertTermWithCourses(TermWithCourses termWithCourses){
+        termRepository.insert(termWithCourses);
     }
 
-    public void update(TermEntity term){
+//    public void insert(Term term){
+//        termRepository.insert(term);
+//    }
+
+    public void update(Term term){
         termRepository.update(term);
     }
 
-    public void delete(TermEntity term){
+    public void delete(Term term){
         termRepository.delete(term);
     }
 

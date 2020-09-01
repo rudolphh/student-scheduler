@@ -13,23 +13,23 @@ import java.util.List;
 public interface AssessmentDao {
 
     @Insert
-    void insert(AssessmentEntity assessment);
+    void insert(Assessment assessment);
 
     @Update
-    void update(AssessmentEntity assessment);
+    void update(Assessment assessment);
 
     @Delete
-    void delete(AssessmentEntity assessment);
+    void delete(Assessment assessment);
 
     @Query("DELETE FROM assessment_table")
     void deleteAllAssessments();
 
     @Query("SELECT * FROM assessment_table ORDER BY dueDate ASC")
-    LiveData<List<AssessmentEntity>> getAllAssessments();
+    LiveData<List<Assessment>> getAllAssessments();
 
-    @Query("SELECT * FROM assessment_table WHERE id = :id")
-    LiveData<AssessmentEntity> getAssessmentById(int id);
+    @Query("SELECT * FROM assessment_table WHERE id_assessment = :id")
+    LiveData<Assessment> getAssessmentById(int id);
 
-    @Query("SELECT * FROM assessment_table WHERE courseId = :courseId ORDER BY title")
-    LiveData<List<AssessmentEntity>> getAllAssessmentsByCourseId(int courseId);
+    @Query("SELECT * FROM assessment_table WHERE id_fkcourse = :courseId ORDER BY title")
+    LiveData<List<Assessment>> getAllAssessmentsByCourseId(int courseId);
 }

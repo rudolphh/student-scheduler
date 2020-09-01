@@ -17,13 +17,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.term.database.TermEntity;
+import com.rudolphh.studentscheduler.course.database.Course;
+import com.rudolphh.studentscheduler.term.database.Term;
+import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -68,11 +72,11 @@ public class TermCreateActivity extends AppCompatActivity {
     private void findViewsById() {
         editTextTitle = findViewById(R.id.edit_text_title);
 
-        editTextStart = (EditText) findViewById(R.id.edit_text_start);
+        editTextStart = findViewById(R.id.edit_text_start);
         editTextStart.setInputType(InputType.TYPE_NULL);
         editTextStart.requestFocus();
 
-        editTextEnd = (EditText) findViewById(R.id.edit_text_end);
+        editTextEnd = findViewById(R.id.edit_text_end);
         editTextEnd.setInputType(InputType.TYPE_NULL);
     }
 
@@ -152,7 +156,9 @@ public class TermCreateActivity extends AppCompatActivity {
         if(startDate.compareTo(endDate) > 0){
             Toast.makeText(this, "Term cannot end before it starts", Toast.LENGTH_SHORT).show();
         } else {
-            termCreateViewModel.insert(new TermEntity(termTitle, startDate, endDate));
+            Term newTerm = new Term(termTitle, startDate, endDate);
+            List<Course> newTermCourses = new ArrayList<>();
+            termCreateViewModel.insertTermWithCourses(new TermWithCourses(newTerm, newTermCourses));
             Toast.makeText(this, "Term created successfully", Toast.LENGTH_SHORT).show();
             finish();
         }

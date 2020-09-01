@@ -65,7 +65,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         // when user clicks on an individual course cardview
         holder.courseView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("courseId", currentCourseDetails.course.getId());
+            bundle.putLong("id_course", currentCourseDetails.course.getId_course());
             bundle.putString("termTitle", termTitle);
 
             Intent intent = new Intent(context, CourseDetailsActivity.class);
@@ -76,7 +76,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         // when user taps on the number of assessments in the course
         holder.textViewNumberAssessments.setOnClickListener((view -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("courseId", currentCourseDetails.course.getId());
+            bundle.putLong("id_course", currentCourseDetails.course.getId_course());
             bundle.putString("courseTitle", currentCourseDetails.course.getTitle());
             bundle.putString("courseNotes", currentCourseDetails.course.getNotes());
 

@@ -6,11 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.rudolphh.studentscheduler.course.database.CourseEntity;
 import com.rudolphh.studentscheduler.course.database.CourseRepository;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
-
-import java.util.List;
 
 public class CourseDetailsViewModel extends AndroidViewModel {
 
@@ -22,8 +19,8 @@ public class CourseDetailsViewModel extends AndroidViewModel {
         CourseRepository = new CourseRepository(application);
     }
 
-    public LiveData<CourseWithMentorAndAssessments> getCourseById(int courseId){
-        return CourseRepository.getCourseById(courseId);
+    public LiveData<CourseWithMentorAndAssessments> getCourseById(long id_course){
+        return CourseRepository.getCourseById(id_course);
     }
 
 }

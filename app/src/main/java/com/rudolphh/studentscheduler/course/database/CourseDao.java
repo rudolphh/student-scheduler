@@ -8,19 +8,25 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.rudolphh.studentscheduler.assessment.database.Assessment;
+import com.rudolphh.studentscheduler.mentor.Mentor;
+
 import java.util.List;
 
 @Dao
 public interface CourseDao {
 
     @Insert
-    void insert(CourseEntity course);
+    void insert(Course course);
+
+    @Insert
+    void insertMentorWithAssessments(Mentor mentor, List<Assessment> assessments);
 
     @Update
-    void update(CourseEntity course);
+    void update(Course course);
 
     @Delete
-    void delete(CourseEntity course);
+    void delete(Course course);
 
     @Query("DELETE FROM course_table")
     void deleteAllCourses();
@@ -30,10 +36,10 @@ public interface CourseDao {
     LiveData<List<CourseWithMentorAndAssessments>> getAllCourses();
 
     @Transaction
-    @Query("SELECT * FROM course_table WHERE termId = :termId ORDER BY start ASC")
-    LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(int termId);
+    @Query("SELECT * FROM course_table WHERE id_fkterm = :termId ORDER BY start ASC")
+    LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(long termId);
 
     @Transaction
-    @Query("SELECT * FROM course_table WHERE id = :courseId")
-    LiveData<CourseWithMentorAndAssessments> getCourseById(int courseId);
+    @Query("SELECT * FROM course_table WHERE id_course = :courseId")
+    LiveData<CourseWithMentorAndAssessments> getCourseById(long courseId);
 }

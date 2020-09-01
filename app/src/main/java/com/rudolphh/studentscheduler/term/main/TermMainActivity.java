@@ -2,6 +2,7 @@ package com.rudolphh.studentscheduler.term.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
+import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
+import java.util.List;
 import java.util.Objects;
 
 public class TermMainActivity extends AppCompatActivity {
@@ -47,6 +50,7 @@ public class TermMainActivity extends AppCompatActivity {
             termMainAdapter.setTerms(termWithCourses);
             setToolBarTitles("Terms", "All");
         });
+
 
         fabNewTerm = findViewById(R.id.fab);
         fabNewTerm.setOnClickListener(view -> {

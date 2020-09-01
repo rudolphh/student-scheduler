@@ -12,7 +12,7 @@ import java.util.List;
 public class AssessmentRepository {
 
     private AssessmentDao assessmentDao;
-    private LiveData<List<AssessmentEntity>> allAssessments;
+    private LiveData<List<Assessment>> allAssessments;
 
     public AssessmentRepository(Application application){
 
@@ -25,17 +25,17 @@ public class AssessmentRepository {
 
     }// end constructor
 
-    public void insert(AssessmentEntity assessment){
+    public void insert(Assessment assessment){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()->
                 assessmentDao.insert(assessment));
     }
 
-    public void update(AssessmentEntity assessment){
+    public void update(Assessment assessment){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()->
                 assessmentDao.update(assessment));
     }
 
-    public void delete(AssessmentEntity assessment){
+    public void delete(Assessment assessment){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()->
                 assessmentDao.delete(assessment));
     }
@@ -45,15 +45,15 @@ public class AssessmentRepository {
                 assessmentDao.deleteAllAssessments());
     }
 
-    public LiveData<List<AssessmentEntity>> getAllAssessments(){
+    public LiveData<List<Assessment>> getAllAssessments(){
         return allAssessments;
     }
 
-    public LiveData<AssessmentEntity> getAssessmentByCourseId(int courseId) {
+    public LiveData<Assessment> getAssessmentByCourseId(int courseId) {
         return assessmentDao.getAssessmentById(courseId);
     }
 
-    public LiveData<List<AssessmentEntity>> getAllAssessmentsByCourseId(int courseId) {
+    public LiveData<List<Assessment>> getAllAssessmentsByCourseId(int courseId) {
         return assessmentDao.getAllAssessmentsByCourseId(courseId);
     }
 }

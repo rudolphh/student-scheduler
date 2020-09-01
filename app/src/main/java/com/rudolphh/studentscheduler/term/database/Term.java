@@ -6,30 +6,31 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "term_table")
-public class TermEntity {
+public class Term {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
-
+    private long id_term;
     private String title;
     private Date start;
     private Date end;
 
     // constructor
-    public TermEntity(String title, Date start, Date end) {
+    public Term(String title, Date start, Date end) {
         this.title = title;
         this.start = start;
         this.end = end;
     }
 
     // setter for id (excluded from constructor)
-    public void setId(int id) {
-        this.id = id;
+    public void setId_term(long id) {
+        this.id_term = id;
     }
 
     // getters
-    public int getId() {
-        return id;
+
+
+    public long getId_term() {
+        return id_term;
     }
 
     public String getTitle() {

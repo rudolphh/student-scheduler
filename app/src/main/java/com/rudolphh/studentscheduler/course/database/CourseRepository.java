@@ -23,15 +23,22 @@ public class CourseRepository {
 
     }// end constructor
 
-    public void insert(CourseEntity course){
+    ///////////////////// insert
+    public void insert(Course course){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.insert(course));
     }
 
-    public void update(CourseEntity course){
+    public void insert(CourseWithMentorAndAssessments course){
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.insertMentorWithAssessments(course.mentor, course.assessments));
+    }
+
+    /////////////////// update
+    public void update(Course course){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.update(course));
     }
 
-    public void delete(CourseEntity course){
+    /////////////////// delete
+    public void delete(Course course){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.delete(course));
     }
 
@@ -39,15 +46,16 @@ public class CourseRepository {
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.deleteAllCourses());
     }
 
+    ///////////////////// getters
     public LiveData<List<CourseWithMentorAndAssessments>> getAllCourses(){
         return allCourses;
     }
 
-    public LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(int termId) {
-        return courseDao.getCoursesByTermId(termId);
+    public LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(long id_term) {
+        return courseDao.getCoursesByTermId(id_term);
     }
 
-    public LiveData<CourseWithMentorAndAssessments> getCourseById(int courseId) {
-        return courseDao.getCourseById(courseId);
+    public LiveData<CourseWithMentorAndAssessments> getCourseById(long id_course) {
+        return courseDao.getCourseById(id_course);
     }
 }

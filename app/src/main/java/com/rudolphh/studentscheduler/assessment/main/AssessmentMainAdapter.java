@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.assessment.database.AssessmentEntity;
+import com.rudolphh.studentscheduler.assessment.database.Assessment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAdapter.AssessmentHolder> {
 
-    private List<AssessmentEntity> assessments = new ArrayList<>();
+    private List<Assessment> assessments = new ArrayList<>();
     private Context context;
 
     @NonNull
@@ -38,7 +38,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
     @Override
     public void onBindViewHolder(@NonNull AssessmentHolder holder, int position) {
 
-        AssessmentEntity currentAssessment = assessments.get(position);
+        Assessment currentAssessment = assessments.get(position);
 
         holder.textViewTitle.setText(currentAssessment.getTitle());// set title
 
@@ -54,7 +54,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         // when user clicks on an individual course cardview
         holder.assessmentView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("assessmentId", currentAssessment.getId());
+            bundle.putLong("assessmentId", currentAssessment.getId_assessment());
             bundle.putString("assessmentTitle", currentAssessment.getTitle());
 
 //            Intent intent = new Intent(context, AssessmentDetailsActivity.class);
@@ -69,7 +69,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         return assessments.size();
     }
 
-    public void setAssessments(List<AssessmentEntity> assessments){
+    public void setAssessments(List<Assessment> assessments){
         this.assessments = assessments;
         notifyDataSetChanged();
         // notifyItemInserted(); && notifyItemRemoved();

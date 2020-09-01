@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.rudolphh.studentscheduler.course.database.CourseEntity;
+import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.database.CourseRepository;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 
@@ -24,15 +24,15 @@ public class CourseMainViewModel extends AndroidViewModel {
         allCourses = CourseRepository.getAllCourses();
     }
 
-    public void insert(CourseEntity Course) {
+    public void insert(Course Course) {
         CourseRepository.insert(Course);
     }
 
-    public void update(CourseEntity Course) {
+    public void update(Course Course) {
         CourseRepository.update(Course);
     }
 
-    public void delete(CourseEntity Course) {
+    public void delete(Course Course) {
         CourseRepository.delete(Course);
     }
 
@@ -44,7 +44,7 @@ public class CourseMainViewModel extends AndroidViewModel {
         return allCourses;
     }
 
-    public LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(int termId){
+    public LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(long termId){
         return CourseRepository.getCoursesByTermId(termId);
     }
 

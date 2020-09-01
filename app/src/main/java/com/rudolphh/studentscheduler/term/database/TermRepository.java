@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.rudolphh.studentscheduler.StudentSchedulerDatabase;
+import com.rudolphh.studentscheduler.course.database.Course;
 
 import java.util.List;
 
@@ -24,24 +25,23 @@ public class TermRepository {
 
     }// end constructor
 
-    public void insert(TermEntity term){
-        /*
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                termDao.insert(term);
+    public void insert(TermWithCourses termWithCourses){
+
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(()->{
+            long identifier = termDao.insert(termWithCourses.term);
+
+            for(Course course : termWithCourses.courses){
+                course.setId_fkterm(identifier);
             }
-        };
-        StudentSchedulerDatabase.databaseWriteExecutor.execute(runnable);
-        */
-        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.insert(term));
+            termDao.insertCourses(termWithCourses.courses);
+        });
     }
 
-    public void update(TermEntity term){
+    public void update(Term term){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.update(term));
     }
 
-    public void delete(TermEntity term){
+    public void delete(Term term){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.delete(term));
     }
 
@@ -55,4 +55,13 @@ public class TermRepository {
 
 }
 
+        /* example of using runnable thread and executing through that
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                termDao.insert(term);
+            }
+        };
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(runnable);
+        */
 
