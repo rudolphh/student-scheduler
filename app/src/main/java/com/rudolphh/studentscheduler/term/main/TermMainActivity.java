@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 
@@ -21,6 +21,7 @@ import java.util.Objects;
 public class TermMainActivity extends AppCompatActivity {
 
     private TermMainViewModel termMainViewModel;
+    private FloatingActionButton fabNewTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,12 @@ public class TermMainActivity extends AppCompatActivity {
         termMainViewModel.getAllTerms().observe(this, termWithCourses -> {
             termMainAdapter.setTerms(termWithCourses);
             setToolBarTitles("Terms", "All");
-            Toast.makeText(TermMainActivity.this, "welCome to Terms!", Toast.LENGTH_LONG).show();
+        });
+
+        fabNewTerm = findViewById(R.id.fab);
+        fabNewTerm.setOnClickListener(view -> {
+            Intent intent = new Intent(this, TermCreateActivity.class);
+            startActivity(intent);
         });
 
     }// end onCreate

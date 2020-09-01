@@ -29,7 +29,10 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:padding="8dp">
+            android:paddingStart="8dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
 
             <LinearLayout
                 android:id="@+id/start_date"
@@ -49,10 +52,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autofillHints="date"
+                    android:focusable="false"
                     android:hint="@string/filler_date"
                     android:inputType="date"
-                    android:onClick="onClick"
-                    android:focusable="false"/>
+                    android:onClick="onClick" />
 
             </LinearLayout>
 
@@ -76,16 +79,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:autofillHints="@string/filler_title"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="@string/filler_title"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimary"
-                    android:autofillHints="@string/filler_title"
-                    android:inputType="text" />
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 
@@ -109,10 +112,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autofillHints="date"
+                    android:focusable="false"
                     android:hint="@string/filler_date"
                     android:inputType="date"
-                    android:onClick="onClick"
-                    android:focusable="false"/>
+                    android:onClick="onClick" />
 
             </LinearLayout>
 
