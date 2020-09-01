@@ -32,7 +32,11 @@ public interface TermDao {
     void deleteAllTerms();
 
     @Transaction
-    @Query("SELECT * FROM term_table ORDER BY start ASC")
+    @Query("SELECT * FROM term_table")
     LiveData< List<TermWithCourses> > getAllTerms();
+
+    @Transaction
+    @Query("SELECT * FROM term_table ORDER BY start ASC")
+    LiveData< List<TermWithCourses> > getAllTermsByDate();
 
 }

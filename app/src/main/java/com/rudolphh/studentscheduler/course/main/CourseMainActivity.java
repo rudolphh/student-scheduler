@@ -7,18 +7,29 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
+import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
+import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CourseMainActivity extends AppCompatActivity {
 
-    CourseMainViewModel courseMainViewModel;
-    Toolbar toolbar;
+    private CourseMainViewModel courseMainViewModel;
+    private Toolbar toolbar;
+    private FloatingActionButton fabNewCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +79,16 @@ public class CourseMainActivity extends AppCompatActivity {
                         "Courses for "+ finalTermTitle, Toast.LENGTH_LONG).show();
             });
         }
+        
+        //////////// set up fab for going to create course activity
+        fabNewCourse = findViewById(R.id.fab);
+        fabNewCourse.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CourseCreateActivity.class);
+            startActivity(intent);
+        });
+        
     }// end onCreate
+
 
 
 
