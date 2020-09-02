@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 
 import com.rudolphh.studentscheduler.R;
+import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.database.CourseStatus;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
@@ -122,12 +123,7 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         int status_position = spinnerCourseStatus.getSelectedItemPosition();
         CourseStatus courseStatus;
         if(status_position != 0){
-             switch (spinnerCourseStatus.getSelectedItem().toString()){
-                 case "Completed" : courseStatus = CourseStatus.COMPLETED; break;
-                 case "Dropped" : courseStatus = CourseStatus.DROPPED; break;
-                 case "Plan to Take" : courseStatus = CourseStatus.PLAN_TO_TAKE; break;
-                 default : courseStatus = CourseStatus.IN_PROGRESS;
-             }
+             courseStatus = StatusConverter.toCourseStatus(spinnerCourseStatus.getSelectedItem().toString());
         } else {
             Toast.makeText(this, "Course needs a status", Toast.LENGTH_SHORT).show();
             return;

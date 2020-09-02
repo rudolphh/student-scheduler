@@ -8,6 +8,7 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
+import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 import com.rudolphh.studentscheduler.course.details.CourseDetailsActivity;
 
@@ -62,6 +64,9 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
 
         holder.textViewNumberAssessments.setText(content);
 
+        String courseStatus = StatusConverter.fromCourseStatus(currentCourseDetails.course.getCourseStatus());
+        holder.textViewCourseStatus.setText(courseStatus);
+
         // when user clicks on an individual course cardview
         holder.courseView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
@@ -108,6 +113,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         private TextView textViewStart;
         private TextView textViewEnd;
         private TextView textViewNumberAssessments;
+        private TextView textViewCourseStatus;
 
         private View courseView;
 
@@ -120,6 +126,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
             textViewStart = itemView.findViewById(R.id.text_view_course_start);
             textViewEnd = itemView.findViewById(R.id.text_view_course_end);
             textViewNumberAssessments = itemView.findViewById(R.id.text_view_number_assessments);
+            textViewCourseStatus = itemView.findViewById(R.id.course_status);
         }
     }
 }
