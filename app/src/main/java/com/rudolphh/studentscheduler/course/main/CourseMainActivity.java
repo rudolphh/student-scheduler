@@ -84,6 +84,9 @@ public class CourseMainActivity extends AppCompatActivity {
         fabNewCourse = findViewById(R.id.fab);
         fabNewCourse.setOnClickListener(view -> {
             Intent intent = new Intent(this, CourseCreateActivity.class);
+            if(extras != null){
+                intent.putExtras(extras);
+            }
             startActivity(intent);
         });
         

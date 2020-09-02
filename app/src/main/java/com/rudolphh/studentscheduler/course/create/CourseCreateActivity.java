@@ -120,6 +120,11 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         String notes = editTextNotes.getText().toString();
 
+        if(courseTitle.isEmpty()){
+            Toast.makeText(this, "Course must have a title", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         int status_position = spinnerCourseStatus.getSelectedItemPosition();
         CourseStatus courseStatus;
         if(status_position != 0){
@@ -134,11 +139,6 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
             term_position = 0;
         }
 
-
-        if(courseTitle.isEmpty()){
-            Toast.makeText(this, "Course must have a title", Toast.LENGTH_SHORT).show();
-            return;
-        }
         // if startDate is after endDate
         assert startDate != null;
         if(startDate.compareTo(endDate) > 0){
@@ -178,10 +178,10 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, status_types);
+                R.layout.spinner_list, status_types);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_list);
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
@@ -199,10 +199,10 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, term_names);
+                R.layout.spinner_list, term_names);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_list);
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
@@ -210,6 +210,14 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         // set the names
 
         AtomicInteger count = new AtomicInteger(0);
+        Bundle extras = getIntent().getExtras();
+        long termId = 0;
+
+        if(extras != null){
+            termId = extras.getLong("id_term");
+        }
+
+        long finalTermId = termId;
         courseCreateViewModel.getAllTerms().observe(this, termWithCourses -> {
             term_names.clear();
             term_names.add("Select Term");
@@ -217,8 +225,12 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
                 term_names.add(termDetails.term.getTitle());
             }
             term_names.add("NEW TERM");
-            if(count.get() == 0){
-                spinner.setSelection(0);
+            if(count.get() == 0){// if first entering
+                if(finalTermId > 0){
+                    spinner.setSelection((int)finalTermId);
+                } else {
+                    spinner.setSelection(0);
+                }
             } else {
                 spinner.setSelection(term_names.size()-2);
             }
@@ -240,11 +252,6 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
             }
         }
 
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub

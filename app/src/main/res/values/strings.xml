@@ -14,7 +14,7 @@
     <!-- Fillers for hardcorded strings -->
     <string name="filler_begins">Begins :\u0020</string>
     <string name="filler_ending">"Ending :\u0020</string>
-    <string name="filler_date">Date</string>
+    <string name="filler_date">date</string>
     <string name="filler_title">Title</string>
     <string name="filler_num_courses">0 Courses</string>
     <string name="filler_num_assessments">0 Assessments</string>
@@ -31,8 +31,8 @@
     <string name="filler_label_assessment_type">Type :\u0020</string>
     <string name="cancel">Cancel</string>
     <string name="save_item">Save Item</string>
-    <string name="filler_start">Start</string>
-    <string name="filler_anticipated_end">Anticipated End</string>
+    <string name="filler_start">Start :\u0020</string>
+    <string name="filler_anticipated_end">Anticipated End :\u0020</string>
     <string name="spinner_select_course_status">Select Status</string>
     <string name="label_spinner_term">"Term : "</string>
     <string name="label_notes">"Notes :  "</string>

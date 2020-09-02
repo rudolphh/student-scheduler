@@ -28,7 +28,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:paddingStart="8dp"
             android:paddingTop="0dp"
             android:paddingEnd="8dp"
@@ -39,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/end_date"
                 android:orientation="horizontal">
 
                 <TextView
@@ -55,21 +56,23 @@
                     android:focusable="false"
                     android:hint="@string/filler_date"
                     android:inputType="date"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorSecondary"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/end_date"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/start_date"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:contentDescription="@string/main_terms"
                     android:src="@drawable/ic_terms_24"
                     app:tint="@color/colorPrimary" />
@@ -77,7 +80,7 @@
                 <EditText
                     android:id="@+id/edit_text_title"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:autofillHints="@string/filler_title"
                     android:ellipsize="end"
@@ -97,7 +100,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
 
                 <TextView
@@ -115,7 +117,10 @@
                     android:focusable="false"
                     android:hint="@string/filler_date"
                     android:inputType="date"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
