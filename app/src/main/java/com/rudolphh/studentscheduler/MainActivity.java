@@ -12,7 +12,7 @@ import android.view.animation.OvershootInterpolator;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.rudolphh.studentscheduler.assessment.AssessmentCreateActivity;
+import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;

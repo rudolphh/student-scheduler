@@ -49,11 +49,11 @@ public class AssessmentRepository {
         return allAssessments;
     }
 
-    public LiveData<Assessment> getAssessmentByCourseId(int courseId) {
+    public LiveData<Assessment> getAssessmentByCourseId(long courseId) {
         return assessmentDao.getAssessmentById(courseId);
     }
 
-    public LiveData<List<Assessment>> getAllAssessmentsByCourseId(int courseId) {
+    public LiveData<List<Assessment>> getAllAssessmentsByCourseId(long courseId) {
         return assessmentDao.getAllAssessmentsByCourseId(courseId);
     }
 }

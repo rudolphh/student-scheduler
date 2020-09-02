@@ -34,7 +34,11 @@
     <string name="filler_start">Start :\u0020</string>
     <string name="filler_anticipated_end">Anticipated End :\u0020</string>
     <string name="spinner_select_course_status">Select Status</string>
+
     <string name="label_spinner_term">"Term : "</string>
     <string name="label_notes">"Notes :  "</string>
+    <string name="label_due_date">"Due Date : "</string>
+    <string name="label_assessment_type">"Type : "</string>
+    <string name="label_spinner_course">"Course : "</string>
 
 </resources>

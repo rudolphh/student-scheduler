@@ -28,8 +28,8 @@ public interface AssessmentDao {
     LiveData<List<Assessment>> getAllAssessments();
 
     @Query("SELECT * FROM assessment_table WHERE id_assessment = :id")
-    LiveData<Assessment> getAssessmentById(int id);
+    LiveData<Assessment> getAssessmentById(long id);
 
     @Query("SELECT * FROM assessment_table WHERE id_fkcourse = :courseId ORDER BY title")
-    LiveData<List<Assessment>> getAllAssessmentsByCourseId(int courseId);
+    LiveData<List<Assessment>> getAllAssessmentsByCourseId(long courseId);
 }

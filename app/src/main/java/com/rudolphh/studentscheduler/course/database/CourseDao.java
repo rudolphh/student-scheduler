@@ -32,8 +32,12 @@ public interface CourseDao {
     void deleteAllCourses();
 
     @Transaction
-    @Query("SELECT * FROM course_table ORDER BY start ASC")
+    @Query("SELECT * FROM course_table")
     LiveData<List<CourseWithMentorAndAssessments>> getAllCourses();
+
+    @Transaction
+    @Query("SELECT * FROM course_table ORDER BY start ASC")
+    LiveData<List<CourseWithMentorAndAssessments>> getAllCoursesByStart();
 
     @Transaction
     @Query("SELECT * FROM course_table WHERE id_fkterm = :termId ORDER BY start ASC")

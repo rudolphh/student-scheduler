@@ -108,22 +108,6 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorSecondary" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/filler_ending"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_view_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="end"
-                android:maxLines="1"
-                android:text="@string/filler_date"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         </LinearLayout>
 

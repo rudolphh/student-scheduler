@@ -9,20 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
-import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class CourseMainActivity extends AppCompatActivity {

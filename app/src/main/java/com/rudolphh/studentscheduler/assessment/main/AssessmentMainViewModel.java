@@ -44,7 +44,7 @@ public class AssessmentMainViewModel extends AndroidViewModel{
         return allAssessments;
     }
 
-    public LiveData<List<Assessment>> getAllAssessmentsByCourseId(int courseId){
+    public LiveData<List<Assessment>> getAllAssessmentsByCourseId(long courseId){
         return assessmentRepository.getAllAssessmentsByCourseId(courseId);
     }
         
