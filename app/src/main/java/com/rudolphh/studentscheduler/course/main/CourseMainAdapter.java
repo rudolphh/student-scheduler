@@ -8,7 +8,7 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
+import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 import com.rudolphh.studentscheduler.course.details.CourseDetailsActivity;
 
@@ -67,6 +68,16 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         String courseStatus = StatusConverter.fromCourseStatus(currentCourseDetails.course.getCourseStatus());
         holder.textViewCourseStatus.setText(courseStatus);
 
+
+        holder.ivEditButton.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("id_course", currentCourseDetails.course.getId_course());
+
+            Intent intent = new Intent(context, CourseCreateActivity.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        });
+
         // when user clicks on an individual course cardview
         holder.courseView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
@@ -109,6 +120,9 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
 
     ///////////////////////// CourseHolder
     static class CourseHolder extends RecyclerView.ViewHolder {
+
+        private ImageView ivEditButton;
+
         private TextView textViewTitle;
         private TextView textViewStart;
         private TextView textViewEnd;
@@ -120,6 +134,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         public CourseHolder(@NonNull View itemView) {
             super(itemView);
 
+            ivEditButton = itemView.findViewById(R.id.edit_button);
             courseView = itemView;
 
             textViewTitle = itemView.findViewById(R.id.text_view_course_title);

@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,9 +55,12 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
     private DatePickerDialog endDatePickerDialog;
 
     private SimpleDateFormat dateFormatter;
+
+    private Bundle extras;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_create);
 
@@ -75,6 +79,46 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         /////////// set up course status AND term spinners
         setUpStatusSpinner();
         setUpTermSpinner();
+
+        // check if the user is creating or editing
+
+        // set up viewModel with liveData
+        long id_course = 0;
+
+        extras = getIntent().getExtras();
+
+        if(extras != null){
+            id_course = extras.getLong("id_course");
+        }
+
+        if(id_course > 0){
+
+            courseCreateViewModel.getCourseById(id_course).observe(this, courseDetails -> {
+                setToolBarTitles("Edit Course", courseDetails.course.getTitle());
+
+                String startDate = dateFormatter.format(courseDetails.course.getStart());
+                editTextStart.setText(startDate);
+
+                String endDate = dateFormatter.format(courseDetails.course.getAnticipatedEnd());
+                editTextEnd.setText(endDate);
+
+                editTextTitle.setText(courseDetails.course.getTitle());
+
+                int courseStatus_position = courseDetails.course.getCourseStatus().getCode();
+                spinnerCourseStatus.setSelection(courseStatus_position+1);
+
+                // if there is a term associated
+                long id_term = courseDetails.course.getId_fkterm();
+                if(id_term > 0) {
+                    spinnerTerm.setSelection((int)id_term);
+                } else spinnerTerm.setSelection(0);
+
+
+                editTextNotes.setText(courseDetails.course.getNotes());
+            });
+        } else {
+            setToolBarTitles("New Course", "");
+        }
     }
 
 
@@ -144,8 +188,15 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         if(startDate.compareTo(endDate) > 0){
             Toast.makeText(this, "Course cannot end before it starts", Toast.LENGTH_SHORT).show();
         } else {
-            courseCreateViewModel.insert(new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus));
-            Toast.makeText(this, "Course created successfully", Toast.LENGTH_SHORT).show();
+            if(extras != null && extras.getLong("id_course") > 0) {
+                Course course = new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus);
+                course.setId_course(extras.getLong("id_course"));
+                courseCreateViewModel.update(course);
+                Toast.makeText(this, "Course edited successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                courseCreateViewModel.insert(new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus));
+                Toast.makeText(this, "Course created successfully", Toast.LENGTH_SHORT).show();
+            }
             finish();
         }
     }
@@ -294,12 +345,14 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
     }
 
+    private void setToolBarTitles(String title, String subtitle){
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
+    }
+
     private void setToolbarAndNavigation() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Objects.requireNonNull(getSupportActionBar()).setTitle("New Course");
-        Objects.requireNonNull(getSupportActionBar()).setSubtitle("");
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

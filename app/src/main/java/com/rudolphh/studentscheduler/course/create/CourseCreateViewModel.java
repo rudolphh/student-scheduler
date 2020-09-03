@@ -33,6 +33,15 @@ public class CourseCreateViewModel extends AndroidViewModel {
         courseRepository.insert(course);
     }
 
+    public void update(Course course){
+        courseRepository.update(course);
+    }
+
+
+    public LiveData<CourseWithMentorAndAssessments> getCourseById(long id_course){
+        return courseRepository.getCourseById(id_course);
+    }
+
     public LiveData<List<TermWithCourses>> getAllTerms(){
         return termRepository.getAllTerms();
     }

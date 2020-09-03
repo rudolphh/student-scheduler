@@ -58,9 +58,6 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
         holder.textViewEnd.setText(formatter.format(currentTermDetails.term.getEnd()));
 
         int numCourses = currentTermDetails.courses.size();
-//        String courseName = currentTermDetails.courses.get(0).getTitle();
-        Log.i("TermMainActivity", "numCourses = " + numCourses);
-//        Log.i("TermMainActivity", "courseName = " + courseName);
 
         String numberOfCourses =  (numCourses == 1) ? numCourses + " course" : numCourses + " courses";
         holder.textViewNumberCourses.setText(numberOfCourses);

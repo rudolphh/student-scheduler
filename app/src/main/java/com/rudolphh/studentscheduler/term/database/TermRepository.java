@@ -49,6 +49,10 @@ public class TermRepository {
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.deleteAllTerms());
     }
 
+    public LiveData<TermWithCourses> getTermById(long id_term){
+        return termDao.getTermById(id_term);
+    }
+
     public LiveData<List<TermWithCourses>> getAllTerms(){
         return allTerms;
     }

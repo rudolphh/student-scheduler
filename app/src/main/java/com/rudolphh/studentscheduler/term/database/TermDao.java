@@ -32,6 +32,10 @@ public interface TermDao {
     void deleteAllTerms();
 
     @Transaction
+    @Query("SELECT * FROM term_table WHERE :id_term = id_term")
+    LiveData< TermWithCourses> getTermById(long id_term);
+
+    @Transaction
     @Query("SELECT * FROM term_table")
     LiveData< List<TermWithCourses> > getAllTerms();
 
