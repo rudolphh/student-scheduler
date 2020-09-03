@@ -11,13 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rudolphh.studentscheduler.R;
+import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
+import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
 
@@ -47,7 +50,6 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
     public void onBindViewHolder(@NonNull TermHolder holder, int position) {
 
         TermWithCourses currentTermDetails = terms.get(position);
-        Log.i("TermMainActivity", "position = " + position);
 
         holder.textViewTitle.setText(currentTermDetails.term.getTitle());// set title
 
@@ -62,7 +64,8 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
         String numberOfCourses =  (numCourses == 1) ? numCourses + " course" : numCourses + " courses";
         holder.textViewNumberCourses.setText(numberOfCourses);
 
-        holder.termView.setOnClickListener((view -> {
+        // when user clicks on term card to see term details (courses, etc.)
+        holder.termView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putLong("id_term", currentTermDetails.term.getId_term());
             bundle.putString("termTitle", currentTermDetails.term.getTitle());
@@ -72,7 +75,16 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
             intent.putExtras(bundle);
 
             context.startActivity(intent);
-        }));
+        });
+
+        holder.ivEditTermButton.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("id_term", currentTermDetails.term.getId_term());
+
+            Intent intent = new Intent(context, TermCreateActivity.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -97,6 +109,8 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
         private TextView textViewEnd;
         private TextView textViewNumberCourses;
 
+        private ImageView ivEditTermButton;
+
         public TermHolder(@NonNull View itemView) {
             super(itemView);
             termView = itemView;
@@ -105,6 +119,7 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
             textViewStart = itemView.findViewById(R.id.text_view_start);
             textViewEnd = itemView.findViewById(R.id.text_view_end);
             textViewNumberCourses = itemView.findViewById(R.id.text_view_number_courses);
+            ivEditTermButton = itemView.findViewById(R.id.edit_term_button);
         }
     }
 }

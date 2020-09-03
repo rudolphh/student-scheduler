@@ -31,7 +31,7 @@ public class TermMainViewModel extends AndroidViewModel {
 //        termRepository.insert(term);
 //    }
 
-    public void update(Term term){
+    public void update(TermWithCourses term){
         termRepository.update(term);
     }
 

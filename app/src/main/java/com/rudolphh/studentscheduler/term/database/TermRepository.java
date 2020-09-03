@@ -37,8 +37,8 @@ public class TermRepository {
         });
     }
 
-    public void update(Term term){
-        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.update(term));
+    public void update(TermWithCourses termWithCourses){
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.update(termWithCourses.term));
     }
 
     public void delete(Term term){

@@ -3,9 +3,11 @@ package com.rudolphh.studentscheduler.term.create;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -46,6 +48,8 @@ public class TermCreateActivity extends AppCompatActivity {
 
     private SimpleDateFormat dateFormatter;
 
+    private Bundle extras;
+
     ////////////////////////////// onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,7 @@ public class TermCreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_term_create);
 
         setToolbarAndNavigation();
-        setToolBarTitles("New Term", "");
+
 
         // get viewModel instance
         termCreateViewModel = new ViewModelProvider.AndroidViewModelFactory(
@@ -64,6 +68,29 @@ public class TermCreateActivity extends AppCompatActivity {
         findViewsById();
         //setDefaultDates();
         setDateTimeField();
+
+        extras = getIntent().getExtras();
+        long id_term = 0;
+        if(extras != null){
+            id_term = extras.getLong("id_term");
+        }
+
+        // if we have a term id, then we are editing
+        if(id_term > 0){
+
+            termCreateViewModel.getTermById(id_term).observe(this, termDetails -> {
+                String startDate = dateFormatter.format(termDetails.term.getStart());
+                editTextStart.setText(startDate);
+
+                String endDate = dateFormatter.format(termDetails.term.getEnd());
+                editTextEnd.setText(endDate);
+
+                editTextTitle.setText(termDetails.term.getTitle());
+            });
+
+        } else { // else we are creating a new term
+            setToolBarTitles("New Term", "");
+        }
 
     }
 
@@ -158,8 +185,16 @@ public class TermCreateActivity extends AppCompatActivity {
         } else {
             Term newTerm = new Term(termTitle, startDate, endDate);
             List<Course> newTermCourses = new ArrayList<>();
-            termCreateViewModel.insertTermWithCourses(new TermWithCourses(newTerm, newTermCourses));
-            Toast.makeText(this, "Term created successfully", Toast.LENGTH_SHORT).show();
+
+            // if doing an edit, update
+            if(extras != null && extras.getLong("id_term") > 0){
+                newTerm.setId_term(extras.getLong("id_term"));
+                termCreateViewModel.update(new TermWithCourses(newTerm, newTermCourses));
+            } else {// else insert
+                termCreateViewModel.insert(new TermWithCourses(newTerm, newTermCourses));
+                Toast.makeText(this, "Term created successfully", Toast.LENGTH_SHORT).show();
+            }
+
             finish();
         }
     }
