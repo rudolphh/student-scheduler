@@ -58,17 +58,14 @@ public class CourseMainActivity extends AppCompatActivity {
             courseMainViewModel.getAllCourses().observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
                 setToolBarTitles("Courses", "All");
-                // update RecyclerView
-                Toast.makeText(CourseMainActivity.this, "All Courses", Toast.LENGTH_LONG).show();
             });
+
         } else { // OR we view courses for a SPECIFIC TERM
             String finalTermTitle = termTitle;
             courseMainViewModel.getCoursesByTermId(id_term).observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
                 courseMainAdapter.setTermTitle(finalTermTitle);
                 setToolBarTitles(finalTermTitle, "Courses");
-                Toast.makeText(CourseMainActivity.this,
-                        "Courses for "+ finalTermTitle, Toast.LENGTH_LONG).show();
             });
         }
         

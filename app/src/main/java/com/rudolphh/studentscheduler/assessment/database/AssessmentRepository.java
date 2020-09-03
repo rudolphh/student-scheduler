@@ -49,8 +49,8 @@ public class AssessmentRepository {
         return allAssessments;
     }
 
-    public LiveData<Assessment> getAssessmentByCourseId(long courseId) {
-        return assessmentDao.getAssessmentById(courseId);
+    public LiveData<Assessment> getAssessmentById(long id_assessment) {
+        return assessmentDao.getAssessmentById(id_assessment);
     }
 
     public LiveData<List<Assessment>> getAllAssessmentsByCourseId(long courseId) {

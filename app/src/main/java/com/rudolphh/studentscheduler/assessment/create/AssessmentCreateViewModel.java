@@ -30,6 +30,12 @@ public class AssessmentCreateViewModel extends AndroidViewModel {
         assessmentRepository.insert(assessment);
     }
 
+    public void update(Assessment assessment) { assessmentRepository.update(assessment); }
+
+    public LiveData<Assessment> getAssessmentById(long id_assessment){
+        return assessmentRepository.getAssessmentById(id_assessment);
+    }
+
     public LiveData<List<CourseWithMentorAndAssessments>> getAllCourses() {
         return courseRepository.getAllCourses();
     }

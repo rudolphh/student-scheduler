@@ -58,17 +58,14 @@ public class AssessmentMainActivity extends AppCompatActivity {
             assessmentMainViewModel.getAllAssessments().observe(this, assessments -> {
                 assessmentMainAdapter.setAssessments(assessments);
                 setToolBarTitles("All Assessments", "");
-                // update RecyclerView
-                Toast.makeText(AssessmentMainActivity.this, "All Assessments", Toast.LENGTH_LONG).show();
             });
+
         } else { // OR we view courses for a SPECIFIC TERM
             String finalCourseTitle = courseTitle;
             assessmentMainViewModel.getAllAssessmentsByCourseId(courseId).observe(
                     this, assessments -> {
                 assessmentMainAdapter.setAssessments(assessments);
                 setToolBarTitles(finalCourseTitle, "Assessments");
-                Toast.makeText(AssessmentMainActivity.this,
-                        "Assessments for "+ finalCourseTitle, Toast.LENGTH_LONG).show();
             });
         }
 

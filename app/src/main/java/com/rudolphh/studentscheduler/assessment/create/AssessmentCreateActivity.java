@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,6 +52,9 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
     private DatePickerDialog dueDatePickerDialog;
     private SimpleDateFormat dateFormatter;
 
+    private Bundle extras;
+    private long id_course;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,40 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
         /////////// set up course status AND term spinners
         setUpAssessmentTypeSpinner();
         setUpCourseSpinner();
+
+        long id_assessment = 0;
+        extras = getIntent().getExtras();
+
+        if(extras != null){
+            id_assessment = extras.getLong("id_assessment");
+        }
+
+        if(id_assessment > 0){
+
+            assessmentCreateViewModel.getAssessmentById(id_assessment).observe(this, assessment -> {
+
+                setToolbarTitles("Edit Assessment", assessment.getTitle());
+
+                String dueDate = dateFormatter.format(assessment.getDueDate());
+                editTextDueDate.setText(dueDate);
+
+                editTextTitle.setText(assessment.getTitle());
+
+                int assessment_type_position = assessment.getAssessmentType().getCode();
+                spinnerAssessmentType.setSelection(assessment_type_position);
+
+                // if there is a course associated
+                id_course = assessment.getId_fkcourse();
+                Log.i("id_course : ", String.valueOf(id_course));
+                if(id_course > 0) {
+                    spinnerCourse.setSelection((int)id_course);
+                } else spinnerCourse.setSelection(0);
+
+            });
+        } else {
+            setToolbarTitles("New Assessment", "");
+        }
+
     }
 
 
@@ -126,12 +164,26 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
             course_position = 0;
         }
 
-        // for now fk_course is 0 but will change to course_position
-        assessmentCreateViewModel.insert(new Assessment(course_position, assessmentTitle, dueDate, assessmentType));
-        Toast.makeText(this, "Assessment created successfully", Toast.LENGTH_SHORT).show();
+        // if editing, get the assessment id from bundle extras
+        long id_assessment = 0;
+        if(extras != null){
+            id_assessment = extras.getLong("id_assessment");
+        }
+
+        Assessment assessment = new Assessment(course_position, assessmentTitle, dueDate, assessmentType);
+        if(id_assessment > 0){// user is editing
+            assessment.setId_assessment(id_assessment);// set the assessment id
+            assessmentCreateViewModel.update(assessment);
+            Toast.makeText(this, "Assessment edited successfully", Toast.LENGTH_SHORT).show();
+
+        } else {// user is creating
+            assessmentCreateViewModel.insert(assessment);
+            Toast.makeText(this, "Assessment created successfully", Toast.LENGTH_SHORT).show();
+        }
+
         finish();
         
-    }
+    }// end saveAssessment
 
     public void onClick(View view) {
         if(view == editTextDueDate) {
@@ -203,18 +255,22 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
                 course_names.add(courseDetails.course.getTitle());
             }
             course_names.add("NEW COURSE");
+
             if(count.get() == 0){// if first entering
-                if(finalCourseId > 0){
+                if(finalCourseId > 0){// upon entering to create assessment
                     spinner.setSelection((int)finalCourseId);
+                } else if (id_course > 0){// upon entering to edit assessment
+                    spinner.setSelection((int) id_course);
                 } else {
                     spinner.setSelection(0);
                 }
-            } else {
+            } else {// upon coming back from create course
                 spinner.setSelection(course_names.size()-2);
             }
 
+            // if any courses are added, we need to update the spinner
             dataAdapter.notifyDataSetChanged();
-            count.getAndIncrement();
+            count.getAndIncrement();// increase count of entering activity
         });
 
     }
@@ -222,7 +278,7 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        // if "new term" is selected go to term create activity
+        // if "new course" is selected go to course create activity
         if (parent.getId() == R.id.spinner_course) {
             if (position == (parent.getCount() - 1)) {
                 Intent intent = new Intent(this, CourseCreateActivity.class);
@@ -260,12 +316,14 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
         
     }
 
+    private void setToolbarTitles(String title, String subtitle){
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
+    }
+
     private void setToolbarAndNavigation() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Objects.requireNonNull(getSupportActionBar()).setTitle("New Assessment");
-        Objects.requireNonNull(getSupportActionBar()).setSubtitle("");
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

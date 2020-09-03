@@ -9,7 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -94,7 +94,7 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         if(id_course > 0){
 
             courseCreateViewModel.getCourseById(id_course).observe(this, courseDetails -> {
-                setToolBarTitles("Edit Course", courseDetails.course.getTitle());
+                setToolbarTitles("Edit Course", courseDetails.course.getTitle());
 
                 String startDate = dateFormatter.format(courseDetails.course.getStart());
                 editTextStart.setText(startDate);
@@ -117,7 +117,7 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
                 editTextNotes.setText(courseDetails.course.getNotes());
             });
         } else {
-            setToolBarTitles("New Course", "");
+            setToolbarTitles("New Course", "");
         }
     }
 
@@ -188,13 +188,18 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         if(startDate.compareTo(endDate) > 0){
             Toast.makeText(this, "Course cannot end before it starts", Toast.LENGTH_SHORT).show();
         } else {
-            if(extras != null && extras.getLong("id_course") > 0) {
-                Course course = new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus);
-                course.setId_course(extras.getLong("id_course"));
+            long id_course = 0;
+            if(extras != null){
+                id_course = extras.getLong("id_course");
+            }
+
+            Course course = new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus);
+            if(id_course > 0) {
+                course.setId_course(id_course);
                 courseCreateViewModel.update(course);
                 Toast.makeText(this, "Course edited successfully", Toast.LENGTH_SHORT).show();
             } else {
-                courseCreateViewModel.insert(new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus));
+                courseCreateViewModel.insert(course);
                 Toast.makeText(this, "Course created successfully", Toast.LENGTH_SHORT).show();
             }
             finish();
@@ -345,7 +350,7 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
     }
 
-    private void setToolBarTitles(String title, String subtitle){
+    private void setToolbarTitles(String title, String subtitle){
         Objects.requireNonNull(getSupportActionBar()).setTitle(title);
         Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
     }

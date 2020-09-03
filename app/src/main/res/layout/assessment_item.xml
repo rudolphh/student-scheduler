@@ -8,7 +8,7 @@
     android:layout_marginEnd="8dp">
 
     <ImageView
-        android:id="@+id/edit_button"
+        android:id="@+id/edit_assessment_button"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_gravity="end"
@@ -22,7 +22,10 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="111dp"
-        android:padding="8dp">
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="12dp">
 
         <LinearLayout
             android:id="@+id/top_row"

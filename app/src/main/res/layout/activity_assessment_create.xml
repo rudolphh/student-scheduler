@@ -29,7 +29,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="0dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="8dp">
+                android:paddingBottom="18dp">
 
                 <LinearLayout
                     android:id="@+id/due_date"
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_section"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="horizontal">
 
@@ -112,7 +112,7 @@
 
                     <Spinner
                         android:id="@+id/spinner_assessment_type"
-                        android:layout_width="170dp"
+                        android:layout_width="185dp"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"/>
 
@@ -126,7 +126,7 @@
                     android:layout_below="@+id/assessment_section"
                     android:layout_alignEnd="@+id/assessment_section"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="5dp"
+
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="horizontal">
 
@@ -138,7 +138,7 @@
 
                     <Spinner
                         android:id="@+id/spinner_course"
-                        android:layout_width="180dp"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:textAlignment="center" />
 

@@ -1,16 +1,19 @@
 package com.rudolphh.studentscheduler.assessment.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rudolphh.studentscheduler.R;
+import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
 
 import java.text.SimpleDateFormat;
@@ -54,12 +57,21 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         // when user clicks on an individual course cardview
         holder.assessmentView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putLong("assessmentId", currentAssessment.getId_assessment());
+            bundle.putLong("id_assessment", currentAssessment.getId_assessment());
             bundle.putString("assessmentTitle", currentAssessment.getTitle());
 
 //            Intent intent = new Intent(context, AssessmentDetailsActivity.class);
-////            intent.putExtras(bundle);
-////            context.startActivity(intent);
+//            intent.putExtras(bundle);
+//            context.startActivity(intent);
+        });
+
+        holder.ivEditAssessmentButton.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("id_assessment", currentAssessment.getId_assessment());
+
+            Intent intent = new Intent(context, AssessmentCreateActivity.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
 
     }
@@ -78,22 +90,21 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
 
     ///////////////////////// CourseHolder
     static class AssessmentHolder extends RecyclerView.ViewHolder {
+        private View assessmentView;
         private TextView textViewTitle;
         private TextView textViewDue;
-
         private TextView textViewAssessmentType;
-
-        private View assessmentView;
+        private ImageView ivEditAssessmentButton;
 
         public AssessmentHolder(@NonNull View itemView) {
             super(itemView);
 
             assessmentView = itemView;
-
             textViewTitle = itemView.findViewById(R.id.text_view_assessment_title);
             textViewDue = itemView.findViewById(R.id.text_view_assessment_due);
-
             textViewAssessmentType = itemView.findViewById(R.id.text_view_assessment_type);
+            ivEditAssessmentButton = itemView.findViewById(R.id.edit_assessment_button);
+
         }
     }
 }
