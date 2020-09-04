@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.mentor;
+package com.rudolphh.studentscheduler.mentor.database;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;

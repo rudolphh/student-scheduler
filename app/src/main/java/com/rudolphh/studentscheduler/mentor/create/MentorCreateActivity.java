@@ -1,4 +1,4 @@
-package com.rudolphh.studentscheduler.mentor;
+package com.rudolphh.studentscheduler.mentor.create;
 
 import androidx.appcompat.app.AppCompatActivity;
 

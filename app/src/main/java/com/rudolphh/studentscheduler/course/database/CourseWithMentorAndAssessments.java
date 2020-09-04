@@ -4,7 +4,7 @@ import androidx.room.Embedded;
 import androidx.room.Relation;
 
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
-import com.rudolphh.studentscheduler.mentor.Mentor;
+import com.rudolphh.studentscheduler.mentor.database.Mentor;
 
 import java.util.List;
 

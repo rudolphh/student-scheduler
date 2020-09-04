@@ -8,8 +8,8 @@ import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.assessment.database.AssessmentDao;
 import com.rudolphh.studentscheduler.course.database.CourseDao;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
-import com.rudolphh.studentscheduler.mentor.Mentor;
-import com.rudolphh.studentscheduler.mentor.MentorDao;
+import com.rudolphh.studentscheduler.mentor.database.Mentor;
+import com.rudolphh.studentscheduler.mentor.database.MentorDao;
 
 import com.rudolphh.studentscheduler.term.database.TermRepository;
 
