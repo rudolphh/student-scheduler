@@ -50,23 +50,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         // set up viewModel with liveData
         long id_course = 0;
-        String termTitle = "";
         Bundle extras = getIntent().getExtras();
 
         if(extras != null){
             id_course = extras.getLong("id_course");
-            termTitle = extras.getString("termTitle");
         }
 
-        String finalTermTitle = termTitle;
         courseDetailsViewModel.getCourseById(id_course).observe(this, courseDetails -> {
 
-            if(finalTermTitle == null || finalTermTitle.isEmpty()){
-                setToolBarTitles(courseDetails.course.getTitle(), "Course Details");
-            } else {
-                setToolBarTitles(courseDetails.course.getTitle(), finalTermTitle);
-            }
-            // TODO : set up the field data within textviews etc.
+            setToolBarTitles(courseDetails.course.getTitle(), "Course Details");
 
             String startDate = dateFormatter.format(courseDetails.course.getStart());
             tvCourseStartDate.setText(startDate);

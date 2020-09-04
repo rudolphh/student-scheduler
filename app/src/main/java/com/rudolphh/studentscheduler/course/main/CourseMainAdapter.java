@@ -82,7 +82,6 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         holder.courseView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putLong("id_course", currentCourseDetails.course.getId_course());
-            bundle.putString("termTitle", termTitle);
 
             Intent intent = new Intent(context, CourseDetailsActivity.class);
             intent.putExtras(bundle);
