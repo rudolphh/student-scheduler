@@ -153,24 +153,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.fabMain:
-                Log.i(TAG, "onClick: fab main");
                 break;
             case R.id.fabTerm:
-                Log.i(TAG, "onClick: fab term");
                 openCreateTerm();
                 break;
             case R.id.fabCourse:
-                Log.i(TAG, "onClick: fab course");
                 openCreateCourse();
                 break;
             case R.id.fabAssessment:
-                Log.i(TAG, "onClick: fab assessment");
                 openCreateAssessment();
                 break;
-//            case R.id.fabMentor:
-//                Log.i(TAG, "onClick: fab mentor");
-//                openCreateMentor();
-//                break;
         }
         toggleMenuOpenClose();
     }

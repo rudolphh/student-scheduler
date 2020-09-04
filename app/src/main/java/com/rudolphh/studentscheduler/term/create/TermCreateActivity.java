@@ -79,13 +79,16 @@ public class TermCreateActivity extends AppCompatActivity {
         if(id_term > 0){
 
             termCreateViewModel.getTermById(id_term).observe(this, termDetails -> {
+
+                String termTitle = termDetails.term.getTitle();
+                setToolBarTitles("Edit Term", termTitle);
+                editTextTitle.setText(termTitle);
+
                 String startDate = dateFormatter.format(termDetails.term.getStart());
                 editTextStart.setText(startDate);
 
                 String endDate = dateFormatter.format(termDetails.term.getEnd());
                 editTextEnd.setText(endDate);
-
-                editTextTitle.setText(termDetails.term.getTitle());
             });
 
         } else { // else we are creating a new term

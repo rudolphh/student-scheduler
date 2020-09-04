@@ -29,4 +29,10 @@ public interface MentorDao {
     @Query("SELECT * FROM mentor_table ORDER BY name ASC")
     LiveData<List<Mentor>> getAllMentors();
 
+    @Query("SELECT * FROM mentor_table WHERE id_mentor = :id_mentor")
+    LiveData<Mentor> getMentorById(long id_mentor);
+
+    @Query("SELECT * FROM mentor_table WHERE id_fkcourse = :id_course")
+    LiveData<Mentor> getMentorByCourseId(long id_course);
+
 }
