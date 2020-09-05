@@ -40,5 +40,8 @@
     <string name="label_due_date">"Due Date : "</string>
     <string name="label_assessment_type">"Type : "</string>
     <string name="label_spinner_course">"Course : "</string>
+    <string name="label_mentor_name">"Mentor Name : "</string>
+    <string name="label_mentor_phone">"Phone : "</string>
+    <string name="label_mentor_email">"Email : "</string>
 
 </resources>
