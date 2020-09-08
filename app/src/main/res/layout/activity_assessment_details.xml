@@ -163,7 +163,7 @@
             android:textColor="@android:color/white"/>
 
             <ImageView
-                android:id="@+id/notes_share_button"
+                android:id="@+id/iv_notes_share"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_alignParentEnd="true"

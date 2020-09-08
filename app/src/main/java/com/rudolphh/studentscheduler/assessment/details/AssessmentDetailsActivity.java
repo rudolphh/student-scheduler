@@ -9,10 +9,12 @@ import android.media.Image;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
+import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.details.CourseDetailsViewModel;
 
 import java.text.SimpleDateFormat;
@@ -77,11 +79,33 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
             });
 
             // get course notes
-            assessmentDetailsViewModel.getCourseById(assessment.getId_fkcourse()).observe(this,
-                    courseWithMentorAndAssessments ->
-                            tvCourseNotes.setText(courseWithMentorAndAssessments.course.getNotes()));
-        });
+            assessmentDetailsViewModel.getCourseById(assessment.getId_fkcourse()).observe(this, courseWithMentorAndAssessments -> {
 
+                Course course = courseWithMentorAndAssessments.course;
+                String course_notes = course.getNotes();
+                tvCourseNotes.setText(course_notes);
+
+
+                // when user clicks on share course notes button
+                ivShareButton.setOnClickListener(view -> {
+
+                    if(course_notes.isEmpty()){
+                        Toast.makeText(this, "No notes to share", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, course.getTitle() + " Course Notes" );
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, course_notes);
+                        sendIntent.setType("text/plain");
+
+                        Intent shareIntent = Intent.createChooser(sendIntent, null);
+                        startActivity(shareIntent);
+                    }
+
+                });// end share clickListener
+
+            });// end observe
+        });
 
     }// end onCreate
 
@@ -93,6 +117,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         tvCourseNotes = findViewById(R.id.tv_course_notes);
 
         ivEditAssessmentButton = findViewById(R.id.iv_edit_assessment);
+        ivShareButton = findViewById(R.id.iv_notes_share);
     }
 
     /////////////////////// Navigation support
