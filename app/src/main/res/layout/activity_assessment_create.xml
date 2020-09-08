@@ -30,7 +30,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="0dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="18dp">
+                android:paddingBottom="8dp">
 
                 <LinearLayout
                     android:id="@+id/due_date"

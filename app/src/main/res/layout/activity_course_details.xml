@@ -43,7 +43,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="28dp">
+                android:paddingBottom="8dp">
 
                 <LinearLayout
                     android:id="@+id/start_date"
@@ -214,7 +214,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="18dp">
+                android:paddingBottom="8dp">
 
                 <LinearLayout
                     android:id="@+id/mentor_name_section"
@@ -314,8 +314,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="28dp"
-                android:layout_marginTop="15dp">
+                android:paddingBottom="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
