@@ -160,6 +160,7 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/course_item"
             android:layout_below="@id/courses_label"/>
+
     </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

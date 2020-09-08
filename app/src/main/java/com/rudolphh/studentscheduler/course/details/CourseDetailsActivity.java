@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rudolphh.studentscheduler.R;
+import com.rudolphh.studentscheduler.assessment.main.AssessmentMainAdapter;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 
@@ -48,6 +51,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_details);
 
         setToolbarAndNavigation();
+
+        // set up recyclerView
+        RecyclerView recyclerView = findViewById(R.id.assessment_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+
+        // set up adapter
+        AssessmentMainAdapter assessmentMainAdapter = new AssessmentMainAdapter();
+        recyclerView.setAdapter(assessmentMainAdapter);
 
         courseDetailsViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseDetailsViewModel.class);
@@ -97,6 +109,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
             // set course notes
             tvCourseNotes.setText(courseDetails.course.getNotes());
+
+            assessmentMainAdapter.setAssessments(courseDetails.assessments);
 
         });
 

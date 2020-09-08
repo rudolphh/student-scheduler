@@ -44,6 +44,5 @@
     <string name="label_mentor_name">"Mentor Name : "</string>
     <string name="label_mentor_phone">"Phone : "</string>
     <string name="label_mentor_email">"Email : "</string>
-    <string name="label_spinner_mentor">"Mentor : "</string>
 
 </resources>
