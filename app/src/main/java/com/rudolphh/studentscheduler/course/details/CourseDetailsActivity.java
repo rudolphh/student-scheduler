@@ -24,11 +24,19 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
     private CourseDetailsViewModel courseDetailsViewModel;
 
+    // UI for main course details
     private TextView tvCourseStartDate;
     private TextView tvCourseEndDate;
     private TextView tvCourseTitle;
     private TextView tvCourseStatus;
     private TextView tvTermTitle;
+
+    // UI for mentor details
+    private TextView tvMentorName;
+    private TextView tvMentorPhone;
+    private TextView tvMentorEmail;
+
+    // UI for course notes
     private TextView tvCourseNotes;
 
     private SimpleDateFormat dateFormatter;
@@ -58,30 +66,36 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         courseDetailsViewModel.getCourseById(id_course).observe(this, courseDetails -> {
 
-            setToolBarTitles(courseDetails.course.getTitle(), "Course Details");
+            // set toolbar title
+            setToolBarTitles(courseDetails.course.getTitle());
 
+            // set start and end dates
             String startDate = dateFormatter.format(courseDetails.course.getStart());
             tvCourseStartDate.setText(startDate);
-
             String endDate = dateFormatter.format(courseDetails.course.getAnticipatedEnd());
             tvCourseEndDate.setText(endDate);
 
+            // set course title
             tvCourseTitle.setText(courseDetails.course.getTitle());
 
+            // set course status
             String courseStatus = StatusConverter.fromCourseStatus(courseDetails.course.getCourseStatus());
             tvCourseStatus.setText(courseStatus);
 
             // if there is a term associated
-            if(courseDetails.course.getId_fkterm() > 0) {
-                courseDetailsViewModel.getTermById(courseDetails.course.getId_fkterm()).observe(
-                        this, termWithCourses -> {
-                            tvTermTitle.setText(termWithCourses.term.getTitle());
-                            assert extras != null;
-                            extras.putLong("id_term", termWithCourses.term.getId_term());
-                        });
+            long id_term = courseDetails.course.getId_fkterm();
+            if(id_term > 0) {
+                courseDetailsViewModel.getTermById(id_term).observe(this,
+                        termWithCourses -> tvTermTitle.setText(termWithCourses.term.getTitle()));
+
             } else tvTermTitle.setText("none");
 
+            // set mentor fields
+            tvMentorName.setText(courseDetails.mentor.getName());
+            tvMentorPhone.setText(courseDetails.mentor.getPhone());
+            tvMentorEmail.setText(courseDetails.mentor.getEmail());
 
+            // set course notes
             tvCourseNotes.setText(courseDetails.course.getNotes());
 
         });
@@ -104,6 +118,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
         tvCourseTitle = findViewById(R.id.tv_course_title);
         tvCourseStatus = findViewById(R.id.tv_course_status);
         tvTermTitle = findViewById(R.id.tv_term);
+
+        tvMentorName = findViewById(R.id.tv_mentor_name);
+        tvMentorPhone = findViewById(R.id.tv_mentor_phone);
+        tvMentorEmail = findViewById(R.id.tv_mentor_email);
+
         tvCourseNotes = findViewById(R.id.tv_course_notes);
     }
 
@@ -117,9 +136,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
     ////////////////// PRIVATE HELPERS
 
-    private void setToolBarTitles (String title, String subtitle){
+    private void setToolBarTitles(String title){
         Objects.requireNonNull(getSupportActionBar()).setTitle(title);
-        Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle("Course Details");
     }
 
     private void setToolbarAndNavigation(){

@@ -8,7 +8,6 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.mentor.database.Mentor;
 
 import java.util.List;
@@ -17,10 +16,7 @@ import java.util.List;
 public interface CourseDao {
 
     @Insert
-    void insert(Course course);
-
-    @Insert
-    void insertMentorWithAssessments(Mentor mentor, List<Assessment> assessments);
+    long insert(Course course);
 
     @Update
     void update(Course course);

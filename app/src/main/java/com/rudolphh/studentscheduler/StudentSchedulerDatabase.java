@@ -60,6 +60,7 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
 
             TermDao termDao = instance.termDao();
             CourseDao courseDao = instance.courseDao();
+            MentorDao mentorDao = instance.mentorDao();
             AssessmentDao assessmentDao = instance.assessmentDao();
 
             databaseWriteExecutor.execute(()-> {
@@ -76,19 +77,24 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
                                 new GregorianCalendar(2021, Calendar.MAY, 31).getTime()));
 
                 // Sample course Data
-                courseDao.insert(
+                long id_course = courseDao.insert(
                         new Course(1, "C196",
                                 new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
                                 new GregorianCalendar(2020, Calendar.AUGUST, 31).getTime(),
                                 "",
                                 CourseStatus.IN_PROGRESS));
 
-                courseDao.insert(
+                mentorDao.insert(new Mentor(id_course, "Rudy", "2093229787", "rudy@gmail.com"));
+
+                id_course = courseDao.insert(
                         new Course(1, "C191",
                                 new GregorianCalendar(2020, Calendar.JULY, 3).getTime(),
                                 new GregorianCalendar(2020, Calendar.AUGUST, 7).getTime(),
                                 "",
                                 CourseStatus.COMPLETED));
+
+                mentorDao.insert(new Mentor(id_course, "Noah", "2093223333", "noah@gmail.com"));
+
 
                 // Sample assessment Data
                 assessmentDao.insert(
@@ -104,3 +110,7 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
     };
 
 }
+
+/*
+
+ */

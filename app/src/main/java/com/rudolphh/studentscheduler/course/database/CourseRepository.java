@@ -5,12 +5,15 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.rudolphh.studentscheduler.StudentSchedulerDatabase;
+import com.rudolphh.studentscheduler.mentor.database.Mentor;
+import com.rudolphh.studentscheduler.mentor.database.MentorDao;
 
 import java.util.List;
 
 public class CourseRepository {
 
     private CourseDao courseDao;
+    private MentorDao mentorDao;
     private LiveData<List<CourseWithMentorAndAssessments>> allCourses;
 
     public CourseRepository(Application application){
@@ -19,6 +22,7 @@ public class CourseRepository {
 
         // initialize LiveData
         courseDao = database.courseDao();
+        mentorDao = database.mentorDao();
         allCourses = courseDao.getAllCourses();
 
     }// end constructor
@@ -28,8 +32,12 @@ public class CourseRepository {
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.insert(course));
     }
 
-    public void insert(CourseWithMentorAndAssessments course){
-        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.insertMentorWithAssessments(course.mentor, course.assessments));
+    public void insertWithMentor(Course course, Mentor mentor){
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> {
+            long id_course = courseDao.insert(course);
+            mentor.setId_fkcourse(id_course);
+            mentorDao.insert(mentor);
+        });
     }
 
     /////////////////// update

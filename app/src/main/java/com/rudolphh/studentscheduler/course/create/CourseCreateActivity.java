@@ -3,6 +3,7 @@ package com.rudolphh.studentscheduler.course.create;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
@@ -25,6 +26,7 @@ import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.database.CourseStatus;
+import com.rudolphh.studentscheduler.mentor.database.Mentor;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
@@ -47,16 +49,22 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
     private EditText editTextStart;
     private EditText editTextEnd;
 
+    private EditText etMentorName;
+    private EditText etMentorPhone;
+    private EditText etMentorEmail;
+
     private EditText editTextNotes;
     private Spinner spinnerCourseStatus;
     private Spinner spinnerTerm;
 
+    /////////////
     private DatePickerDialog startDatePickerDialog;
     private DatePickerDialog endDatePickerDialog;
 
     private SimpleDateFormat dateFormatter;
 
-    private Bundle extras;
+    private long id_course = 0;
+    private long id_mentor = 0;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,25 +91,26 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         // check if the user is creating or editing
 
         // set up viewModel with liveData
-        long id_course = 0;
 
-        extras = getIntent().getExtras();
-
+        Bundle extras = getIntent().getExtras();
         if(extras != null){
             id_course = extras.getLong("id_course");
         }
 
-        if(id_course > 0){
+        if(id_course > 0){// pre-populate fields for an edit
 
+            // set all fields for the course
             courseCreateViewModel.getCourseById(id_course).observe(this, courseDetails -> {
+                // set the toolbar title
                 setToolbarTitles("Edit Course", courseDetails.course.getTitle());
 
+                // set the start and end dates
                 String startDate = dateFormatter.format(courseDetails.course.getStart());
                 editTextStart.setText(startDate);
-
                 String endDate = dateFormatter.format(courseDetails.course.getAnticipatedEnd());
                 editTextEnd.setText(endDate);
 
+                // set the title
                 editTextTitle.setText(courseDetails.course.getTitle());
 
                 int courseStatus_position = courseDetails.course.getCourseStatus().getCode();
@@ -110,17 +119,22 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
                 // if there is a term associated
                 long id_term = courseDetails.course.getId_fkterm();
                 if(id_term > 0) {
-                    spinnerTerm.setSelection((int)id_term);
+                    spinnerTerm.setSelection((int)id_term);// set spinner to the term
                 } else spinnerTerm.setSelection(0);
 
+                // set mentor details
+                id_mentor = courseDetails.mentor.getId_mentor();
+                etMentorName.setText(courseDetails.mentor.getName());
+                etMentorPhone.setText(courseDetails.mentor.getPhone());
+                etMentorEmail.setText(courseDetails.mentor.getEmail());
 
+                // set course notes
                 editTextNotes.setText(courseDetails.course.getNotes());
             });
-        } else {
+        } else {// otherwise leave the fields blank
             setToolbarTitles("New Course", "");
         }
     }
-
 
     /////////////////////////////// Menu
     @Override
@@ -156,6 +170,8 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
+
+    /////////////// Save
     private void saveCourse() throws ParseException {
 
         String courseTitle = editTextTitle.getText().toString();
@@ -164,11 +180,13 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         String notes = editTextNotes.getText().toString();
 
+        // course title validate
         if(courseTitle.isEmpty()){
             Toast.makeText(this, "Course must have a title", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // course status validate
         int status_position = spinnerCourseStatus.getSelectedItemPosition();
         CourseStatus courseStatus;
         if(status_position != 0){
@@ -178,34 +196,41 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
             return;
         }
 
+        // term spinner position validation
         int term_position = spinnerTerm.getSelectedItemPosition();
         if(term_position == spinnerTerm.getCount()-1){
             term_position = 0;
         }
 
-        // if startDate is after endDate
+
+        // start date greater than end date validation
         assert startDate != null;
         if(startDate.compareTo(endDate) > 0){
             Toast.makeText(this, "Course cannot end before it starts", Toast.LENGTH_SHORT).show();
         } else {
-            long id_course = 0;
-            if(extras != null){
-                id_course = extras.getLong("id_course");
-            }
 
+            // everything is valid, set course values
             Course course = new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus);
+            Mentor mentor = new Mentor(id_course, etMentorName.getText().toString(),
+                    etMentorPhone.getText().toString(), etMentorEmail.getText().toString());
+            // if user is editing
             if(id_course > 0) {
-                course.setId_course(id_course);
+                mentor.setId_mentor(id_mentor);// set its primary key
+                courseCreateViewModel.update(mentor);
+                course.setId_course(id_course);// set its primary key
                 courseCreateViewModel.update(course);
                 Toast.makeText(this, "Course edited successfully", Toast.LENGTH_SHORT).show();
-            } else {
-                courseCreateViewModel.insert(course);
+
+            } else {// create a new course and mentor - every id_course has matching id_mentor
+                courseCreateViewModel.insertWithMentor(course, mentor);
                 Toast.makeText(this, "Course created successfully", Toast.LENGTH_SHORT).show();
             }
             finish();
         }
-    }
+    }// end saveCourse
 
+
+    ////////// Date pickers onClick handler
     public void onClick(View view) {
         if(view == editTextStart) {
             startDatePickerDialog.show();
@@ -241,7 +266,9 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-    }
+
+    }// end setUpStatusSpinner
+
 
     private void setUpTermSpinner(){
         // Spinner element
@@ -266,14 +293,7 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         // set the names
 
         AtomicInteger count = new AtomicInteger(0);
-        Bundle extras = getIntent().getExtras();
-        long termId = 0;
 
-        if(extras != null){
-            termId = extras.getLong("id_term");
-        }
-
-        long finalTermId = termId;
         courseCreateViewModel.getAllTerms().observe(this, termWithCourses -> {
             term_names.clear();
             term_names.add("Select Term");
@@ -282,12 +302,8 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
             }
             term_names.add("NEW TERM");
             if(count.get() == 0){// if first entering
-                if(finalTermId > 0){
-                    spinner.setSelection((int)finalTermId);
-                } else {
-                    spinner.setSelection(0);
-                }
-            } else {
+                spinner.setSelection(0);// set to start of spinner for setup
+            } else { // else now select the created item
                 spinner.setSelection(term_names.size()-2);
             }
 
@@ -295,8 +311,10 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
             count.getAndIncrement();
         });
 
-    }
+    }// end setUpTermSpinner
 
+
+    ///////////////////////////////
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -307,8 +325,8 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
                 startActivity(intent);
             }
         }
-
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
@@ -317,19 +335,32 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
     ////////////////// PRIVATE HELPERS
 
     private void findViewsById() {
-        editTextTitle = findViewById(R.id.edit_text_title);
 
+        // start date
         editTextStart = findViewById(R.id.edit_text_start);
         editTextStart.setInputType(InputType.TYPE_NULL);
         editTextStart.requestFocus();
 
+        // end date
         editTextEnd = findViewById(R.id.edit_text_end);
         editTextEnd.setInputType(InputType.TYPE_NULL);
 
-        editTextNotes = findViewById(R.id.edit_text_notes);
+        // title
+        editTextTitle = findViewById(R.id.edit_text_title);
 
+        // course status and term spinners
         spinnerCourseStatus = findViewById(R.id.spinner_course_status);
         spinnerTerm = findViewById(R.id.spinner_term);
+
+        // mentor name, phone, email
+        etMentorName = findViewById(R.id.et_mentor_name);
+        etMentorPhone = findViewById(R.id.et_mentor_phone);
+        etMentorEmail = findViewById(R.id.et_mentor_email);
+
+        // course notes
+        editTextNotes = findViewById(R.id.edit_text_notes);
+
+
     }
 
     private void setDateTimeField() {
