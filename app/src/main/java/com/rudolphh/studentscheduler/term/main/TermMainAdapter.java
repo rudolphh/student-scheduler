@@ -22,6 +22,8 @@ import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
+import com.rudolphh.studentscheduler.term.details.TermDetailsActivity;
+import com.rudolphh.studentscheduler.term.details.TermDetailsViewModel;
 
 
 import java.text.SimpleDateFormat;
@@ -71,7 +73,7 @@ public class TermMainAdapter extends RecyclerView.Adapter<TermMainAdapter.TermHo
             bundle.putString("termTitle", currentTermDetails.term.getTitle());
 
             // take us to CourseMain
-            Intent intent = new Intent(context, CourseMainActivity.class);
+            Intent intent = new Intent(context, TermDetailsActivity.class);
             intent.putExtras(bundle);
 
             context.startActivity(intent);

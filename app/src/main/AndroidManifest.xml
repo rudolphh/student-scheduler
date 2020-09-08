@@ -12,17 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         app:contentInsetStartWithNavigation="20dp">
-        <activity android:name=".course.details.CourseDetailsActivity"
+        <activity
+        android:name=".term.details.TermDetailsActivity"
+        android:label="Term Details Activity"
+        android:parentActivityName=".term.main.TermMainActivity" />
+        <activity
+            android:name=".course.details.CourseDetailsActivity"
             android:label="Course Details Activity"
-            android:parentActivityName=".course.main.CourseMainActivity"/>
-        <activity android:name=".mentor.create.MentorCreateActivity" />
+            android:parentActivityName=".course.main.CourseMainActivity" />
         <activity android:name=".assessment.create.AssessmentCreateActivity" />
         <activity android:name=".course.create.CourseCreateActivity" />
         <activity android:name=".term.create.TermCreateActivity" />
-        <activity
-            android:name=".mentor.details.MentorDetailsActivity"
-            android:label="Mentor Main Activity"
-            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".assessment.main.AssessmentMainActivity"
             android:label="Assessment Main Activity"

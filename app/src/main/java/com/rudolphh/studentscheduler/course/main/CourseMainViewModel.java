@@ -14,30 +14,30 @@ import java.util.List;
 
 public class CourseMainViewModel extends AndroidViewModel {
 
-    private CourseRepository CourseRepository;
+    private CourseRepository courseRepository;
     private LiveData<List<CourseWithMentorAndAssessments>> allCourses;
 
     public CourseMainViewModel(@NonNull Application application) {
         super(application);
-        CourseRepository = new CourseRepository(application);
+        courseRepository = new CourseRepository(application);
 
-        allCourses = CourseRepository.getAllCourses();
+        allCourses = courseRepository.getAllCourses();
     }
 
     public void insert(Course Course) {
-        CourseRepository.insert(Course);
+        courseRepository.insert(Course);
     }
 
     public void update(Course Course) {
-        CourseRepository.update(Course);
+        courseRepository.update(Course);
     }
 
     public void delete(Course Course) {
-        CourseRepository.delete(Course);
+        courseRepository.delete(Course);
     }
 
     public void deleteAllCourses() {
-        CourseRepository.deleteAllCourses();
+        courseRepository.deleteAllCourses();
     }
 
     public LiveData<List<CourseWithMentorAndAssessments>> getAllCourses() {
@@ -45,7 +45,7 @@ public class CourseMainViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<CourseWithMentorAndAssessments>> getCoursesByTermId(long termId){
-        return CourseRepository.getCoursesByTermId(termId);
+        return courseRepository.getCoursesByTermId(termId);
     }
 
 }
