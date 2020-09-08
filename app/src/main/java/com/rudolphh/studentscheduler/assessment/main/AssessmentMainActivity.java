@@ -53,14 +53,14 @@ public class AssessmentMainActivity extends AppCompatActivity {
             courseTitle = extras.getString("courseTitle");
         }
 
-        // Either we view ALL COURSES
+        // Either we view ALL ASSESSMENTS
         if(courseId == 0) {
             assessmentMainViewModel.getAllAssessments().observe(this, assessments -> {
                 assessmentMainAdapter.setAssessments(assessments);
                 setToolBarTitles("All Assessments", "");
             });
 
-        } else { // OR we view courses for a SPECIFIC TERM
+        } else { // OR we view assessments for a SPECIFIC COURSE
             String finalCourseTitle = courseTitle;
             assessmentMainViewModel.getAllAssessmentsByCourseId(courseId).observe(
                     this, assessments -> {

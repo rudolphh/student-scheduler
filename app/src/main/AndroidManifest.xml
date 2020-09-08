@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         app:contentInsetStartWithNavigation="20dp">
+        <activity android:name=".assessment.details.AssessmentDetailsActivity"
+            android:label="Assessment Details Activity"
+            android:parentActivityName=".assessment.details.AssessmentDetailsActivity" />
         <activity
-        android:name=".term.details.TermDetailsActivity"
-        android:label="Term Details Activity"
-        android:parentActivityName=".term.main.TermMainActivity" />
+            android:name=".term.details.TermDetailsActivity"
+            android:label="Term Details Activity"
+            android:parentActivityName=".term.main.TermMainActivity" />
         <activity
             android:name=".course.details.CourseDetailsActivity"
             android:label="Course Details Activity"

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
+import com.rudolphh.studentscheduler.assessment.details.AssessmentDetailsActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
 
         holder.textViewTitle.setText(currentAssessment.getTitle());// set title
 
-        // format text and set start and end Date textView
+        // format text and set due date
         SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy", Locale.US);
 
         holder.textViewDue.setText(formatter.format(currentAssessment.getDueDate()));
@@ -58,11 +59,10 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         holder.assessmentView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putLong("id_assessment", currentAssessment.getId_assessment());
-            bundle.putString("assessmentTitle", currentAssessment.getTitle());
 
-//            Intent intent = new Intent(context, AssessmentDetailsActivity.class);
-//            intent.putExtras(bundle);
-//            context.startActivity(intent);
+            Intent intent = new Intent(context, AssessmentDetailsActivity.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
 
         holder.ivEditAssessmentButton.setOnClickListener(view -> {

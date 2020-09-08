@@ -74,7 +74,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         termDetailsViewModel.getTermById(id_term).observe(this, termWithCourses -> {
             Term term = termWithCourses.term;
-            setToolBarTitles("Term Details", "");
+            setToolBarTitles(term.getTitle(), "Term Details");
 
             tvTitle.setText(term.getTitle());// set title
 

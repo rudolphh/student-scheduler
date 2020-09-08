@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".course.create.CourseCreateActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorNeutralLightGray">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/top_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp">
+
+            <ImageView
+                android:id="@+id/iv_edit_assessment"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="end"
+                android:contentDescription="@string/edit_button"
+                android:paddingStart="17dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="17dp"
+                android:src="@drawable/ic_twotone_edit_24" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="111dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="12dp">
+
+                <LinearLayout
+                    android:id="@+id/top_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filler_assessment_due"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_assessment_due"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/filler_date"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorSecondary" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/middle_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/bottom_row"
+                    android:layout_below="@id/top_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:contentDescription="@string/main_assessments"
+                        app:srcCompat="@drawable/ic_assessment_24"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_assessment_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="@string/filler_assessment_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottom_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text_view_label_assessment_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:gravity="center_vertical"
+                        android:text="@string/filler_label_assessment_type"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_assessment_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/filler_assessment_type"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorSecondary" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/course_notes_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_cardview">
+
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="0dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:text="@string/course_notes"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+
+            android:background="@color/colorSecondary"
+            android:textColor="@android:color/white"/>
+
+            <ImageView
+                android:id="@+id/notes_share_button"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp"
+                android:contentDescription="@string/share_button"
+                android:paddingStart="10dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="0dp"
+                android:src="@drawable/ic_baseline_share_24"
+                app:tint="@android:color/white" />
+
+        </RelativeLayout>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/notes_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_below="@id/course_notes_label">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="28dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/edit_text_notes"
+                    android:text="@string/label_notes"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_course_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Course Notes"
+                    android:gravity="top"
+                    android:lines="9"
+                    android:maxLines="12"
+                    android:minLines="1"
+                    android:singleLine="false" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

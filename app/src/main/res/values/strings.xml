@@ -44,5 +44,7 @@
     <string name="label_mentor_name">"Mentor Name : "</string>
     <string name="label_mentor_phone">"Phone : "</string>
     <string name="label_mentor_email">"Email : "</string>
+    <string name="course_notes">Course Notes</string>
+    <string name="share_button">Share</string>
 
 </resources>
