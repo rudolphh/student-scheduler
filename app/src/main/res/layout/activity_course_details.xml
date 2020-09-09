@@ -37,6 +37,31 @@
                 android:paddingBottom="17dp"
                 android:src="@drawable/ic_twotone_edit_24" />
 
+            <ImageView
+                android:id="@+id/iv_start_notify"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:contentDescription="@string/start_notify"
+                android:paddingStart="13dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="18dp"
+                android:layout_marginStart="155dp"
+                android:src="@drawable/ic_baseline_access_alarm_24" />
+
+            <ImageView
+                android:id="@+id/iv_end_notify"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:contentDescription="@string/end_notify"
+                android:paddingStart="13dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="18dp"
+                android:layout_marginStart="224dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/ic_baseline_access_alarm_24" />
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,8 +91,7 @@
                         android:focusable="false"
                         android:hint="@string/filler_date"
                         android:textColor="@color/colorSecondary"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -95,8 +119,7 @@
                         android:focusable="false"
                         android:hint="@string/filler_date"
                         android:textColor="@color/colorSecondary"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -186,8 +209,7 @@
                         android:layout_width="@dimen/course_field_width"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
-                        android:textColor="@color/colorSecondary"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorSecondary" />
 
 
                 </LinearLayout>
@@ -237,7 +259,7 @@
                         android:layout_width="@dimen/course_field_width"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textColor="@color/colorSecondary"/>
 
                 </LinearLayout>
 
@@ -263,7 +285,7 @@
                         android:layout_width="@dimen/course_field_width"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorSecondary" />
 
                 </LinearLayout>
 
@@ -289,7 +311,7 @@
                         android:layout_width="@dimen/course_field_width"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textColor="@color/colorSecondary"/>
 
                 </LinearLayout>
 

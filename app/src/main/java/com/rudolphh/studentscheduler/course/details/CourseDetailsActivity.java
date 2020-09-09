@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.rudolphh.studentscheduler.AlertBroadcastReceiver;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainAdapter;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
@@ -22,6 +26,7 @@ import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Objects;
+
 
 public class CourseDetailsActivity extends AppCompatActivity {
 
@@ -41,6 +46,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
     // UI for course notes
     private TextView tvCourseNotes;
+
+    private ImageView ivStartNotify;
+    private ImageView ivEndNotify;
 
     private SimpleDateFormat dateFormatter;
 
@@ -64,7 +72,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         courseDetailsViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseDetailsViewModel.class);
 
-        dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("E MMM dd yyyy", Locale.US);
 
         findViewsById();
 
@@ -76,6 +84,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             id_course = extras.getLong("id_course");
         }
 
+        long finalId_course = id_course;
         courseDetailsViewModel.getCourseById(id_course).observe(this, courseDetails -> {
 
             // set toolbar title
@@ -112,7 +121,50 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
             assessmentMainAdapter.setAssessments(courseDetails.assessments);
 
-        });
+
+            // when user clicks on start date notification icon
+            ivStartNotify.setOnClickListener(view->{
+                Toast.makeText(this, "Course start notification set", Toast.LENGTH_SHORT).show();
+
+                int notificationId = Integer.parseInt( "200" + finalId_course);
+
+                // create intent and set bundle of extras
+                Intent intent = new Intent(this, AlertBroadcastReceiver.class);
+                if(extras != null) {
+                    extras.putInt("notification_id", notificationId);
+                    extras.putString("course_title", courseDetails.course.getTitle());
+                    intent.putExtras(extras);
+                }
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                        notificationId, intent, 0);
+
+                AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, courseDetails.course.getStart().getTime(), pendingIntent);
+            });
+
+            // when user clicks on end date notification icon
+            ivEndNotify.setOnClickListener(view->{
+                Toast.makeText(this, "Course end notification set", Toast.LENGTH_SHORT).show();
+
+                int notificationId = Integer.parseInt( "300" + finalId_course);
+
+                // create intent and set bundle of extras
+                Intent intent = new Intent(this, AlertBroadcastReceiver.class);
+                if(extras != null) {
+                    extras.putInt("notification_id", notificationId);
+                    extras.putString("course_title", courseDetails.course.getTitle());
+                    intent.putExtras(extras);
+                }
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                        notificationId, intent, 0);
+
+                AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, courseDetails.course.getAnticipatedEnd().getTime(), pendingIntent);
+            });
+
+        });// end course observe
 
         // edit button click listener
         ImageView edit_button = findViewById(R.id.edit_button);
@@ -138,6 +190,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
         tvMentorEmail = findViewById(R.id.tv_mentor_email);
 
         tvCourseNotes = findViewById(R.id.tv_course_notes);
+
+        ivStartNotify = findViewById(R.id.iv_start_notify);
+        ivEndNotify = findViewById(R.id.iv_end_notify);
     }
 
 

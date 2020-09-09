@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
@@ -18,10 +17,6 @@ import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import java.util.Objects;
 
 public class CourseMainActivity extends AppCompatActivity {
-
-    private CourseMainViewModel courseMainViewModel;
-    private Toolbar toolbar;
-    private FloatingActionButton fabNewCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +35,7 @@ public class CourseMainActivity extends AppCompatActivity {
         recyclerView.setAdapter(courseMainAdapter);
 
         // get viewModel instance
-        courseMainViewModel = new ViewModelProvider.AndroidViewModelFactory(
+        CourseMainViewModel courseMainViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(CourseMainViewModel.class);
 
         // set up viewModel with liveData
@@ -64,13 +59,12 @@ public class CourseMainActivity extends AppCompatActivity {
             String finalTermTitle = termTitle;
             courseMainViewModel.getCoursesByTermId(id_term).observe(this, courses -> {
                 courseMainAdapter.setCourses(courses);
-                courseMainAdapter.setTermTitle(finalTermTitle);
                 setToolBarTitles(finalTermTitle, "Courses");
             });
         }
         
         //////////// set up fab for going to create course activity
-        fabNewCourse = findViewById(R.id.fab);
+        FloatingActionButton fabNewCourse = findViewById(R.id.fab);
         fabNewCourse.setOnClickListener(view -> {
             Intent intent = new Intent(this, CourseCreateActivity.class);
             if(extras != null){
@@ -99,7 +93,7 @@ public class CourseMainActivity extends AppCompatActivity {
     }
 
     private void setToolbarAndNavigation(){
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

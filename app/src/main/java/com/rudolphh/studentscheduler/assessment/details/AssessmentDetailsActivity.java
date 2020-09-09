@@ -4,18 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.media.Image;
+
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rudolphh.studentscheduler.AlertBroadcastReceiver;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
-import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.course.database.Course;
-import com.rudolphh.studentscheduler.course.details.CourseDetailsViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -27,9 +28,9 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
 
     private TextView tvTitle;
     private TextView tvDueDate;
+    private ImageView ivDueNotify;
     private TextView tvAssessmentType;
     private ImageView ivEditAssessmentButton;
-
     private ImageView ivShareButton;
     private TextView tvCourseNotes;
 
@@ -104,8 +105,30 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
 
                 });// end share clickListener
 
-            });// end observe
-        });
+            });// end course observe
+
+            // when user clicks on due date notification icon
+            ivDueNotify.setOnClickListener(view->{
+                Toast.makeText(this, "Assessment due date notification set", Toast.LENGTH_SHORT).show();
+
+                int notificationId = Integer.parseInt( "100" + assessment.getId_assessment());
+
+                Intent intent = new Intent(this, AlertBroadcastReceiver.class);
+
+                if(extras != null) {
+                    extras.putInt("notification_id", notificationId);
+                    extras.putString("assessment_title", assessment.getTitle());
+                    intent.putExtras(extras);
+                }
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                        Integer.parseInt("100"+assessment.getId_assessment()), intent, 0);
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, assessment.getDueDate().getTime(), pendingIntent);
+            });
+
+        });// end assessment observe
 
     }// end onCreate
 
@@ -113,6 +136,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     private void findViewsById(){
         tvTitle = findViewById(R.id.tv_assessment_title);
         tvDueDate = findViewById(R.id.tv_assessment_due);
+        ivDueNotify = findViewById(R.id.iv_due_notify);
         tvAssessmentType = findViewById(R.id.tv_assessment_type);
         tvCourseNotes = findViewById(R.id.tv_course_notes);
 

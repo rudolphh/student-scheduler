@@ -1,5 +1,7 @@
 package com.rudolphh.studentscheduler.course.main;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rudolphh.studentscheduler.AlertBroadcastReceiver;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
@@ -26,10 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static android.content.Context.ALARM_SERVICE;
+
 public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.CourseHolder> {
 
     private List<CourseWithMentorAndAssessments> coursesDetails = new ArrayList<>();
-    private String termTitle;
     private Context context;
 
     @NonNull
@@ -69,9 +74,11 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         holder.textViewCourseStatus.setText(courseStatus);
 
 
+        long id_course = currentCourseDetails.course.getId_course();
+        Bundle bundle = new Bundle();
+        bundle.putLong("id_course", id_course);
+
         holder.ivEditButton.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putLong("id_course", currentCourseDetails.course.getId_course());
 
             Intent intent = new Intent(context, CourseCreateActivity.class);
             intent.putExtras(bundle);
@@ -80,25 +87,58 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
 
         // when user clicks on an individual course cardview
         holder.courseView.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putLong("id_course", currentCourseDetails.course.getId_course());
 
             Intent intent = new Intent(context, CourseDetailsActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
         });
 
+        bundle.putString("course_title", currentCourseDetails.course.getTitle());
+
         // when user taps on the number of assessments in the course
         holder.textViewNumberAssessments.setOnClickListener((view -> {
-            Bundle bundle = new Bundle();
-            bundle.putLong("id_course", currentCourseDetails.course.getId_course());
-            bundle.putString("courseTitle", currentCourseDetails.course.getTitle());
+
             bundle.putString("courseNotes", currentCourseDetails.course.getNotes());
 
             Intent intent = new Intent(context, AssessmentMainActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
         }));
+
+
+        // when user clicks on start date notification icon
+        holder.ivStartNotify.setOnClickListener(view->{
+            Toast.makeText(context, "Course start notification set", Toast.LENGTH_SHORT).show();
+
+            // create intent and set bundle of extras
+            Intent intent = new Intent(context, AlertBroadcastReceiver.class);
+            int notificationId = Integer.parseInt( "200" + id_course);
+            bundle.putInt("notification_id", notificationId);
+            bundle.putBoolean("course_start", true);
+            intent.putExtras(bundle);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, currentCourseDetails.course.getStart().getTime(), pendingIntent);
+        });
+
+        // when user clicks on end date notification icon
+        holder.ivEndNotify.setOnClickListener(view->{
+            Toast.makeText(context, "Course end notification set", Toast.LENGTH_SHORT).show();
+
+            // create intent and set bundle of extras
+            Intent intent = new Intent(context, AlertBroadcastReceiver.class);
+            int notificationId = Integer.parseInt( "300" + id_course);
+            bundle.putInt("notification_id", notificationId);
+            bundle.putBoolean("course_start", false);
+            intent.putExtras(bundle);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, currentCourseDetails.course.getAnticipatedEnd().getTime(), pendingIntent);
+        });
     }
 
     @Override
@@ -112,15 +152,13 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         // notifyItemInserted(); && notifyItemRemoved();
     }
 
-    public void setTermTitle(String termTitle){
-        this.termTitle = termTitle;
-    }
-
 
     ///////////////////////// CourseHolder
     static class CourseHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivEditButton;
+        private ImageView ivStartNotify;
+        private ImageView ivEndNotify;
 
         private TextView textViewTitle;
         private TextView textViewStart;
@@ -133,6 +171,8 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         public CourseHolder(@NonNull View itemView) {
             super(itemView);
 
+            ivStartNotify = itemView.findViewById(R.id.iv_start_notify);
+            ivEndNotify = itemView.findViewById(R.id.iv_end_notify);
             ivEditButton = itemView.findViewById(R.id.edit_button);
             courseView = itemView;
 

@@ -19,9 +19,34 @@
         android:paddingBottom="17dp"
         android:src="@drawable/ic_twotone_edit_24" />
 
+    <ImageView
+        android:id="@+id/iv_start_notify"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/start_notify"
+        android:paddingStart="13dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="18dp"
+        android:layout_marginStart="155dp"
+        android:src="@drawable/ic_baseline_access_alarm_24" />
+
+    <ImageView
+        android:id="@+id/iv_end_notify"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/end_notify"
+        android:paddingStart="13dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="18dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_baseline_access_alarm_24" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="111dp"
+        android:layout_height="wrap_content"
         android:padding="8dp">
 
         <LinearLayout
@@ -34,15 +59,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/filler_begins"
+                android:text="@string/filler_start"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text_view_course_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:text="@string/filler_date"
                 android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -51,10 +74,38 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/start_date"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="@string/filler_anticipated_end"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_course_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filler_date"
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorSecondary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/title_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/bottom_row"
-            android:layout_below="@id/start_date"
+            android:layout_below="@id/end_date"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -82,7 +133,7 @@
             <TextView
                 android:id="@+id/text_view_number_assessments"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:gravity="center_vertical"
                 android:text="@string/filler_num_assessments"
@@ -96,8 +147,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_below="@id/title_section"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/label_course_status"
@@ -117,26 +170,10 @@
                 android:gravity="center_vertical"
                 android:text="@string/filler_course_status"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorSecondary" />
-
-            <TextView
-                android:id="@+id/text_view_label_course_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filler_ending"
-                android:gravity="end"
+                android:textColor="@color/colorSecondary"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/text_view_course_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="end"
-                android:maxLines="1"
-                android:text="@string/filler_date"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorSecondary" />
+
 
         </LinearLayout>
 

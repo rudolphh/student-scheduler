@@ -4,6 +4,7 @@
     package="com.rudolphh.studentscheduler">
 
     <application
+        android:name=".StudentSchedulerApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +15,7 @@
         app:contentInsetStartWithNavigation="20dp">
         <activity android:name=".assessment.details.AssessmentDetailsActivity"
             android:label="Assessment Details Activity"
-            android:parentActivityName=".assessment.details.AssessmentDetailsActivity" />
+            android:parentActivityName=".assessment.main.AssessmentMainActivity" />
         <activity
             android:name=".term.details.TermDetailsActivity"
             android:label="Term Details Activity"
@@ -45,6 +46,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".AlertBroadcastReceiver"/>
+
     </application>
 
 </manifest>

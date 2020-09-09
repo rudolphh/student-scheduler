@@ -208,10 +208,10 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_list, assessment_types);
+                R.layout.spinner_list_bold, assessment_types);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(R.layout.spinner_list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_list_bold);
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);

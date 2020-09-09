@@ -50,7 +50,7 @@ public class AssessmentMainActivity extends AppCompatActivity {
 
         if(extras != null) {
             courseId = extras.getLong("id_course");
-            courseTitle = extras.getString("courseTitle");
+            courseTitle = extras.getString("course_title");
         }
 
         // Either we view ALL ASSESSMENTS

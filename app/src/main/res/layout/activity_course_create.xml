@@ -221,8 +221,8 @@
                         android:textAlignment="center"
                         android:autofillHints="AUTOFILL_HINT_PERSON_NAME"
                         android:inputType="text"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"/>
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -250,8 +250,8 @@
                         android:textAlignment="center"
                         android:autofillHints="AUTOFILL_HINT_PHONE_NUMBER"
                         android:inputType="phone"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"/>
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -279,8 +279,8 @@
                         android:textAlignment="center"
                         android:autofillHints="AUTOFILL_HINT_EMAIL_ADDRESS"
                         android:inputType="textEmailAddress"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"/>
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -322,7 +322,7 @@
                     android:lines="9"
                     android:maxLines="12"
                     android:minLines="1"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 

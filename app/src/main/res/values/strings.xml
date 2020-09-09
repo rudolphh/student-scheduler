@@ -14,7 +14,8 @@
     <!-- Fillers for hardcorded strings -->
     <string name="filler_begins">Begins :\u0020</string>
     <string name="filler_ending">"Ending :\u0020</string>
-    <string name="filler_date">date</string>
+    <string name="filler_date">08/30/2020</string>
+    <string name="filler_assessment_date">Mon Aug 31 2020</string>
     <string name="filler_title">Title</string>
     <string name="filler_num_courses">0 Courses</string>
     <string name="filler_num_assessments">0 Assessments</string>
@@ -46,5 +47,10 @@
     <string name="label_mentor_email">"Email : "</string>
     <string name="course_notes">Course Notes</string>
     <string name="share_button">Share</string>
+    <string name="channel_name">Date Notifications</string>
+    <string name="channel_description">Notifications of important dates</string>
+    <string name="due_notify">Set Due Date Notification</string>
+    <string name="start_notify">Set Start Date Notification</string>
+    <string name="end_notify">Set End Date Notification</string>
 
 </resources>

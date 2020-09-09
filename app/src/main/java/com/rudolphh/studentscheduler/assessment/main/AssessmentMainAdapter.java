@@ -1,5 +1,7 @@
 package com.rudolphh.studentscheduler.assessment.main;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rudolphh.studentscheduler.AlertBroadcastReceiver;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
@@ -21,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAdapter.AssessmentHolder> {
 
@@ -56,9 +62,11 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         holder.textViewAssessmentType.setText(assessmentType);
 
         // when user clicks on an individual course cardview
+
+        Bundle bundle = new Bundle();
+        bundle.putLong("id_assessment", currentAssessment.getId_assessment());
+
         holder.assessmentView.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putLong("id_assessment", currentAssessment.getId_assessment());
 
             Intent intent = new Intent(context, AssessmentDetailsActivity.class);
             intent.putExtras(bundle);
@@ -66,12 +74,27 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         });
 
         holder.ivEditAssessmentButton.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putLong("id_assessment", currentAssessment.getId_assessment());
 
             Intent intent = new Intent(context, AssessmentCreateActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
+        });
+
+        // when user clicks on due date notification icon
+        holder.ivDueNotify.setOnClickListener(view->{
+            Toast.makeText(context, "Assessment due date notification set", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(context, AlertBroadcastReceiver.class);
+            int notificationId = Integer.parseInt( "100" + currentAssessment.getId_assessment());
+            bundle.putInt("notification_id", notificationId);
+            bundle.putString("assessment_title", currentAssessment.getTitle());
+            intent.putExtras(bundle);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                    notificationId, intent, 0);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, currentAssessment.getDueDate().getTime(), pendingIntent);
         });
 
     }
@@ -96,6 +119,8 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
         private TextView textViewAssessmentType;
         private ImageView ivEditAssessmentButton;
 
+        private ImageView ivDueNotify;
+
         public AssessmentHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -104,7 +129,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
             textViewDue = itemView.findViewById(R.id.text_view_assessment_due);
             textViewAssessmentType = itemView.findViewById(R.id.text_view_assessment_type);
             ivEditAssessmentButton = itemView.findViewById(R.id.edit_assessment_button);
-
+            ivDueNotify = itemView.findViewById(R.id.iv_due_notify);
         }
     }
 }

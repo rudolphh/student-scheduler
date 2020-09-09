@@ -259,10 +259,10 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_list, status_types);
+                R.layout.spinner_list_bold, status_types);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(R.layout.spinner_list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_list_bold);
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
