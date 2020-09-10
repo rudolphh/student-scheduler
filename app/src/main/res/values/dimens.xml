@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="width_of_label">111dp</dimen>
+    <dimen name="width_of_label">66dp</dimen>
     <dimen name="course_field_width">240dp</dimen>
     <dimen name="width_of_label2">66dp</dimen>
 </resources>

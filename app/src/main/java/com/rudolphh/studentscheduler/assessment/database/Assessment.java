@@ -65,8 +65,4 @@ public class Assessment {
         return assessmentType;
     }
 
-    public long getCourseId() {
-        return id_fkcourse;
-    }
-
 }

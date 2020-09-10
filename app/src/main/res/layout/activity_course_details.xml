@@ -162,9 +162,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_section"
-                    android:layout_alignParentStart="true"
                     android:layout_marginTop="12dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView
@@ -189,12 +188,11 @@
 
                 <LinearLayout
                     android:id="@+id/term_section"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/status_section"
-                    android:layout_alignParentStart="true"
                     android:layout_marginTop="15dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView
@@ -220,6 +218,21 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/mentor_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="0dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:text="@string/mentor"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/top_cardview"
+            android:background="@color/colorSecondary"
+            android:textColor="@android:color/white"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/mentor_details"
@@ -228,7 +241,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_below="@id/top_cardview">
+            android:layout_below="@id/mentor_label">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -236,14 +249,14 @@
                 android:paddingStart="8dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="8dp">
+                android:paddingBottom="12dp">
 
                 <LinearLayout
                     android:id="@+id/mentor_name_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView
@@ -269,7 +282,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mentor_name_section"
                     android:layout_marginTop="15dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView
@@ -295,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mentor_phone_section"
                     android:layout_marginTop="15dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView
@@ -320,6 +333,21 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/notes_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="0dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:text="@string/course_notes"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/mentor_details"
+            android:background="@color/colorSecondary"
+            android:textColor="@android:color/white"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/notes_section"
@@ -328,7 +356,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_below="@id/mentor_details">
+            android:layout_below="@id/notes_label">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -336,7 +364,7 @@
                 android:paddingStart="8dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="8dp">
+                android:paddingBottom="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"

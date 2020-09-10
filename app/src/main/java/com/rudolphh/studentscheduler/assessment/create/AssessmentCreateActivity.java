@@ -252,7 +252,7 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
             courses_list.add(new CourseWithMentorAndAssessments(tempCourse, dummy, new ArrayList<>()));
             courses_list.addAll(coursesWithMentorAndAssessments);
 
-            tempCourse.setTitle("NEW COURSE");
+            tempCourse = new Course(0, "NEW COURSE", new Date(), new Date(), "", CourseStatus.COMPLETED);
             courses_list.add(new CourseWithMentorAndAssessments(tempCourse, dummy, new ArrayList<>()));
 
             if(count.get() == 0){// first entering

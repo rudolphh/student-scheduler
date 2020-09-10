@@ -22,8 +22,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.AlertBroadcastReceiver;
 import com.rudolphh.studentscheduler.R;
+import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainAdapter;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
@@ -141,6 +143,15 @@ public class CourseDetailsActivity extends AppCompatActivity  {
             Intent intent = new Intent(this, CourseCreateActivity.class);
             assert extras != null;
             intent.putExtras(extras);
+            startActivity(intent);
+        });
+
+        FloatingActionButton fabNewAssessment = findViewById(R.id.fab);
+        fabNewAssessment.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AssessmentCreateActivity.class);
+            if(extras != null){
+                intent.putExtras(extras);
+            }
             startActivity(intent);
         });
 

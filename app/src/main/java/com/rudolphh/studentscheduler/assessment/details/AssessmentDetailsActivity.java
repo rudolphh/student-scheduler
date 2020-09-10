@@ -83,6 +83,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
             ivEditAssessmentButton.setOnClickListener(view -> {
                 Bundle bundle = new Bundle();
                 bundle.putLong("id_assessment", assessment.getId_assessment());
+                bundle.putLong("id_course", assessment.getId_fkcourse());
 
                 Intent intent = new Intent(this, AssessmentCreateActivity.class);
                 intent.putExtras(bundle);

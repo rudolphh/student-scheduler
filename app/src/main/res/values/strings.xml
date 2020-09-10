@@ -42,7 +42,7 @@
     <string name="label_assessment_type">"Type : "</string>
     <string name="label_spinner_course">"Course : "</string>
 
-    <string name="label_mentor_name">"Mentor Name : "</string>
+    <string name="label_mentor_name">"Name : "</string>
     <string name="label_mentor_phone">"Phone : "</string>
     <string name="label_mentor_email">"Email : "</string>
     <string name="course_notes">Course Notes</string>
@@ -53,5 +53,6 @@
     <string name="start_notify">Set Start Date Notification</string>
     <string name="end_notify">Set End Date Notification</string>
     <string name="delete">Delete</string>
+    <string name="mentor">Course Mentor</string>
 
 </resources>
