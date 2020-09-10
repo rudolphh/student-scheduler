@@ -2,6 +2,7 @@ package com.rudolphh.studentscheduler.term.database;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
@@ -20,5 +21,11 @@ public class TermWithCourses {
     public TermWithCourses(Term term, List<Course> courses){
         this.term = term;
         this.courses = courses;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return term.getTitle();
     }
 }

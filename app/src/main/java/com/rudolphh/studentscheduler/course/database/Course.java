@@ -2,24 +2,26 @@ package com.rudolphh.studentscheduler.course.database;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.rudolphh.studentscheduler.term.database.Term;
 
 import java.util.Date;
 
-import static androidx.room.ForeignKey.CASCADE;
+import static androidx.room.ForeignKey.RESTRICT;
 
-@Entity(tableName = "course_table")
+@Entity(tableName = "course_table",
+        indices = @Index(value = "id_fkterm"),
+        foreignKeys = @ForeignKey
+                (entity = Term.class,
+                        parentColumns = "id_term",
+                        childColumns = "id_fkterm", onDelete = RESTRICT))
 public class Course {
 
     @PrimaryKey(autoGenerate = true)
     private long id_course;
-    
-    @ForeignKey
-            (entity = Term.class,
-            parentColumns = "id_term",
-            childColumns = "id_fkterm", onDelete = CASCADE)
+
     private long id_fkterm;
 
     private String title;
@@ -59,6 +61,8 @@ public class Course {
     public String getTitle() {
         return title;
     }
+
+    public void setTitle(String title){ this.title = title; }
 
     public Date getStart() {
         return start;

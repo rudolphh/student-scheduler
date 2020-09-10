@@ -77,6 +77,7 @@ public class CourseMainAdapter extends RecyclerView.Adapter<CourseMainAdapter.Co
         long id_course = currentCourseDetails.course.getId_course();
         Bundle bundle = new Bundle();
         bundle.putLong("id_course", id_course);
+        bundle.putLong("id_term", currentCourseDetails.course.getId_fkterm());
 
         holder.ivEditButton.setOnClickListener(view -> {
 

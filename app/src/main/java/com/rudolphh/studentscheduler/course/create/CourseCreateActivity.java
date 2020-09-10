@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
@@ -26,8 +27,10 @@ import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.database.CourseStatus;
+import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 import com.rudolphh.studentscheduler.mentor.database.Mentor;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
+import com.rudolphh.studentscheduler.term.database.Term;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
 import java.text.ParseException;
@@ -63,8 +66,13 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
     private SimpleDateFormat dateFormatter;
 
+    private long id_term = 0;
     private long id_course = 0;
     private long id_mentor = 0;
+
+    Bundle extras;
+
+    LiveData<CourseWithMentorAndAssessments> courseLiveData;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,14 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
+
+        extras = getIntent().getExtras();
+        if(extras != null){
+            id_course = extras.getLong("id_course");
+            // if creating a course specifically for a term
+            id_term = extras.getLong("id_term");
+        }
+
         findViewsById();
         //setDefaultDates();
         setDateTimeField();
@@ -92,15 +108,11 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
         // set up viewModel with liveData
 
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            id_course = extras.getLong("id_course");
-        }
-
         if(id_course > 0){// pre-populate fields for an edit
 
             // set all fields for the course
-            courseCreateViewModel.getCourseById(id_course).observe(this, courseDetails -> {
+            courseLiveData = courseCreateViewModel.getCourseById(id_course);
+            courseLiveData.observe(this, courseDetails -> {
                 // set the toolbar title
                 setToolbarTitles("Edit Course", courseDetails.course.getTitle());
 
@@ -115,12 +127,6 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
 
                 int courseStatus_position = courseDetails.course.getCourseStatus().getCode();
                 spinnerCourseStatus.setSelection(courseStatus_position+1);
-
-                // if there is a term associated
-                long id_term = courseDetails.course.getId_fkterm();
-                if(id_term > 0) {
-                    spinnerTerm.setSelection((int)id_term);// set spinner to the term
-                } else spinnerTerm.setSelection(0);
 
                 // set mentor details
                 id_mentor = courseDetails.mentor.getId_mentor();
@@ -170,7 +176,6 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-
     /////////////// Save
     private void saveCourse() throws ParseException {
 
@@ -196,10 +201,17 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
             return;
         }
 
-        // term spinner position validation
+        // set fk_term of the course with the selected terms id
         int term_position = spinnerTerm.getSelectedItemPosition();
-        if(term_position == spinnerTerm.getCount()-1){
-            term_position = 0;
+        long new_id_term;
+        // if no valid term is selected
+        if(term_position == 0 || term_position == spinnerTerm.getCount()-1){
+            Toast.makeText(this, "The course must have a term", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            // else the fk_term will equal the id of the term selected
+            TermWithCourses termWithCourses = (TermWithCourses) spinnerTerm.getSelectedItem();
+            new_id_term = termWithCourses.term.getId_term();
         }
 
 
@@ -210,7 +222,7 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         } else {
 
             // everything is valid, set course values
-            Course course = new Course(term_position, courseTitle, startDate, endDate, notes, courseStatus);
+            Course course = new Course(new_id_term, courseTitle, startDate, endDate, notes, courseStatus);
             Mentor mentor = new Mentor(id_course, etMentorName.getText().toString(),
                     etMentorPhone.getText().toString(), etMentorEmail.getText().toString());
             // if user is editing
@@ -278,11 +290,11 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         spinner.setOnItemSelectedListener(this);
 
         // Spinner Drop down elements
-        List<String> term_names = new ArrayList<>();
+        List<TermWithCourses> terms = new ArrayList<>();
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_list, term_names);
+        ArrayAdapter<TermWithCourses> dataAdapter = new ArrayAdapter<>(this,
+                R.layout.spinner_list, terms);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(R.layout.spinner_list);
@@ -295,16 +307,23 @@ public class CourseCreateActivity extends AppCompatActivity implements AdapterVi
         AtomicInteger count = new AtomicInteger(0);
 
         courseCreateViewModel.getAllTerms().observe(this, termWithCourses -> {
-            term_names.clear();
-            term_names.add("Select Term");
-            for (TermWithCourses termDetails : termWithCourses){
-                term_names.add(termDetails.term.getTitle());
-            }
-            term_names.add("NEW TERM");
-            if(count.get() == 0){// if first entering
-                spinner.setSelection(0);// set to start of spinner for setup
-            } else { // else now select the created item
-                spinner.setSelection(term_names.size()-2);
+            terms.clear();
+            terms.add(new TermWithCourses(new Term("Select Term", new Date(), new Date()), new ArrayList<>()));
+            terms.addAll(termWithCourses);
+            terms.add(new TermWithCourses(new Term("NEW TERM", new Date(), new Date()), new ArrayList<>()));
+            if(count.get() == 0){// first entering
+                if(id_term > 0) {
+
+                    for(int i = 0; i < terms.size(); i++){
+                        if(terms.get(i).term.getId_term() == id_term){
+                            spinnerTerm.setSelection(i);
+                        }
+                    }
+
+                } else spinnerTerm.setSelection(0);// set to start of spinner for setup
+
+            } else { // else data changed, set to added term
+                spinner.setSelection(terms.size()-2);
             }
 
             dataAdapter.notifyDataSetChanged();

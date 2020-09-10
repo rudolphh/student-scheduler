@@ -50,6 +50,10 @@ public class CourseRepository {
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.delete(course));
     }
 
+    public void deleteById(long id_course){
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.deleteById(id_course));
+    }
+
     public void deleteAllCourses(){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> courseDao.deleteAllCourses());
     }

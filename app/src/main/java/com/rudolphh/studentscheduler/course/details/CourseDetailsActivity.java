@@ -1,8 +1,10 @@
 package com.rudolphh.studentscheduler.course.details;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,9 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,13 +27,14 @@ import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.main.AssessmentMainAdapter;
 import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
+import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Objects;
 
 
-public class CourseDetailsActivity extends AppCompatActivity {
+public class CourseDetailsActivity extends AppCompatActivity  {
 
     private CourseDetailsViewModel courseDetailsViewModel;
 
@@ -51,6 +57,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
     private ImageView ivEndNotify;
 
     private SimpleDateFormat dateFormatter;
+
+    private LiveData<CourseWithMentorAndAssessments> courseLiveData;
+    long id_course;
+    Bundle extras;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -77,15 +87,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
         findViewsById();
 
         // set up viewModel with liveData
-        long id_course = 0;
-        Bundle extras = getIntent().getExtras();
+        id_course = 0;
+        extras = getIntent().getExtras();
 
         if(extras != null){
             id_course = extras.getLong("id_course");
         }
 
-        long finalId_course = id_course;
-        courseDetailsViewModel.getCourseById(id_course).observe(this, courseDetails -> {
+        courseLiveData = courseDetailsViewModel.getCourseById(id_course);
+        courseLiveData.observe(this, courseDetails -> {
 
             // set toolbar title
             setToolBarTitles(courseDetails.course.getTitle());
@@ -121,48 +131,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
             assessmentMainAdapter.setAssessments(courseDetails.assessments);
 
-
-            // when user clicks on start date notification icon
-            ivStartNotify.setOnClickListener(view->{
-                Toast.makeText(this, "Course start notification set", Toast.LENGTH_SHORT).show();
-
-                int notificationId = Integer.parseInt( "200" + finalId_course);
-
-                // create intent and set bundle of extras
-                Intent intent = new Intent(this, AlertBroadcastReceiver.class);
-                if(extras != null) {
-                    extras.putInt("notification_id", notificationId);
-                    extras.putString("course_title", courseDetails.course.getTitle());
-                    intent.putExtras(extras);
-                }
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                        notificationId, intent, 0);
-
-                AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, courseDetails.course.getStart().getTime(), pendingIntent);
-            });
-
-            // when user clicks on end date notification icon
-            ivEndNotify.setOnClickListener(view->{
-                Toast.makeText(this, "Course end notification set", Toast.LENGTH_SHORT).show();
-
-                int notificationId = Integer.parseInt( "300" + finalId_course);
-
-                // create intent and set bundle of extras
-                Intent intent = new Intent(this, AlertBroadcastReceiver.class);
-                if(extras != null) {
-                    extras.putInt("notification_id", notificationId);
-                    extras.putString("course_title", courseDetails.course.getTitle());
-                    intent.putExtras(extras);
-                }
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                        notificationId, intent, 0);
-
-                AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, courseDetails.course.getAnticipatedEnd().getTime(), pendingIntent);
-            });
+            setUpStartEndNotificationClickListeners(courseDetails);
 
         });// end course observe
 
@@ -176,6 +145,87 @@ public class CourseDetailsActivity extends AppCompatActivity {
         });
 
     }// end onCreate
+
+    /////////////////////////////// Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.details_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+
+            case android.R.id.home:// case back button
+                finish();
+                return true;
+
+            case R.id.delete_item:
+                deleteCourse();
+                return true;
+
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void deleteCourse() {
+
+        if(courseLiveData.hasObservers()){
+            courseLiveData.removeObservers(this);
+            courseDetailsViewModel.deleteCourseById(id_course);
+            finish();
+        }
+    }
+
+    ////////////////// set up helpers
+
+    private void setUpStartEndNotificationClickListeners(CourseWithMentorAndAssessments courseDetails){
+
+        // when user clicks on start date notification icon
+        ivStartNotify.setOnClickListener(view->{
+            Toast.makeText(this, "Course start notification set", Toast.LENGTH_SHORT).show();
+
+            int notificationId = Integer.parseInt( "200" + id_course);
+
+            // create intent and set bundle of extras
+            Intent intent = new Intent(this, AlertBroadcastReceiver.class);
+            if(extras != null) {
+                extras.putInt("notification_id", notificationId);
+                extras.putString("course_title", courseDetails.course.getTitle());
+                intent.putExtras(extras);
+            }
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                    notificationId, intent, 0);
+
+            AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, courseDetails.course.getStart().getTime(), pendingIntent);
+        });
+
+        // when user clicks on end date notification icon
+        ivEndNotify.setOnClickListener(view->{
+            Toast.makeText(this, "Course end notification set", Toast.LENGTH_SHORT).show();
+
+            int notificationId = Integer.parseInt( "300" + id_course);
+
+            // create intent and set bundle of extras
+            Intent intent = new Intent(this, AlertBroadcastReceiver.class);
+            if(extras != null) {
+                extras.putInt("notification_id", notificationId);
+                extras.putString("course_title", courseDetails.course.getTitle());
+                intent.putExtras(extras);
+            }
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                    notificationId, intent, 0);
+
+            AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, courseDetails.course.getAnticipatedEnd().getTime(), pendingIntent);
+        });
+
+    }
 
 
     private void findViewsById(){

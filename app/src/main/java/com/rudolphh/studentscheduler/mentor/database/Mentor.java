@@ -7,14 +7,19 @@ import androidx.room.PrimaryKey;
 
 import com.rudolphh.studentscheduler.course.database.Course;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "mentor_table",
+        foreignKeys = @ForeignKey
+                (entity = Course.class,
+                        parentColumns = "id_course",
+                        childColumns = "id_fkcourse", onDelete = CASCADE),
         indices = @Index(value = "id_fkcourse", unique = true) )
 public class Mentor {
 
     @PrimaryKey(autoGenerate = true)
     private long id_mentor;
-    
-    
+
     private long id_fkcourse;
 
     private String name;

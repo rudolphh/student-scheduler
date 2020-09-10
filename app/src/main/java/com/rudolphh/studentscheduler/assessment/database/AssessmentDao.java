@@ -21,6 +21,10 @@ public interface AssessmentDao {
     @Delete
     void delete(Assessment assessment);
 
+    @Query("DELETE FROM assessment_table where id_assessment = :id_assessment")
+    void deleteById(long id_assessment);
+
+
     @Query("DELETE FROM assessment_table")
     void deleteAllAssessments();
 

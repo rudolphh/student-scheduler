@@ -40,6 +40,11 @@ public class AssessmentRepository {
                 assessmentDao.delete(assessment));
     }
 
+    public void deleteById(long id_assessment){
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(()->
+                assessmentDao.deleteById(id_assessment));
+    }
+
     public void deleteAllAssessments(){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()->
                 assessmentDao.deleteAllAssessments());

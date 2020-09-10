@@ -33,4 +33,8 @@ public class TermDetailsViewModel extends AndroidViewModel {
         return courseRepository.getCoursesByTermId(id_term);
     }
 
+    public void deleteTermById(long id_term){
+        termRepository.deleteById(id_term);
+    }
+
 }

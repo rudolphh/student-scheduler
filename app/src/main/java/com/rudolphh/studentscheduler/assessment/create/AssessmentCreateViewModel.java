@@ -39,4 +39,5 @@ public class AssessmentCreateViewModel extends AndroidViewModel {
     public LiveData<List<CourseWithMentorAndAssessments>> getAllCourses() {
         return courseRepository.getAllCourses();
     }
+
 }

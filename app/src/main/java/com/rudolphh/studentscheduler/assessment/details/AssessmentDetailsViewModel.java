@@ -31,4 +31,8 @@ public class AssessmentDetailsViewModel extends AndroidViewModel {
         return courseRepository.getCourseById(id_course);
     }
 
+    public void deleteAssessmentById(long id_assessment){
+        assessmentRepository.deleteById(id_assessment);
+    }
+
 }

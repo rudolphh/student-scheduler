@@ -24,6 +24,9 @@ public interface CourseDao {
     @Delete
     void delete(Course course);
 
+    @Query("DELETE FROM course_table WHERE id_course = :id_course")
+    void deleteById(long id_course);
+
     @Query("DELETE FROM course_table")
     void deleteAllCourses();
 

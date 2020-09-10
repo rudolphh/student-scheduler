@@ -3,12 +3,14 @@ package com.rudolphh.studentscheduler.assessment.create;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +28,10 @@ import com.rudolphh.studentscheduler.assessment.database.AssessmentType;
 import com.rudolphh.studentscheduler.converters.AssessmentTypeConverter;
 
 import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
+import com.rudolphh.studentscheduler.course.database.Course;
+import com.rudolphh.studentscheduler.course.database.CourseStatus;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
+import com.rudolphh.studentscheduler.mentor.database.Mentor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,8 +57,9 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
     private DatePickerDialog dueDatePickerDialog;
     private SimpleDateFormat dateFormatter;
 
-    private Bundle extras;
     private long id_course;
+    private long id_assessment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,14 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
 
         dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            id_assessment = extras.getLong("id_assessment");
+            // if creating an assessment specifically for a course
+            id_course = extras.getLong("id_course");
+        }
+
+
         findViewsById();
         //setDefaultDates();
         setDateTimeField();
@@ -76,12 +90,6 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
         setUpAssessmentTypeSpinner();
         setUpCourseSpinner();
 
-        long id_assessment = 0;
-        extras = getIntent().getExtras();
-
-        if(extras != null){
-            id_assessment = extras.getLong("id_assessment");
-        }
 
         if(id_assessment > 0){
 
@@ -96,13 +104,6 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
 
                 int assessment_type_position = assessment.getAssessmentType().getCode();
                 spinnerAssessmentType.setSelection(assessment_type_position);
-
-                // if there is a course associated
-                id_course = assessment.getId_fkcourse();
-                Log.i("id_course : ", String.valueOf(id_course));
-                if(id_course > 0) {
-                    spinnerCourse.setSelection((int)id_course);
-                } else spinnerCourse.setSelection(0);
 
             });
         } else {
@@ -159,18 +160,20 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
         int type_position = spinnerAssessmentType.getSelectedItemPosition();
         AssessmentType assessmentType = AssessmentTypeConverter.codeToAssessmentType(type_position);
 
+        // set fk_course of the assessment with the selected course's id
         int course_position = spinnerCourse.getSelectedItemPosition();
-        if(course_position == spinnerCourse.getCount()-1){
-            course_position = 0;
+        long new_id_course;
+        // if no valid course is selected
+        if(course_position == 0 || course_position == spinnerCourse.getCount()-1){
+            Toast.makeText(this, "Assessment needs a course", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            // else the fk_course will equal the id of the course selected
+            CourseWithMentorAndAssessments courseDetails = (CourseWithMentorAndAssessments) spinnerCourse.getSelectedItem();
+            new_id_course = courseDetails.course.getId_course();
         }
 
-        // if editing, get the assessment id from bundle extras
-        long id_assessment = 0;
-        if(extras != null){
-            id_assessment = extras.getLong("id_assessment");
-        }
-
-        Assessment assessment = new Assessment(course_position, assessmentTitle, dueDate, assessmentType);
+        Assessment assessment = new Assessment(new_id_course, assessmentTitle, dueDate, assessmentType);
         if(id_assessment > 0){// user is editing
             assessment.setId_assessment(id_assessment);// set the assessment id
             assessmentCreateViewModel.update(assessment);
@@ -225,11 +228,11 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
         spinner.setOnItemSelectedListener(this);
 
         // Spinner Drop down elements
-        List<String> course_names = new ArrayList<>();
+        List<CourseWithMentorAndAssessments> courses_list = new ArrayList<>();
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_list, course_names);
+        ArrayAdapter<CourseWithMentorAndAssessments> dataAdapter = new ArrayAdapter<>(this,
+                R.layout.spinner_list, courses_list);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(R.layout.spinner_list);
@@ -240,32 +243,29 @@ public class AssessmentCreateActivity extends AppCompatActivity implements Adapt
         // set the names
 
         AtomicInteger count = new AtomicInteger(0);
-        Bundle extras = getIntent().getExtras();
-        long courseId = 0;
 
-        if(extras != null){
-            courseId = extras.getLong("id_course");
-        }
-
-        long finalCourseId = courseId;
         assessmentCreateViewModel.getAllCourses().observe(this, coursesWithMentorAndAssessments -> {
-            course_names.clear();
-            course_names.add("Select Course");
-            for (CourseWithMentorAndAssessments courseDetails : coursesWithMentorAndAssessments){
-                course_names.add(courseDetails.course.getTitle());
-            }
-            course_names.add("NEW COURSE");
+            courses_list.clear();
 
-            if(count.get() == 0){// if first entering
-                if(finalCourseId > 0){// upon entering to create assessment
-                    spinner.setSelection((int)finalCourseId);
-                } else if (id_course > 0){// upon entering to edit assessment
-                    spinner.setSelection((int) id_course);
-                } else {
-                    spinner.setSelection(0);
+            Course tempCourse = new Course(0, "Select Course", new Date(), new Date(), "", CourseStatus.COMPLETED);
+            Mentor dummy = new Mentor(0, "", "", "");
+            courses_list.add(new CourseWithMentorAndAssessments(tempCourse, dummy, new ArrayList<>()));
+            courses_list.addAll(coursesWithMentorAndAssessments);
+
+            tempCourse.setTitle("NEW COURSE");
+            courses_list.add(new CourseWithMentorAndAssessments(tempCourse, dummy, new ArrayList<>()));
+
+            if(count.get() == 0){// first entering
+                if(id_course > 0){
+
+                    for(int i = 0; i < courses_list.size(); i++){
+                        if(courses_list.get(i).course.getId_course() == id_course){
+                            spinnerCourse.setSelection(i);
+                        }
+                    }
                 }
             } else {// upon coming back from create course
-                spinner.setSelection(course_names.size()-2);
+                spinner.setSelection(courses_list.size()-2);
             }
 
             // if any courses are added, we need to update the spinner

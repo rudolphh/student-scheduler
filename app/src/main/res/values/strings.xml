@@ -52,5 +52,6 @@
     <string name="due_notify">Set Due Date Notification</string>
     <string name="start_notify">Set Start Date Notification</string>
     <string name="end_notify">Set End Date Notification</string>
+    <string name="delete">Delete</string>
 
 </resources>

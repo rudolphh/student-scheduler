@@ -1,7 +1,9 @@
 package com.rudolphh.studentscheduler.assessment.details;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlarmManager;
@@ -9,6 +11,9 @@ import android.app.PendingIntent;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +21,7 @@ import android.widget.Toast;
 import com.rudolphh.studentscheduler.AlertBroadcastReceiver;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
+import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.course.database.Course;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +40,9 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     private ImageView ivShareButton;
     private TextView tvCourseNotes;
 
+    Bundle extras;
+    long id_assessment;
+    LiveData<Assessment> assessmentLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +59,18 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
 
         findViewsById();
 
-        long id_assessment = 0;
-        Bundle extras = getIntent().getExtras();
+        id_assessment = 0;
+        extras = getIntent().getExtras();
 
         if(extras != null){
             id_assessment = extras.getLong("id_assessment");
         }
 
-        assessmentDetailsViewModel.getAssessmentById(id_assessment).observe(this, assessment -> {
+        assessmentLiveData = assessmentDetailsViewModel.getAssessmentById(id_assessment);
+        assessmentLiveData.observe(this, assessment -> {
 
             // set toolbar title
-            setToolBarTitles(assessment.getTitle(), "Assessment Details");
+            setToolBarTitles(assessment.getTitle());
 
             tvTitle.setText(assessment.getTitle());// set title
 
@@ -107,31 +117,71 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
 
             });// end course observe
 
-            // when user clicks on due date notification icon
-            ivDueNotify.setOnClickListener(view->{
-                Toast.makeText(this, "Assessment due date notification set", Toast.LENGTH_SHORT).show();
-
-                int notificationId = Integer.parseInt( "100" + assessment.getId_assessment());
-
-                Intent intent = new Intent(this, AlertBroadcastReceiver.class);
-
-                if(extras != null) {
-                    extras.putInt("notification_id", notificationId);
-                    extras.putString("assessment_title", assessment.getTitle());
-                    intent.putExtras(extras);
-                }
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                        Integer.parseInt("100"+assessment.getId_assessment()), intent, 0);
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, assessment.getDueDate().getTime(), pendingIntent);
-            });
+            setUpDueDateNotificationClickListener(assessment);
 
         });// end assessment observe
 
     }// end onCreate
 
+
+    /////////////////////////////// Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.details_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+
+            case android.R.id.home:// case back button
+                finish();
+                return true;
+
+            case R.id.delete_item:
+                deleteAssessment();
+                return true;
+
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void deleteAssessment() {
+
+        if(assessmentLiveData.hasObservers()){
+            assessmentLiveData.removeObservers(this);
+            assessmentDetailsViewModel.deleteAssessmentById(id_assessment);
+            finish();
+        }
+    }
+
+
+    //////////////////////// private helpers
+
+    private void setUpDueDateNotificationClickListener(Assessment assessment){
+        // when user clicks on due date notification icon
+        ivDueNotify.setOnClickListener(view->{
+            Toast.makeText(this, "Assessment due date notification set", Toast.LENGTH_SHORT).show();
+
+            int notificationId = Integer.parseInt( "100" + assessment.getId_assessment());
+
+            Intent intent = new Intent(this, AlertBroadcastReceiver.class);
+
+            if(extras != null) {
+                extras.putInt("notification_id", notificationId);
+                extras.putString("assessment_title", assessment.getTitle());
+                intent.putExtras(extras);
+            }
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                    Integer.parseInt("100"+assessment.getId_assessment()), intent, 0);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, assessment.getDueDate().getTime(), pendingIntent);
+        });
+    }
 
     private void findViewsById(){
         tvTitle = findViewById(R.id.tv_assessment_title);
@@ -153,9 +203,9 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
 
     ////////////////// PRIVATE HELPERS
 
-    private void setToolBarTitles(String title, String subtitle){
+    private void setToolBarTitles(String title){
         Objects.requireNonNull(getSupportActionBar()).setTitle(title);
-        Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle("Assessment Details");
     }
 
     private void setToolbarAndNavigation(){

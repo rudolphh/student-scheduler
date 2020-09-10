@@ -65,6 +65,7 @@ public class AssessmentMainAdapter extends RecyclerView.Adapter<AssessmentMainAd
 
         Bundle bundle = new Bundle();
         bundle.putLong("id_assessment", currentAssessment.getId_assessment());
+        bundle.putLong("id_course", currentAssessment.getId_fkcourse());
 
         holder.assessmentView.setOnClickListener(view -> {
 

@@ -1,8 +1,10 @@
 package com.rudolphh.studentscheduler.term.details;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
@@ -20,6 +26,7 @@ import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.main.CourseMainAdapter;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.database.Term;
+import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -27,7 +34,7 @@ import java.util.Objects;
 
 public class TermDetailsActivity extends AppCompatActivity {
 
-    private TermDetailsViewModel termDetailsViewModel;
+    TermDetailsViewModel termDetailsViewModel;
 
     //UI for term details
     private TextView tvTitle;
@@ -37,7 +44,9 @@ public class TermDetailsActivity extends AppCompatActivity {
 
     private ImageView ivEditTermButton;
 
-    private FloatingActionButton fabNewCourse;
+    long id_term;
+    LiveData<TermWithCourses> termLiveData;
+    int numCourses;
 
     /////////////////// onCreate
     @Override
@@ -60,21 +69,21 @@ public class TermDetailsActivity extends AppCompatActivity {
         termDetailsViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 this.getApplication()).create(TermDetailsViewModel.class);
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
         findViewsById();
 
         // set up viewModel with liveData
-        long id_term = 0;
+        id_term = 0;
         Bundle extras = getIntent().getExtras();
 
         if(extras != null){
             id_term = extras.getLong("id_term");
         }
 
-        termDetailsViewModel.getTermById(id_term).observe(this, termWithCourses -> {
+        termLiveData = termDetailsViewModel.getTermById(id_term);
+        termLiveData.observe(this, termWithCourses -> {
             Term term = termWithCourses.term;
-            setToolBarTitles(term.getTitle(), "Term Details");
+            setToolBarTitles(term.getTitle());
 
             tvTitle.setText(term.getTitle());// set title
 
@@ -84,7 +93,7 @@ public class TermDetailsActivity extends AppCompatActivity {
             tvStart.setText(formatter.format(term.getStart()));
             tvEnd.setText(formatter.format(term.getEnd()));
 
-            int numCourses = termWithCourses.courses.size();
+            numCourses = termWithCourses.courses.size();
 
             String numberOfCourses =  (numCourses == 1) ? numCourses + " course" : numCourses + " courses";
             tvNumberCourses.setText(numberOfCourses);
@@ -111,7 +120,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         });
 
         //////////// set up fab for going to create course activity
-        fabNewCourse = findViewById(R.id.fab);
+        FloatingActionButton fabNewCourse = findViewById(R.id.fab);
         fabNewCourse.setOnClickListener(view -> {
             Intent intent = new Intent(this, CourseCreateActivity.class);
             if(extras != null){
@@ -121,6 +130,44 @@ public class TermDetailsActivity extends AppCompatActivity {
         });
     }
 
+
+    /////////////////////////////// Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.details_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+
+            case android.R.id.home:// case back button
+                finish();
+                return true;
+
+            case R.id.delete_item:
+                deleteTerm();
+                return true;
+
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void deleteTerm() {
+        if(termLiveData.hasObservers()){
+            termLiveData.removeObservers(this);
+            if(numCourses == 0) {
+                termDetailsViewModel.deleteTermById(id_term);
+                finish();
+            } else {
+                Toast.makeText(this, "Term has courses associated", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    ///////////////////////// Private helpers
 
     private void findViewsById(){
         tvTitle = findViewById(R.id.text_view_title);
@@ -140,9 +187,9 @@ public class TermDetailsActivity extends AppCompatActivity {
 
     ////////////////// PRIVATE HELPERS
 
-    private void setToolBarTitles(String title, String subtitle){
+    private void setToolBarTitles(String title){
         Objects.requireNonNull(getSupportActionBar()).setTitle(title);
-        Objects.requireNonNull(getSupportActionBar()).setSubtitle(subtitle);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle("Term Details");
     }
 
     private void setToolbarAndNavigation(){

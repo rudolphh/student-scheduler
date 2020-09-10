@@ -57,7 +57,7 @@ public class AssessmentMainActivity extends AppCompatActivity {
         if(courseId == 0) {
             assessmentMainViewModel.getAllAssessments().observe(this, assessments -> {
                 assessmentMainAdapter.setAssessments(assessments);
-                setToolBarTitles("All Assessments", "");
+                setToolBarTitles("Assessments", "All");
             });
 
         } else { // OR we view assessments for a SPECIFIC COURSE

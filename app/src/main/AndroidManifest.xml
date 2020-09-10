@@ -5,7 +5,7 @@
 
     <application
         android:name=".StudentSchedulerApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

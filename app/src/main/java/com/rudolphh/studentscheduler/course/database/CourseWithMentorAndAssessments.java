@@ -1,5 +1,6 @@
 package com.rudolphh.studentscheduler.course.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
@@ -18,4 +19,16 @@ public class CourseWithMentorAndAssessments {
 
     @Relation( parentColumn = "id_course", entityColumn = "id_fkcourse")
     public List<Assessment> assessments;
+
+    public CourseWithMentorAndAssessments(Course course, Mentor mentor, List<Assessment> assessments){
+        this.course = course;
+        this.mentor = mentor;
+        this.assessments = assessments;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return course.getTitle();
+    }
 }

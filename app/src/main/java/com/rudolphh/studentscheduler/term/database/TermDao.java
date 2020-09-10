@@ -28,6 +28,9 @@ public interface TermDao {
     @Delete
     void delete(Term term);
 
+    @Query("DELETE FROM term_table WHERE id_term = :id_term")
+    void deleteById(long id_term);
+
     @Query("DELETE FROM term_table")
     void deleteAllTerms();
 

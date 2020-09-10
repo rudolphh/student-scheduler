@@ -45,6 +45,10 @@ public class TermRepository {
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.delete(term));
     }
 
+    public void deleteById(long id_term){
+        StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.deleteById(id_term));
+    }
+
     public void deleteAllTerms(){
         StudentSchedulerDatabase.databaseWriteExecutor.execute(()-> termDao.deleteAllTerms());
     }
@@ -58,14 +62,4 @@ public class TermRepository {
     }
 
 }
-
-        /* example of using runnable thread and executing through that
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                termDao.insert(term);
-            }
-        };
-        StudentSchedulerDatabase.databaseWriteExecutor.execute(runnable);
-        */
 

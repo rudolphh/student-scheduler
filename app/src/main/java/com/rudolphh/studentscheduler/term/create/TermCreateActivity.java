@@ -3,11 +3,10 @@ package com.rudolphh.studentscheduler.term.create;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -25,7 +24,6 @@ import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,6 +48,9 @@ public class TermCreateActivity extends AppCompatActivity {
 
     private Bundle extras;
 
+    long id_term;
+    LiveData<TermWithCourses> termLiveData;
+
     ////////////////////////////// onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class TermCreateActivity extends AppCompatActivity {
         setDateTimeField();
 
         extras = getIntent().getExtras();
-        long id_term = 0;
+        id_term = 0;
         if(extras != null){
             id_term = extras.getLong("id_term");
         }
@@ -78,7 +79,8 @@ public class TermCreateActivity extends AppCompatActivity {
         // if we have a term id, then we are editing
         if(id_term > 0){
 
-            termCreateViewModel.getTermById(id_term).observe(this, termDetails -> {
+            termLiveData = termCreateViewModel.getTermById(id_term);
+            termLiveData.observe(this, termDetails -> {
 
                 String termTitle = termDetails.term.getTitle();
                 setToolBarTitles("Edit Term", termTitle);
@@ -202,31 +204,6 @@ public class TermCreateActivity extends AppCompatActivity {
         }
     }
 
-
-    private void setDefaultDates(){
-
-        Calendar cal = Calendar.getInstance();
-
-        Date startDate = Date.from(Instant.now());
-        cal.setTime(startDate);
-        cal.add(Calendar.DATE, 3);
-        Date endDate = cal.getTime();// add 3 days to default end date
-
-        editTextStart.setText(dateFormatter.format(startDate));
-        editTextEnd.setText(dateFormatter.format(endDate));
-
-        editTextStart.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus)
-                startDatePickerDialog.show();
-
-        });
-
-        editTextEnd.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus)
-                endDatePickerDialog.show();
-
-        });
-    }
 
     ////////////////// PRIVATE HELPERS
 
