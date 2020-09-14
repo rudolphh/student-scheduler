@@ -1,7 +1,5 @@
 package com.rudolphh.studentscheduler.term.database;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Relation;

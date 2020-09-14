@@ -1,24 +1,19 @@
 package com.rudolphh.studentscheduler.term.main;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
-import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 
-import java.util.List;
 import java.util.Objects;
 
 public class TermMainActivity extends AppCompatActivity {

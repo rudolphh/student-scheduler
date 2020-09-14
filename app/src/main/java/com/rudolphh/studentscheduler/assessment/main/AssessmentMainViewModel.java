@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.assessment.database.AssessmentRepository;
 
-
 import java.util.List;
 
 public class AssessmentMainViewModel extends AndroidViewModel{

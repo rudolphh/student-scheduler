@@ -1,15 +1,12 @@
 package com.rudolphh.studentscheduler;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
@@ -29,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Boolean menuOpen = false;
 
     OvershootInterpolator interpolator = new OvershootInterpolator();
-    private static final String TAG = "MainActivity";
 
 
     /** onCreate */

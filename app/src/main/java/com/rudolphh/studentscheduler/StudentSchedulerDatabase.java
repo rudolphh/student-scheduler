@@ -18,8 +18,8 @@ import com.rudolphh.studentscheduler.converters.StatusConverter;
 import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.database.CourseDao;
 import com.rudolphh.studentscheduler.course.database.CourseStatus;
-import com.rudolphh.studentscheduler.mentor.database.MentorDao;
 import com.rudolphh.studentscheduler.mentor.database.Mentor;
+import com.rudolphh.studentscheduler.mentor.database.MentorDao;
 import com.rudolphh.studentscheduler.term.database.Term;
 import com.rudolphh.studentscheduler.term.database.TermDao;
 

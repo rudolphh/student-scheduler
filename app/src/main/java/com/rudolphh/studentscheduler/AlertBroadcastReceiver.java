@@ -12,9 +12,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
 
 import com.rudolphh.studentscheduler.assessment.details.AssessmentDetailsActivity;
-import com.rudolphh.studentscheduler.assessment.main.AssessmentMainActivity;
 import com.rudolphh.studentscheduler.course.details.CourseDetailsActivity;
-import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
 
 import static com.rudolphh.studentscheduler.StudentSchedulerApp.CHANNEL_GOAL_DATES_ID;
 

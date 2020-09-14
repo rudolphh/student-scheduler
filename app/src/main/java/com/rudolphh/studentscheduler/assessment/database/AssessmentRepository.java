@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 
 import com.rudolphh.studentscheduler.StudentSchedulerDatabase;
 
-
 import java.util.List;
 
 public class AssessmentRepository {

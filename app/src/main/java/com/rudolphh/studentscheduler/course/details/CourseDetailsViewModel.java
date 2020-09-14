@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.rudolphh.studentscheduler.course.database.CourseRepository;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 import com.rudolphh.studentscheduler.mentor.database.MentorRepository;
-import com.rudolphh.studentscheduler.term.database.Term;
 import com.rudolphh.studentscheduler.term.database.TermRepository;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 

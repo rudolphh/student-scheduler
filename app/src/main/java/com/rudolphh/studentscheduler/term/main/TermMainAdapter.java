@@ -3,11 +3,6 @@ package com.rudolphh.studentscheduler.term.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rudolphh.studentscheduler.R;
-import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
-import com.rudolphh.studentscheduler.course.main.CourseMainActivity;
 import com.rudolphh.studentscheduler.term.create.TermCreateActivity;
 import com.rudolphh.studentscheduler.term.database.TermWithCourses;
 import com.rudolphh.studentscheduler.term.details.TermDetailsActivity;
-import com.rudolphh.studentscheduler.term.details.TermDetailsViewModel;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

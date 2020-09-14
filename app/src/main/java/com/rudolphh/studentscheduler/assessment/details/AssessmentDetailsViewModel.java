@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.assessment.database.AssessmentRepository;
-import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.database.CourseRepository;
 import com.rudolphh.studentscheduler.course.database.CourseWithMentorAndAssessments;
 

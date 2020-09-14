@@ -1,17 +1,9 @@
 package com.rudolphh.studentscheduler.assessment.create;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,11 +14,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.database.Assessment;
 import com.rudolphh.studentscheduler.assessment.database.AssessmentType;
 import com.rudolphh.studentscheduler.converters.AssessmentTypeConverter;
-
 import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 import com.rudolphh.studentscheduler.course.database.Course;
 import com.rudolphh.studentscheduler.course.database.CourseStatus;

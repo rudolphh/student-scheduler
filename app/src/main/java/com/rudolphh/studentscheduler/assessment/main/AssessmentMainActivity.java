@@ -1,19 +1,17 @@
 package com.rudolphh.studentscheduler.assessment.main;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rudolphh.studentscheduler.R;
 import com.rudolphh.studentscheduler.assessment.create.AssessmentCreateActivity;
-import com.rudolphh.studentscheduler.course.create.CourseCreateActivity;
 
 import java.util.Objects;
 
