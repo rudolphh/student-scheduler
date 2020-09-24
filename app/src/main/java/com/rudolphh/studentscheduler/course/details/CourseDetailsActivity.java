@@ -55,6 +55,7 @@ public class CourseDetailsActivity extends AppCompatActivity  {
 
     private ImageView ivStartNotify;
     private ImageView ivEndNotify;
+    private ImageView ivShareButton;
 
     private SimpleDateFormat dateFormatter;
 
@@ -132,6 +133,24 @@ public class CourseDetailsActivity extends AppCompatActivity  {
             assessmentMainAdapter.setAssessments(courseDetails.assessments);
 
             setUpStartEndNotificationClickListeners(courseDetails);
+
+            // when user clicks on share course notes button
+            ivShareButton.setOnClickListener(view -> {
+
+                if(courseDetails.course.getNotes().isEmpty()){
+                    Toast.makeText(this, "No notes to share", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, courseDetails.course.getTitle() + " Course Notes" );
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, courseDetails.course.getNotes());
+                    sendIntent.setType("text/plain");
+
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    startActivity(shareIntent);
+                }
+
+            });// end share clickListener
 
         });// end course observe
 
@@ -252,6 +271,7 @@ public class CourseDetailsActivity extends AppCompatActivity  {
 
         ivStartNotify = findViewById(R.id.iv_start_notify);
         ivEndNotify = findViewById(R.id.iv_end_notify);
+        ivShareButton = findViewById(R.id.iv_notes_share);
     }
 
 

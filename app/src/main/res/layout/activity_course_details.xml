@@ -338,21 +338,42 @@
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/notes_label"
+        <RelativeLayout
+            android:id="@+id/course_notes_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="0dp"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
-            android:text="@string/course_notes"
-            android:textSize="18sp"
-            android:gravity="center_vertical"
-            android:layout_below="@id/mentor_details"
-            android:background="@color/colorSecondary"
-            android:textColor="@android:color/white"/>
+            android:layout_below="@id/mentor_details">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="0dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="@string/course_notes"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:background="@color/colorSecondary"
+                android:textColor="@android:color/white"/>
+
+            <ImageView
+                android:id="@+id/iv_notes_share"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp"
+                android:contentDescription="@string/share_button"
+                android:paddingStart="10dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="0dp"
+                android:src="@drawable/ic_baseline_share_24"
+                app:tint="@android:color/white" />
+
+        </RelativeLayout>
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/notes_section"
@@ -361,7 +382,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_below="@id/notes_label">
+            android:layout_below="@id/course_notes_label">
 
             <LinearLayout
                 android:layout_width="match_parent"
