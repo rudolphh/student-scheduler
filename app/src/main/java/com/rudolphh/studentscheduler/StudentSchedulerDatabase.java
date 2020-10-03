@@ -81,7 +81,7 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
                         new Course(1, "C196",
                                 new GregorianCalendar(2020, Calendar.AUGUST, 11).getTime(),
                                 new GregorianCalendar(2020, Calendar.AUGUST, 31).getTime(),
-                                "",
+                                "awesome detailed note right here",
                                 CourseStatus.IN_PROGRESS));
 
                 mentorDao.insert(new Mentor(id_course, "Rudy", "2093229787", "rudy@gmail.com"));
@@ -90,7 +90,7 @@ public abstract class StudentSchedulerDatabase extends RoomDatabase {
                         new Course(1, "C191",
                                 new GregorianCalendar(2020, Calendar.JULY, 3).getTime(),
                                 new GregorianCalendar(2020, Calendar.AUGUST, 7).getTime(),
-                                "",
+                                "you want notes! i got your notes!",
                                 CourseStatus.COMPLETED));
 
                 mentorDao.insert(new Mentor(id_course, "Noah", "2093223333", "noah@gmail.com"));
