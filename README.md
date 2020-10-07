@@ -1,7 +1,7 @@
 # Student Scheduler
 
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/rudolphh/student-scheduler)
 
 Student Scheduler is a native, mobile, offline-storage, Android powered Student schedule/progress tracker.
 
